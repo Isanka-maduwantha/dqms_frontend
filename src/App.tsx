@@ -1,6 +1,6 @@
 import './App.css'
 import Navbar from './components/Navbar'
-import LoginPage from './pages/auth/login/LoginPage'
+
 
 function App() {
 
@@ -8,8 +8,13 @@ function App() {
   return  (
     
    <>
-    <Navbar></Navbar>
-    <LoginPage></LoginPage>
+
+    <h1>Welcome To Dental</h1>
+     <Navbar></Navbar>
+   
+     
+   
+   
    </>
   );
 }
