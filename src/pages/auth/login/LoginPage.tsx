@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {CONFIG} from '@config'
+import { CONFIG } from "@config";
 interface LoginFormData {
   email: string;
   password: string;
@@ -37,42 +37,39 @@ function LoginPage() {
         setTimeout(resolve, 1500);
       });
 
-      const response = await fetch(`${CONFIG.LOGIN_API_URL}`,{
-        method: 'POST',
+      const response = await fetch(`${CONFIG.LOGIN_API_URL}`, {
+        method: "POST",
         headers: {
-            'Content-Type' : 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(
-            {
-                email: formData.email,
-                password: formData.password,
-            }
-        ),
-
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
       });
       const data = await response.json();
-      if(!response.ok){
-        throw new Error(data.message || 'Login failed');
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
       }
       console.log("Successfully logged in", data);
-      localStorage.setItem('token', data.token)
+      localStorage.setItem("token", data.token);
       alert("Login Successfull");
     } catch (err) {
-       alert("Login Failed");
+      alert("Login Failed");
       setError("Invalid Email or Password, Please try again");
-      console.log(error,err);
+      console.log(error, err);
     } finally {
       setIsLoading(false);
     }
   };
   return (
-    <div>
-      LoginPage
-      <form onSubmit={handleSubmit}>
+    <div className="container">
+      <h1>Login Page</h1>
+      <form onSubmit={handleSubmit} className="w-4/5 m-auto">
         <div>
           <label htmlFor="email">Email Address</label>
           <input
-          id="email"
+            id="email"
             type="email"
             name="email"
             value={formData.email}
@@ -82,42 +79,45 @@ function LoginPage() {
         </div>
 
         <div>
-          
-          
           <div className="psswdWrapper">
             <label htmlFor="password">Password</label>
             <input
-            id="password"
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="**********"
-            required
-          ></input>
-          <button 
-            type="button"
-            onClick={ ()=> setShowPassword(!showPassword)}
-            aria-label={showPassword? 'Hide password': 'Show Password'}
-          >
-            {showPassword ? 'Hide': 'Show'}
-          </button>
-         
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="**********"
+              required
+            ></input>
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show Password"}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
           </div>
-           <a href="#forgor">Forgot Password</a>
-
+          <div className="forget_psswd">
+            <a href="#forgor">Forgot Password</a>
+          </div>
         </div>
         <div className="checkbox-container">
-            <input id="rememberMe" type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={handleChange} />
-            <label htmlFor="rememberMe">Remember me for 30 days</label>
+          <input
+            id="rememberMe"
+            type="checkbox"
+            name="rememberMe"
+            checked={formData.rememberMe}
+            onChange={handleChange}
+          />
+          <label htmlFor="rememberMe">Remember me for 30 days</label>
         </div>
-           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Signing in...': 'Sign In'}
-           </button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Signing in..." : "Sign In"}
+        </button>
       </form>
     </div>
   );
 }
-
 
 export default LoginPage;
