@@ -2,24 +2,20 @@ import React, { useState } from "react";
 import { CONFIG } from "@config";
 
 interface RegisterFormData {
-  firstName: string;
-  lastName: string;
+  Name: string;
   nic: string;
   phone: string;
   email: string;
-  username: string;
   password: string;
   confirmPassword: string;
 }
 
 function RegisterPage() {
   const [formData, setFormData] = useState<RegisterFormData>({
-    firstName: "",
-    lastName: "",
+    Name: "",
     nic: "",
     phone: "",
     email: "",
-    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -42,12 +38,10 @@ function RegisterPage() {
 
     // Validation checks
     if (
-      !formData.firstName ||
-      !formData.lastName ||
+      !formData.Name ||
       !formData.nic ||
       !formData.phone ||
       !formData.email ||
-      !formData.username ||
       !formData.password
     ) {
       setError("Please fill in all required fields.");
@@ -73,24 +67,33 @@ function RegisterPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          nic: formData.nic,
-          phone: formData.phone,
-          email: formData.email,
-          username: formData.username,
-          password: formData.password,
+           name: formData.Name,
+            nic: formData.nic,
+           phone: formData.phone,
+           email: formData.email,
+           password: formData.password,
         }),
       });
 
-      const data = await response.json();
+      // Safely parse JSON or empty response to prevent "Unexpected end of JSON input" error
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : {};
 
       if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
+        throw new Error(data.message || `Registration failed (Status: ${response.status})`);
       }
 
       alert("Patient Registration Successful!");
-      // Optionally redirect or clear form here
+      
+      // Clear form on success
+      setFormData({
+        Name: "",
+        nic: "",
+        phone: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
     } catch (err: unknown) {
       const errorMessage =
         err instanceof Error ? err.message : "Registration failed. Please try again.";
@@ -107,24 +110,12 @@ function RegisterPage() {
 
       <form onSubmit={handleSubmit} className="w-4/5 m-auto">
         <div className="form-group">
-          <label htmlFor="firstName">First Name</label>
+          <label htmlFor="Name">Full Name</label>
           <input
-            id="firstName"
+            id="Name"
             type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            id="lastName"
-            type="text"
-            name="lastName"
-            value={formData.lastName}
+            name="Name"
+            value={formData.Name}
             onChange={handleChange}
             required
           />
@@ -163,18 +154,6 @@ function RegisterPage() {
             type="email"
             name="email"
             value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            name="username"
-            value={formData.username}
             onChange={handleChange}
             required
           />
