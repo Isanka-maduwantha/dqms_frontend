@@ -13,9 +13,10 @@ export const ReceptionistDashboardPage: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [generatedToken, setGeneratedToken] = useState<string | null>(null);
 
+  // Updated to Port 3000
   const API_BASE_URL = 'http://localhost:3000/api/receptionist';
 
-  // Fetch initial appointments
+  // F-3.1 Fetch initial appointments
   useEffect(() => {
     fetchAppointments();
   }, []);
@@ -32,7 +33,7 @@ export const ReceptionistDashboardPage: React.FC = () => {
     }
   };
 
-  // Mark Patient Arrived
+  // F-3.1 Mark Patient Arrived
   const handleCheckIn = async (appointmentId: string) => {
     try {
       const res = await fetch(`${API_BASE_URL}/check-in/${appointmentId}`, {
@@ -50,7 +51,7 @@ export const ReceptionistDashboardPage: React.FC = () => {
     }
   };
 
-  // Generate Walk-In Token & Update Table Live
+  // F-3.2 Generate Walk-In Token & Update Table Live
   const handleWalkInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -63,17 +64,15 @@ export const ReceptionistDashboardPage: React.FC = () => {
       if (result.success) {
         setGeneratedToken(result.token);
 
-        // Add the new walk-in patient directly to the appointments list
+        // Add the new walk-in patient directly to the table list
         const newWalkIn: Appointment = {
           id: result.token,
           patientName: patientName,
           timeSlot: `Walk-In (${result.token})`,
-          status: 'Arrived', // Walk-ins are physically present
+          status: 'Arrived',
         };
 
         setAppointments(prev => [...prev, newWalkIn]);
-
-        // Reset form inputs
         setPatientName('');
         setPhone('');
       }
@@ -82,7 +81,31 @@ export const ReceptionistDashboardPage: React.FC = () => {
     }
   };
 
-  // Emergency Priority Override
+  // F-3.3 Reschedule Appointment Slot
+  const handleReschedule = async (appointmentId: string) => {
+    const newSlot = prompt('Enter new time slot (e.g., "10:30 AM" or "02:00 PM"):');
+    if (!newSlot) return;
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/reschedule/${appointmentId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ newSlot }),
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert(result.message);
+        // Update slot locally in state
+        setAppointments(prev =>
+          prev.map(apt => (apt.id === appointmentId ? { ...apt, timeSlot: newSlot } : apt))
+        );
+      }
+    } catch (err) {
+      console.error('Reschedule error:', err);
+    }
+  };
+
+  // F-3.4 Emergency Priority Override
   const handleEmergencyPriority = async (tokenId: string) => {
     try {
       const res = await fetch(`${API_BASE_URL}/priority/${tokenId}`, {
@@ -98,10 +121,10 @@ export const ReceptionistDashboardPage: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '900px', margin: '0 auto' }}>
+    <div style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '950px', margin: '0 auto' }}>
       <h2>Module 3: Receptionist & Front Desk Operations</h2>
 
-      {/* Walk-In Token Generator */}
+      {/* F-3.2 Walk-In Token Generator */}
       <section style={{ background: '#f8f9fa', padding: '16px', borderRadius: '8px', marginBottom: '24px', border: '1px solid #e9ecef' }}>
         <h3>F-3.2: Walk-In Token Generator</h3>
         <form onSubmit={handleWalkInSubmit} style={{ display: 'flex', gap: '12px' }}>
@@ -133,9 +156,9 @@ export const ReceptionistDashboardPage: React.FC = () => {
         )}
       </section>
 
-      {/* Daily Check-In & Walk-Ins */}
+      {/* F-3.1, F-3.3 & F-3.4 Daily Check-In & Queue Management */}
       <section style={{ background: '#fff', padding: '16px', borderRadius: '8px', border: '1px solid #dee2e6' }}>
-        <h3>F-3.1 & F-3.4: Daily Check-In & Priority Override</h3>
+        <h3>F-3.1, F-3.3 & F-3.4: Daily Operations & Queue Management</h3>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '2px solid #dee2e6', textAlign: 'left' }}>
@@ -148,7 +171,7 @@ export const ReceptionistDashboardPage: React.FC = () => {
           <tbody>
             {appointments.map(apt => (
               <tr key={apt.id} style={{ borderBottom: '1px solid #e9ecef' }}>
-                <td style={{ padding: '8px' }}>{apt.timeSlot}</td>
+                <td style={{ padding: '8px', fontWeight: 'bold' }}>{apt.timeSlot}</td>
                 <td style={{ padding: '8px' }}>{apt.patientName}</td>
                 <td style={{ padding: '8px' }}>
                   <span style={{
@@ -161,7 +184,7 @@ export const ReceptionistDashboardPage: React.FC = () => {
                     {apt.status}
                   </span>
                 </td>
-                <td style={{ padding: '8px', display: 'flex', gap: '8px' }}>
+                <td style={{ padding: '8px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {apt.status !== 'Arrived' && (
                     <button
                       onClick={() => handleCheckIn(apt.id)}
@@ -170,11 +193,19 @@ export const ReceptionistDashboardPage: React.FC = () => {
                       Mark Arrived
                     </button>
                   )}
+                  {/* F-3.3 Reschedule Action */}
+                  <button
+                    onClick={() => handleReschedule(apt.id)}
+                    style={{ padding: '4px 10px', backgroundColor: '#0dcaf0', color: '#000', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                  >
+                    📅 Reschedule
+                  </button>
+                  {/* F-3.4 Emergency Priority Action */}
                   <button
                     onClick={() => handleEmergencyPriority(apt.id)}
                     style={{ padding: '4px 10px', backgroundColor: '#dc3545', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
                   >
-                    🚨 Priority Flag
+                    🚨 Priority
                   </button>
                 </td>
               </tr>
