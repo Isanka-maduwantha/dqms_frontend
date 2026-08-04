@@ -1,18 +1,14 @@
-import './App.css'
-import Navbar from './components/Navbar'
-import LoginPage from './pages/auth/login/LoginPage'
+import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+
+import AppRoutes from './app/routes/AppRoutes';
 
 function App() {
-
-
-  return  (
-    
-   <>
-    <Navbar></Navbar>
-    <LoginPage></LoginPage>
-   </>
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 
-
-export default App
+export default App;
