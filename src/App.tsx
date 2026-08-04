@@ -1,22 +1,12 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-// Notice ../ to go up out of app/ into components/ and pages/
-import Navbar from './components/Navbar';
-import LoginPage from './pages/auth/login/LoginPage';
-import RegisterPage from './pages/auth/register/RegisterPage';
-import { ReceptionistDashboardPage } from './pages/receptionist/ReceptionistDashboardPage';
+import AppRoutes from './app/routes/AppRoutes';
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/receptionist" element={<ReceptionistDashboardPage />} />
-        <Route path="/" element={<LoginPage />} />
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

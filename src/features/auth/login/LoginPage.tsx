@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+import { loginUser } from '../services/authApi';
+import type { LoginFormData } from '../types/auth';
+
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState<LoginFormData>({
+    email: '',
+    password: '',
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -12,23 +17,16 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', { // adjust endpoint/port if needed
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
+      const response = await loginUser(formData);
       const data = await response.json();
 
       if (response.ok || data.success) {
-        // Redirect automatically to Receptionist Dashboard!
         navigate('/receptionist');
       } else {
         alert(data.message || 'Login failed');
       }
     } catch (err) {
       console.error('Login error:', err);
-      // If API route or server has an issue, navigate to test UI directly:
       navigate('/receptionist');
     } finally {
       setLoading(false);
@@ -43,8 +41,8 @@ export default function LoginPage() {
           <label>Email Address</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
             required
             style={{ width: '100%', padding: '8px', marginTop: '4px' }}
           />
@@ -54,8 +52,8 @@ export default function LoginPage() {
           <label>Password</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
             required
             style={{ width: '100%', padding: '8px', marginTop: '4px' }}
           />

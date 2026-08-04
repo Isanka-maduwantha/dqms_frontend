@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-interface Appointment {
-  id: string;
-  patientName: string;
-  timeSlot: string;
-  status: string;
-}
+import {
+  checkInAppointment,
+  createWalkInPatient,
+  fetchTodayAppointments,
+  prioritizeToken,
+  rescheduleAppointment,
+} from './services/receptionistApi';
+import type { Appointment } from './types/receptionist';
 
 export const ReceptionistDashboardPage: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -13,18 +15,14 @@ export const ReceptionistDashboardPage: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [generatedToken, setGeneratedToken] = useState<string | null>(null);
 
-  // Updated to Port 3000
-  const API_BASE_URL = 'http://localhost:3000/api/receptionist';
-
-  // F-3.1 Fetch initial appointments
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/immutability
     fetchAppointments();
   }, []);
 
   const fetchAppointments = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/today`);
-      const result = await res.json();
+      const result = await fetchTodayAppointments();
       if (result.success) {
         setAppointments(result.data);
       }
@@ -36,10 +34,7 @@ export const ReceptionistDashboardPage: React.FC = () => {
   // F-3.1 Mark Patient Arrived
   const handleCheckIn = async (appointmentId: string) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/check-in/${appointmentId}`, {
-        method: 'PATCH',
-      });
-      const result = await res.json();
+      const result = await checkInAppointment(appointmentId);
       if (result.success) {
         alert(result.message);
         setAppointments(prev =>
@@ -55,12 +50,7 @@ export const ReceptionistDashboardPage: React.FC = () => {
   const handleWalkInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API_BASE_URL}/walk-in`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ patientName, phone }),
-      });
-      const result = await res.json();
+      const result = await createWalkInPatient({ patientName, phone });
       if (result.success) {
         setGeneratedToken(result.token);
 
@@ -87,12 +77,7 @@ export const ReceptionistDashboardPage: React.FC = () => {
     if (!newSlot) return;
 
     try {
-      const res = await fetch(`${API_BASE_URL}/reschedule/${appointmentId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ newSlot }),
-      });
-      const result = await res.json();
+      const result = await rescheduleAppointment(appointmentId, newSlot);
       if (result.success) {
         alert(result.message);
         // Update slot locally in state
@@ -108,10 +93,7 @@ export const ReceptionistDashboardPage: React.FC = () => {
   // F-3.4 Emergency Priority Override
   const handleEmergencyPriority = async (tokenId: string) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/priority/${tokenId}`, {
-        method: 'PATCH',
-      });
-      const result = await res.json();
+      const result = await prioritizeToken(tokenId);
       if (result.success) {
         alert(result.message);
       }

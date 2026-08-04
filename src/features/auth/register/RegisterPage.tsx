@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import { CONFIG } from "@config";
 
-interface RegisterFormData {
-  Name: string;
-  nic: string;
-  phone: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { parseJsonResponse } from "../../../lib/utils/http";
+import { registerUser } from "../services/authApi";
+import type { RegisterFormData } from "../types/auth";
 
 function RegisterPage() {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -23,9 +17,6 @@ function RegisterPage() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // Fallback endpoint if CONFIG is undefined
-  const registerUrl = CONFIG?.REGISTER_API_URL || "http://localhost:3000/api/auth/register";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -64,26 +55,18 @@ function RegisterPage() {
     try {
       setIsLoading(true);
 
-      const response = await fetch(registerUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.Name,
-          nic: formData.nic,
-          phone: formData.phone,
-          email: formData.email,
-          password: formData.password,
-        }),
+      const response = await registerUser({
+        name: formData.Name,
+        nic: formData.nic,
+        phone: formData.phone,
+        email: formData.email,
+        password: formData.password,
       });
 
-      // Safely parse JSON or empty response to prevent "Unexpected end of JSON input"
-      const text = await response.text();
-      const data = text ? JSON.parse(text) : {};
+      const data = await parseJsonResponse<{ message?: string }>(response);
 
       if (!response.ok) {
-        throw new Error(data.message || `Registration failed (Status: ${response.status})`);
+        throw new Error((data as { message?: string }).message || `Registration failed (Status: ${response.status})`);
       }
 
       alert("Patient Registration Successful!");
