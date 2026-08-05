@@ -8,12 +8,11 @@ import { ReceptionistDashboardPage } from '../../features/receptionist/Reception
 export default function AppRoutes() {
   return (
     <>
-      <Navbar />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/receptionist" element={<ReceptionistDashboardPage />} />
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/"  />
       </Routes>
     </>
   );
