@@ -1,18 +1,21 @@
-import './App.css'
-import Navbar from './components/Navbar'
-import LoginPage from './pages/auth/login/LoginPage'
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
 
+import AppRoutes from "./app/routes/AppRoutes";
+import  NavBar  from "./components/Navbar";
+import FooterBar from "./components/FooterBar";
 function App() {
+  return (
+    <BrowserRouter>
+      <NavBar />
 
-
-  return  (
-    
-   <>
-    <Navbar></Navbar>
-    <LoginPage></LoginPage>
-   </>
+      <main className="main-content">
+           <AppRoutes />
+      </main>
+   
+      <FooterBar />
+    </BrowserRouter>
   );
 }
 
-
-export default App
+export default App;
