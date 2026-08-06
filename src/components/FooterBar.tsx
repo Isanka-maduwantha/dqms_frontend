@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function FooterBar() {
   return (
-    <footer className="flex justify-between items-center pl-10 pr-10 pt-5 pb-5 h-14 w-full font-inter fixed bottom-0">
+    <footer className="flex justify-between items-center pl-10 pr-10 pt-5 pb-5 h-14 w-full font-inter relative bottom-0 bg-white">
       <div className="copyrights text-[12px]">
         <span>© 2026 Dental Surgery. All rights reserved.</span>
       </div>

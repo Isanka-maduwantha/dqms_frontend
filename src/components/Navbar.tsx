@@ -29,14 +29,14 @@ function Navbar() {
           <NavLink to="/lobby">Live Queue</NavLink>
         </li>
       </ul>
-      <div className="top-actions flex gap-2.5 font-inter items-center text-[12px]">
+      <div className="top-actions flex gap-2.5 font-inter items-center text-[12px] h-full">
         <NavLink to="/login" className="text-light">
-          <button className=" bg-accent rounded-2xl p-2 pl-4 pr-4 h-full text-white  ">
+          <button className=" bg-white border-border-grey border rounded-full p-1 pl-4 pr-4  text-black  ">
             Login
           </button>
         </NavLink>
         <NavLink to="/register" className="text-light">
-          <button className=" bg-accent rounded-2xl p-2 pl-4 pr-4 h-full text-white">
+          <button className=" bg-accent rounded-2xl pl-4 pr-4 p-1 text-white">
             Register
           </button>
         </NavLink>
