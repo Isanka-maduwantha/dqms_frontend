@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../assets/span.brand-mark.png";
 function Navbar() {
   return (
-    <nav className="flex justify-between h-20 items-center pl-10 pr-10 font-inter">
+    <nav className="flex justify-between h-20 items-center pl-10 pr-10 font-inter bg-white border-b border-border-grey">
       <div className="brand flex items-center">
         <NavLink to="/">
           <div className="container flex gap-2.5 items-center">

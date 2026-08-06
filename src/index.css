@@ -57,10 +57,12 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+
 }
 
 body {
   margin: 0;
+  font-family: "Inter", sans-serif;
 }
 
 h1,
