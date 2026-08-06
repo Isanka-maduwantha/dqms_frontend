@@ -6,6 +6,7 @@ import { parseJsonResponse } from "../../../lib/utils/http";
 import { registerUser } from "../services/authApi";
 import type { RegisterFormData } from "../types/auth";
 import { NavLink } from "react-router-dom";
+import CommanButton from "../../../components/CommanButton";
 
 function RegisterPage() {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -19,7 +20,7 @@ function RegisterPage() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [agreeToTerms,setAgreeToTerms] = useState<boolean>(false)
+  const [agreeToTerms, setAgreeToTerms] = useState<boolean>(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -181,26 +182,42 @@ function RegisterPage() {
               )}
             </button>
           </div>
-         
+
           <div className="terms flex items-center text-left gap-2 p-4 pl-2  pr-2">
-            <input type="checkbox" name="agreeToterms" id="agreeToterms" className="bg-white" onClick={ ()=> setAgreeToTerms(!agreeToTerms) }required />
+            <input
+              type="checkbox"
+              name="agreeToterms"
+              id="agreeToterms"
+              className="bg-white"
+              onClick={() => setAgreeToTerms(!agreeToTerms)}
+              required
+            />
             <label htmlFor="agreeToterms" className="text-[12px]">
               I agree to the Terms of Service and Privacy Policy, including
               secure handling of my health records.
             </label>
           </div>
           {/* Submit Button */}
-          <button
+
+          <CommanButton
             type="submit"
             disabled={isLoading}
-            className="bg-accent text-white w-full rounded-[10px] pl-3.25 pt-3.25 pr-3.25 pb-3.5"
-          >
-            {isLoading
-              ? "Completing registration..."
-              : "Complete registration →"}
-          </button>
+            label={
+              isLoading
+                ? "Completing registration..."
+                : "Complete registration →"
+            }
+            containerProps={{
+              className :"w-full",
+            }}
+          ></CommanButton>
         </form>
-        <p className="text-[14px] pt-4">Already have an account? <NavLink to="/login"><span className="text-accent font-bold">Sign in</span></NavLink></p>
+        <p className="text-[14px] pt-4">
+          Already have an account?{" "}
+          <NavLink to="/login">
+            <span className="text-accent font-bold">Sign in</span>
+          </NavLink>
+        </p>
       </div>
     </div>
   );
