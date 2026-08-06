@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import FormInput from "../../../components/FormInput";
 import { parseJsonResponse } from "../../../lib/utils/http";
 import { registerUser } from "../services/authApi";
 import type { RegisterFormData } from "../types/auth";
+import { NavLink } from "react-router-dom";
 
 function RegisterPage() {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -11,13 +14,12 @@ function RegisterPage() {
     phone: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [agreeToTerms,setAgreeToTerms] = useState<boolean>(false)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -42,11 +44,6 @@ function RegisterPage() {
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
     if (formData.password.length < 8) {
       setError("Password must be at least 8 characters long.");
       return;
@@ -66,7 +63,10 @@ function RegisterPage() {
       const data = await parseJsonResponse<{ message?: string }>(response);
 
       if (!response.ok) {
-        throw new Error((data as { message?: string }).message || `Registration failed (Status: ${response.status})`);
+        throw new Error(
+          (data as { message?: string }).message ||
+            `Registration failed (Status: ${response.status})`,
+        );
       }
 
       alert("Patient Registration Successful!");
@@ -78,7 +78,6 @@ function RegisterPage() {
         phone: "",
         email: "",
         password: "",
-        confirmPassword: "",
       });
     } catch (err: unknown) {
       const errorMessage =
@@ -92,174 +91,117 @@ function RegisterPage() {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "480px",
-        margin: "40px auto",
-        padding: "24px",
-        border: "1px solid #e0e0e0",
-        borderRadius: "8px",
-        boxShadow: "0 4px 6px rgba(0,0,0,0.05)",
-        fontFamily: "sans-serif",
-        backgroundColor: "#fff",
-      }}
-    >
-      <h1 style={{ textAlign: "center", marginBottom: "20px", fontSize: "1.75rem", color: "#333" }}>
-        Patient Registration
-      </h1>
-
-      {error && (
-        <div
-          style={{
-            color: "#d32f2f",
-            backgroundColor: "#fde8e8",
-            padding: "10px 14px",
-            borderRadius: "4px",
-            marginBottom: "16px",
-            fontSize: "14px",
-            textAlign: "center",
-          }}
-        >
-          {error}
+    <div className="grid grid-cols-10 h-full ">
+      <div className="hero-panel col-span-4 bg-accent h-full"></div>
+      <div className="form-panel col-span-6 pl-16 pr-16 pt-14 pb-14">
+        <div className="header-text">
+          <h1 className="text-2xl font-bold text-green-text-1 text-left">
+            Create your patient account
+          </h1>
+          <p className="text-left text-muted-green">
+            Provide your identification details to register.
+          </p>
         </div>
-      )}
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-        {/* Full Name */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <label htmlFor="Name" style={{ fontWeight: 600, fontSize: "14px" }}>
-            Full Name
-          </label>
-          <input
+        {error && <div>{error}</div>}
+
+        <form onSubmit={handleSubmit}>
+          {/* Full Name */}
+          <FormInput
+            padding="24px"
+            label="Full Name"
             id="Name"
-            type="text"
             name="Name"
             value={formData.Name}
             onChange={handleChange}
-            style={{ padding: "8px 12px", border: "1px solid #ccc", borderRadius: "4px", fontSize: "14px" }}
+            placeholder="Jantha Kumara"
             required
           />
-        </div>
 
-        {/* NIC Number */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <label htmlFor="nic" style={{ fontWeight: 600, fontSize: "14px" }}>
-            NIC Number
-          </label>
-          <input
+          {/* NIC Number */}
+          <FormInput
+            label="NIC / Passport / ID number"
             id="nic"
-            type="text"
             name="nic"
-            placeholder="e.g. 199012345678 or 901234567V"
+            placeholder="Enter identification number"
             value={formData.nic}
             onChange={handleChange}
-            style={{ padding: "8px 12px", border: "1px solid #ccc", borderRadius: "4px", fontSize: "14px" }}
             required
+            pattern="\d{12}"
           />
-        </div>
 
-        {/* Phone Number */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <label htmlFor="phone" style={{ fontWeight: 600, fontSize: "14px" }}>
-            Phone Number
-          </label>
-          <input
-            id="phone"
-            type="tel"
-            name="phone"
-            placeholder="e.g. 0712345678"
-            value={formData.phone}
-            onChange={handleChange}
-            style={{ padding: "8px 12px", border: "1px solid #ccc", borderRadius: "4px", fontSize: "14px" }}
-            required
-          />
-        </div>
-
-        {/* Email Address */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <label htmlFor="email" style={{ fontWeight: 600, fontSize: "14px" }}>
-            Email Address
-          </label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            style={{ padding: "8px 12px", border: "1px solid #ccc", borderRadius: "4px", fontSize: "14px" }}
-            required
-          />
-        </div>
-
-        {/* Password */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <label htmlFor="password" style={{ fontWeight: 600, fontSize: "14px" }}>
-            Password
-          </label>
-          <div style={{ display: "flex", gap: "8px" }}>
-            <input
+          <div className="email-psswd-container">
+            {/* Email Address */}
+            <FormInput
+              label="Email address"
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="name@gmail.com"
+              required
+            />
+            {/* Phone Number */}
+            <FormInput
+              label="Phone number"
+              id="phone"
+              type="tel"
+              name="phone"
+              placeholder="e.g. 0712345678"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              pattern="\d{10}"
+            />
+          </div>
+          <div className="password-section relative">
+            {/* Password */}
+            <FormInput
+              label="Password"
+              pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
               id="password"
               type={showPassword ? "text" : "password"}
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Minimum 8 characters"
-              style={{ flex: 1, padding: "8px 12px", border: "1px solid #ccc", borderRadius: "4px", fontSize: "14px" }}
+              placeholder="Min. 8 characters with uppercase, lowercase, number, and symbol"
               required
             />
             <button
+              className="absolute right-2 top-10 outline-0"
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? "Hide password" : "Show password"}
-              style={{
-                padding: "8px 12px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                backgroundColor: "#f8f9fa",
-                cursor: "pointer",
-                fontSize: "14px",
-              }}
             >
-              {showPassword ? "Hide" : "Show"}
+              {showPassword ? (
+                <FontAwesomeIcon size={"xl"} icon={faEyeSlash} className="" />
+              ) : (
+                <FontAwesomeIcon icon={faEye} size={"xl"} />
+              )}
             </button>
           </div>
-        </div>
-
-        {/* Confirm Password */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <label htmlFor="confirmPassword" style={{ fontWeight: 600, fontSize: "14px" }}>
-            Confirm Password
-          </label>
-          <input
-            id="confirmPassword"
-            type={showPassword ? "text" : "password"}
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            style={{ padding: "8px 12px", border: "1px solid #ccc", borderRadius: "4px", fontSize: "14px" }}
-            required
-          />
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          disabled={isLoading}
-          style={{
-            marginTop: "8px",
-            padding: "10px",
-            backgroundColor: isLoading ? "#6c757d" : "#0d6efd",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            fontSize: "16px",
-            fontWeight: 600,
-            cursor: isLoading ? "not-allowed" : "pointer",
-          }}
-        >
-          {isLoading ? "Registering..." : "Register"}
-        </button>
-      </form>
+         
+          <div className="terms flex items-center text-left gap-2 p-4 pl-2  pr-2">
+            <input type="checkbox" name="agreeToterms" id="agreeToterms" className="bg-white" onClick={ ()=> setAgreeToTerms(!agreeToTerms) }required />
+            <label htmlFor="agreeToterms" className="text-[12px]">
+              I agree to the Terms of Service and Privacy Policy, including
+              secure handling of my health records.
+            </label>
+          </div>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-accent text-white w-full rounded-[10px] pl-3.25 pt-3.25 pr-3.25 pb-3.5"
+          >
+            {isLoading
+              ? "Completing registration..."
+              : "Complete registration →"}
+          </button>
+        </form>
+        <p className="text-[14px] pt-4">Already have an account? <NavLink to="/login"><span className="text-accent font-bold">Sign in</span></NavLink></p>
+      </div>
     </div>
   );
 }

@@ -1,12 +1,19 @@
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
 
-import AppRoutes from './app/routes/AppRoutes';
-
+import AppRoutes from "./app/routes/AppRoutes";
+import  NavBar  from "./components/Navbar";
+import FooterBar from "./components/FooterBar";
 function App() {
   return (
     <BrowserRouter>
-      <AppRoutes />
+      <NavBar />
+
+      <main className="main-content">
+           <AppRoutes />
+      </main>
+   
+      <FooterBar />
     </BrowserRouter>
   );
 }
