@@ -92,7 +92,7 @@ function RegisterPage() {
   };
 
   return (
-    <div className="grid grid-cols-10 h-full ">
+    <div className="grid grid-cols-10 h-full grow ">
       <div className="hero-panel col-span-4 bg-accent h-full"></div>
       <div className="form-panel col-span-6 pl-16 pr-16 pt-14 pb-14">
         <div className="header-text">
@@ -207,7 +207,7 @@ function RegisterPage() {
                 ? "Completing registration..."
                 : "Complete registration →"
             }
-            className=""
+            className="pb-3.5 pl-3.25 pr-3.25 pt-3.25"
             containerProps={{
               className :"w-full",
             }}
