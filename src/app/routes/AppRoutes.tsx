@@ -44,7 +44,7 @@ export default function AppRoutes() {
         element={<ReceptionistDashboardPage />}
       />
 
-        <Route
+      {/* <Route
           element={
             <ProtectedRoute
               userRole={currentUserRole}
@@ -52,39 +52,31 @@ export default function AppRoutes() {
             />
           }
         >
-          {/* Module 6 */}
-          <Route path="/dentist/dashboard" element={<DentistDashboardPage />} />
-        </Route>
+        </Route> */}
+      <Route path="/dentist/dashboard" element={<DentistDashboardPage />} />
+      {/* <Route
+        element={
+          <ProtectedRoute
+            userRole={currentUserRole}
+            allowedRoles={["patient", "admin"]}
+          />
+        }
+      ></Route> */}
+      <Route path="/patient/dashboard" element={<PatientDashbaord />} />
+      <Route path="/patient/book-appointment" element={<FindSlots/>}/>
+      <Route path="/patient/billing" element={<PatientBillingPage />} />
+      {/* <Route
+        element={
+          <ProtectedRoute
+            userRole={currentUserRole}
+            allowedRoles={["admin", "receptionist", "dentist"]}
+          />
+        }
+      >
 
-            <Route
-          element={
-            <ProtectedRoute
-              userRole={currentUserRole}
-              allowedRoles={["patient", "admin"]}
-            />
-          }
-        >
-          <Route path="/patient/dashboard" element={<PatientDashbaord/>} />
-          {/* Module 7: patient-facing invoices & payments */}
-          <Route path="/patient/billing" element={<PatientBillingPage />} />
-        </Route>
-
-        <Route
-          element={
-            <ProtectedRoute
-              userRole={currentUserRole}
-              allowedRoles={["admin", "receptionist", "dentist"]}
-            />
-          }
-        >
-          {/* Module 7: front-desk invoicing & instalment ledger */}
-          <Route path="/billing/dashboard" element={<BillingDashboardPage />} />
-          {/* Module 8 */}
-          <Route path="/inventory/dashboard" element={<InventoryDashboardPage />} />
-        </Route>
-
-
-      </Routes>
-    </>
+      </Route> */}
+      <Route path="/inventory/dashboard" element={<InventoryDashboardPage />} />
+      <Route path="/billing/dashboard" element={<BillingDashboardPage />} />
+    </Routes>
   );
 }
