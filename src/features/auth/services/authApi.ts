@@ -120,8 +120,18 @@ export function saveToken(token: string): void {
   localStorage.setItem("token", token);
 }
 
+export function saveRole(role: string): void {
+  if (!role || typeof role !== "string") {
+    throw new Error("A valid user role is required.");
+  }
+
+  localStorage.setItem("role", role.trim().toLowerCase());
+}
+
 export function clearToken(): void {
   localStorage.removeItem("token");
+  localStorage.removeItem("role");
+  localStorage.setItem("login", "false");
 }
 
 export function getToken(): string | null {
@@ -129,6 +139,12 @@ export function getToken(): string | null {
 }
 
 export function getRole(): string | null {
+  const storedRole = localStorage.getItem("role");
+
+  if (storedRole && storedRole.trim() !== "") {
+    return storedRole.trim().toLowerCase();
+  }
+
   const user = getUserFromToken();
 
   if (!user) {
