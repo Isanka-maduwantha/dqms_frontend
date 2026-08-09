@@ -11,6 +11,8 @@ import { ReceptionistDashboardPage } from "../../features/receptionist/Reception
 import ProtectedRoute, { type UserRole } from "../../components/ProtectedRoute";
 import { getRole } from "../../features/auth/services/authApi";
 import Unauthorized from "../../features/extra/Unauthorized";
+import FindSlots from "../../features/patient/FindSlots";
+import MainPage from "../../features/extra/MainPage";
 export default function AppRoutes() {
   const currentUserRole: UserRole = getRole();
 
@@ -23,7 +25,7 @@ export default function AppRoutes() {
         <Route path="/support" element="" />
         <Route path="/security" element="" />
         <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="/" />
+        <Route path="/" element={<MainPage/>} />
 
         <Route
           element={
@@ -59,6 +61,7 @@ export default function AppRoutes() {
           }
         >
           <Route path="/dentist/dashboard" element="" />
+          
         </Route>
 
             <Route
@@ -70,6 +73,8 @@ export default function AppRoutes() {
           }
         >
           <Route path="/patient/dashboard" element={<PatientDashbaord/>} />
+          <Route path="/patient/book-appointment" element={<FindSlots/>} />
+
         </Route>
 
         
