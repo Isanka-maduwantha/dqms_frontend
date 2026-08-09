@@ -30,79 +30,22 @@ import {
 } from "../../features/auth/services/authApi";
 
 import Unauthorized from "../../features/extra/Unauthorized";
-
-
+import FindSlots from "../../features/patient/FindSlots";
+import MainPage from "../../features/extra/MainPage";
 export default function AppRoutes() {
 
-  const currentUserRole: UserRole =
-    getRole();
+  const currentUserRole: UserRole = getRole();
 
   return (
-    <Routes>
-
-      {/* =====================================================
-          LOGIN
-      ===================================================== */}
-
-      <Route
-        path="/login"
-        element={<LoginPage />}
-      />
-
-
-      {/* =====================================================
-          REGISTER
-      ===================================================== */}
-
-      <Route
-        path="/register"
-        element={<RegisterPage />}
-      />
-
-
-      {/* =====================================================
-          UNAUTHORIZED
-      ===================================================== */}
-
-      <Route
-        path="/unauthorized"
-        element={<Unauthorized />}
-      />
-
-
-      {/* =====================================================
-          ROOT
-          
-          FIXES:
-          "Matched leaf route at location "/" does not have
-          an element or Component."
-      ===================================================== */}
-
-      <Route
-        path="/"
-        element={
-          <Navigate
-            to="/login"
-            replace
-          />
-        }
-      />
-
-
-      {/* =====================================================
-          RECEPTIONIST
-      ===================================================== */}
-
-      <Route
-        element={
-          <ProtectedRoute
-            userRole={currentUserRole}
-            allowedRoles={[
-              "receptionist",
-            ]}
-          />
-        }
-      >
+    <>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/help" element="" />
+        <Route path="/support" element="" />
+        <Route path="/security" element="" />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/" element={<MainPage/>} />
 
         <Route
           path="/receptionist/dashboard"
@@ -168,26 +111,23 @@ export default function AppRoutes() {
           element={
             <PatientDashbaord />
           }
-        />
-
-      </Route>
-
-
-      {/* =====================================================
-          UNKNOWN URL
+        >
+          <Route path="/dentist/dashboard" element="" />
           
-          Send unknown pages to login.
-      ===================================================== */}
+        </Route>
 
-      <Route
-        path="*"
-        element={
-          <Navigate
-            to="/login"
-            replace
-          />
-        }
-      />
+            <Route
+          element={
+            <ProtectedRoute
+              userRole={currentUserRole}
+              allowedRoles={["patient", "admin"]}
+            />
+          }
+        >
+          <Route path="/patient/dashboard" element={<PatientDashbaord/>} />
+          <Route path="/patient/book-appointment" element={<FindSlots/>} />
+
+        </Route>
 
     </Routes>
   );

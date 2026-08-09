@@ -2,18 +2,16 @@ import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 
 import AppRoutes from "./app/routes/AppRoutes";
-import  NavBar  from "./components/Navbar";
+import NavBar from "./components/Navbar";
 import FooterBar from "./components/FooterBar";
 function App() {
   return (
     <BrowserRouter>
-      <NavBar />
-
-      <main className="main-content">
-           <AppRoutes />
+      <main className="main-content min-h-screen relative flex flex-col justify-between">
+        <NavBar/>
+        <AppRoutes />
+        <FooterBar />
       </main>
-   
-      <FooterBar />
     </BrowserRouter>
   );
 }

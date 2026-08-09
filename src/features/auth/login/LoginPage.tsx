@@ -10,7 +10,7 @@ import {
 
 import type { LoginFormData } from "../types/auth";
 import FormInput from "../../../components/FormInput";
-import CommanButton from "../../../components/CommanButton";
+import CommonButton from "../../../components/CommanButton";
 
 export default function LoginPage() {
   const [formData, setFormData] =
@@ -112,79 +112,56 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="grid grid-cols-2 min-h-dvh font-inter">
-      <div className="body-area col-span-1 bg-accent"></div>
 
-      <div className="form-area col-span-1 pl-15 pr-15 pt-13 pb-13 content-center">
-        <div className="content">
-          <h2 className="text-2xl text-green-text-1 text-left">
-            Welcome Back
-          </h2>
-
-          <p className="text-[12px] text-left">
-            Enter your credentials to access your portal.
-          </p>
-        </div>
-
-        {error && (
-          <div className="mt-4 p-3 rounded-md bg-red-100 border border-red-300 text-red-700 text-sm text-left">
-            {error}
+      <div className="grid grid-cols-2 grow  font-inter">
+        <div className="body-area col-span-1 bg-accent"></div>
+        <div className="form-area col-span-1 pl-15 pr-15 pt-13 pb-13  content-center">
+          <div className="content">
+            <h2 className="text-2xl text-green-text-1 text-left">
+              Welcome Back
+            </h2>
+            <p className="text-[12px] text-left">
+              Enter your credentials to access your portal.
+            </p>
           </div>
-        )}
-
-        <form onSubmit={handleLogin}>
-          <FormInput
-            label="Email Address"
-            type="email"
-            value={formData.email}
-            onChange={(event) =>
-              setFormData((previous) => ({
-                ...previous,
-                email: event.target.value,
-              }))
-            }
-            required
-          />
-
-          <FormInput
-            label="Password"
-            type="password"
-            value={formData.password}
-            onChange={(event) =>
-              setFormData((previous) => ({
-                ...previous,
-                password: event.target.value,
-              }))
-            }
-            required
-          />
-
-          <div className="login-btn pt-3">
-            <CommanButton
-              label={
-                loading
-                  ? "Signing in..."
-                  : "Login"
+          <form onSubmit={handleLogin}>
+            <FormInput
+              label="Email Address"
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, email: e.target.value }))
               }
-              type="submit"
-              disabled={loading}
+              required
             />
+            <FormInput
+              label="Password"
+              type="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, password: e.target.value }))
+              }
+              required
+            />
+            <div className="login-btn pt-3">
+              <CommonButton
+                label={loading ? "Signing in..." : "Login"}
+                type="submit"
+                disabled={loading}
+                className="pb-3.5 pl-3.25 pr-3.25 pt-3.25"
+              />
+            </div>
+          </form>
+
+          {/* Register Link */}
+          <div className="text-[14px] pt-3.5">
+            <span>Don't have an account? </span>
+            <Link to="/register" className="text-accent font-bold">
+              Register here
+            </Link>
           </div>
-        </form>
-
-        <div className="text-[14px] pt-3.5">
-          <span>
-            Don't have an account?{" "}
-          </span>
-
-          <Link
-            to="/register"
-            className="text-accent font-bold"
-          >
-            Register here
-          </Link>
         </div>
       </div>
-    </div>
+
   );
 }

@@ -1,31 +1,30 @@
-import React, {
-  type ComponentProps,
-} from 'react';
-
-type ButtonProps =
-  ComponentProps<'button'> & {
-    label: string;
-    containerProps?: React.ComponentPropsWithoutRef<'div'>;
-  };
-
-function CommanButton({
+import React, { type ComponentPropsWithoutRef, type ReactNode } from "react";
+type ButtonProps = ComponentPropsWithoutRef<"button"> & {
+  label?: string;
+  children?: ReactNode;
+  containerProps?: ComponentPropsWithoutRef<"div">;
+};
+export default function CommonButton({
   label,
+  children,
   containerProps,
+  className = "",
   ...props
 }: ButtonProps) {
+  const { className: containerClassName = "", ...restContainerProps } =
+    containerProps || {};
+
   return (
     <div
-      className="btn-cont"
-      {...containerProps}
+      className={`btn-cont justify-center items-center flex w-full ${containerClassName}`.trim()}
+      {...restContainerProps}
     >
       <button
-        className="w-full rounded-[10px] pl-3.25 pt-3.25 pr-3.25 pb-3.5 bg-accent text-white"
+        className={`rounded-[10px] w-full bg-accent text-white ${className}`.trim()}
         {...props}
       >
-        {label}
+        {children ?? label}
       </button>
     </div>
   );
 }
-
-export default CommanButton;
