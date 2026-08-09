@@ -20,6 +20,10 @@ import ProtectedRoute, { type UserRole } from "../../components/ProtectedRoute";
 import { getRole } from "../../features/auth/services/authApi";
 
 import Unauthorized from "../../features/extra/Unauthorized";
+import DentistDashboardPage from "../../features/dentist/DentistDashboardPage";
+import BillingDashboardPage from "../../features/billing/BillingDashboardPage";
+import PatientBillingPage from "../../features/billing/PatientBillingPage";
+import InventoryDashboardPage from "../../features/inventory/InventoryDashboardPage";
 import FindSlots from "../../features/patient/FindSlots";
 import MainPage from "../../features/extra/MainPage";
 export default function AppRoutes() {
@@ -40,38 +44,47 @@ export default function AppRoutes() {
         element={<ReceptionistDashboardPage />}
       />
 
-      <Route
-        element={
-          <ProtectedRoute 
-          userRole={currentUserRole} 
-          allowedRoles={["admin"]} />
-        }
-      >
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-      </Route>
+        <Route
+          element={
+            <ProtectedRoute
+              userRole={currentUserRole}
+              allowedRoles={["admin", "dentist"]}
+            />
+          }
+        >
+          {/* Module 6 */}
+          <Route path="/dentist/dashboard" element={<DentistDashboardPage />} />
+        </Route>
 
-      <Route
-        element={
-          <ProtectedRoute
-            userRole={currentUserRole}
-            allowedRoles={["dentist", "admin"]}
-          />
-        }
-      >
-        <Route path="/dentist/dashboard" element="" />
-      </Route>
+            <Route
+          element={
+            <ProtectedRoute
+              userRole={currentUserRole}
+              allowedRoles={["patient", "admin"]}
+            />
+          }
+        >
+          <Route path="/patient/dashboard" element={<PatientDashbaord/>} />
+          {/* Module 7: patient-facing invoices & payments */}
+          <Route path="/patient/billing" element={<PatientBillingPage />} />
+        </Route>
 
-      <Route
-        element={
-          <ProtectedRoute
-            userRole={currentUserRole}
-            allowedRoles={["patient", "admin"]}
-          />
-        }
-      >
-        <Route path="/patient/dashboard" element={<PatientDashbaord />} />
-        <Route path="/patient/book-appointment" element={<FindSlots />} />
-      </Route>
-    </Routes>
+        <Route
+          element={
+            <ProtectedRoute
+              userRole={currentUserRole}
+              allowedRoles={["admin", "receptionist", "dentist"]}
+            />
+          }
+        >
+          {/* Module 7: front-desk invoicing & instalment ledger */}
+          <Route path="/billing/dashboard" element={<BillingDashboardPage />} />
+          {/* Module 8 */}
+          <Route path="/inventory/dashboard" element={<InventoryDashboardPage />} />
+        </Route>
+
+
+      </Routes>
+    </>
   );
 }

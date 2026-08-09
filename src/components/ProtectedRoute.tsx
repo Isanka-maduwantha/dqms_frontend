@@ -1,7 +1,6 @@
-import React, { type ReactElement } from 'react'
-import { Navigate, Outlet } from "react-router-dom";
-
-export type UserRole = "admin" | "dentist" | "receptionist" | "patient";
+import { type ReactElement } from 'react'
+import { Navigate,Outlet } from "react-router-dom"; 
+export type UserRole = "admin" | "dentist" | "receptionist" | "patient" | null;
 
 interface ProtectedRouteProps {
   userRole: UserRole | null;
