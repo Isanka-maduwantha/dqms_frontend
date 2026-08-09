@@ -1,40 +1,111 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { getRole, loginUser, saveToken } from "../services/authApi";
+import {
+  clearToken,
+  getRole,
+  loginUser,
+  saveToken,
+} from "../services/authApi";
+
 import type { LoginFormData } from "../types/auth";
 import FormInput from "../../../components/FormInput";
 import CommanButton from "../../../components/CommanButton";
 
 export default function LoginPage() {
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] =
+    useState<LoginFormData>({
+      email: "",
+      password: "",
+    });
+
+  const [loading, setLoading] =
+    useState<boolean>(false);
+
+  const [error, setError] =
+    useState<string | null>(null);
+
   const navigate = useNavigate();
 
-  const navigateToRole = () => {
-    const role = getRole();
-    navigate(`/${role}/dashboard`);
-  };
+  const handleLogin = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
     setLoading(true);
+    setError(null);
+
+    /*
+     * Remove the previous browser session before
+     * starting a new login.
+     */
+    clearToken();
 
     try {
       const response = await loginUser(formData);
-      const data = await response.json();
 
-      if (response.ok || data.success) {
-        saveToken(data.token);
-        navigateToRole();
-      } else {
-        alert(data.message || "Login failed");
+      const data: unknown = await response.json();
+
+      if (!response.ok) {
+        const message =
+          typeof data === "object" &&
+          data !== null &&
+          "message" in data &&
+          typeof data.message === "string"
+            ? data.message
+            : "Login failed.";
+
+        throw new Error(message);
       }
-    } catch (err) {
-      console.error("Login error:", err);
+
+      if (
+        typeof data !== "object" ||
+        data === null ||
+        !("token" in data) ||
+        typeof data.token !== "string"
+      ) {
+        throw new Error(
+          "Login succeeded, but the server did not return an authentication token.",
+        );
+      }
+
+      saveToken(data.token);
+
+      const role = getRole();
+
+      if (!role) {
+        clearToken();
+
+        throw new Error(
+          "Login succeeded, but the user role could not be determined.",
+        );
+      }
+
+      if (
+        role !== "patient" &&
+        role !== "receptionist" &&
+        role !== "admin" &&
+        role !== "dentist"
+      ) {
+        clearToken();
+
+        throw new Error(
+          `Unsupported user role: ${role}`,
+        );
+      }
+
+      navigate(`/${role}/dashboard`, {
+        replace: true,
+      });
+    } catch (loginError: unknown) {
+      const message =
+        loginError instanceof Error
+          ? loginError.message
+          : "Unable to login.";
+
+      setError(message);
+
+      console.error("Login error:", loginError);
     } finally {
       setLoading(false);
     }
@@ -43,45 +114,73 @@ export default function LoginPage() {
   return (
     <div className="grid grid-cols-2 min-h-dvh font-inter">
       <div className="body-area col-span-1 bg-accent"></div>
-      <div className="form-area col-span-1 pl-15 pr-15 pt-13 pb-13  content-center">
+
+      <div className="form-area col-span-1 pl-15 pr-15 pt-13 pb-13 content-center">
         <div className="content">
-          <h2 className="text-2xl text-green-text-1 text-left">Welcome Back</h2>
+          <h2 className="text-2xl text-green-text-1 text-left">
+            Welcome Back
+          </h2>
+
           <p className="text-[12px] text-left">
             Enter your credentials to access your portal.
           </p>
         </div>
+
+        {error && (
+          <div className="mt-4 p-3 rounded-md bg-red-100 border border-red-300 text-red-700 text-sm text-left">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleLogin}>
           <FormInput
             label="Email Address"
             type="email"
             value={formData.email}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, email: e.target.value }))
+            onChange={(event) =>
+              setFormData((previous) => ({
+                ...previous,
+                email: event.target.value,
+              }))
             }
             required
           />
+
           <FormInput
             label="Password"
             type="password"
             value={formData.password}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, password: e.target.value }))
+            onChange={(event) =>
+              setFormData((previous) => ({
+                ...previous,
+                password: event.target.value,
+              }))
             }
             required
           />
+
           <div className="login-btn pt-3">
             <CommanButton
-              label={loading ? "Signing in..." : "Login"}
+              label={
+                loading
+                  ? "Signing in..."
+                  : "Login"
+              }
               type="submit"
               disabled={loading}
             />
           </div>
         </form>
 
-        {/* Register Link */}
         <div className="text-[14px] pt-3.5">
-          <span>Don't have an account? </span>
-          <Link to="/register" className="text-accent font-bold">
+          <span>
+            Don't have an account?{" "}
+          </span>
+
+          <Link
+            to="/register"
+            className="text-accent font-bold"
+          >
             Register here
           </Link>
         </div>
