@@ -73,7 +73,7 @@ export default function AppRoutes() {
           }
         >
           <Route path="/patient/dashboard" element={<PatientDashbaord/>} />
-          <Route path="/patient/avaliable-slots" element={<FindSlots/>} />
+          <Route path="/patient/book-appointment" element={<FindSlots/>} />
 
         </Route>
 
