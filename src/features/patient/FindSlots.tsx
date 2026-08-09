@@ -8,7 +8,7 @@ type Appointment = {
   doctorId?: string;
   appointmentDate: string; // 'YYYY-MM-DD'
   startTime: string; // '09:15'
-  endTime?: string; // '09:30'
+  endTime: string; // '09:30'
   type: string;
   status: string;
 };
@@ -23,7 +23,19 @@ function FindSlots() {
     setTime(slot);
     setSelectedSlot(slot);
   };
+  function add15Minutes(timeStr:string) {
+    const [hours, minutes] = timeStr.split(":").map(Number);
 
+    // 2. Create a Date object set to today with those times
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+
+    // 3. Add 15 minutes
+    date.setMinutes(date.getMinutes() + 15);
+
+    // 4. Format back to HH:MM string
+    return date.toTimeString().slice(0, 5);
+  }
   const updateDate = (selectedDate: string) => {
     setDate(selectedDate);
   };
@@ -40,6 +52,7 @@ function FindSlots() {
     const body: Appointment = {
       appointmentDate: date,
       startTime: time,
+      endTime: add15Minutes(time),
       type: type,
       status: "BOOKED",
     };
@@ -53,11 +66,11 @@ function FindSlots() {
         },
         body: JSON.stringify(body),
       });
-      if(!response.ok) throw new Error(`HTTP error Status ${response.status}`)
-        
+      console.log(response);
+      if (!response.ok) throw new Error(`HTTP error Status ${response.status}`);
+
       const result = await response.json();
       console.log("Success", result);
-
     } catch (error) {
       console.log(error);
     }

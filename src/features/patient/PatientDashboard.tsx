@@ -68,7 +68,7 @@ function PatientDashboard() {
               Cancellations within 24 hours may incur a clinical service fee.
             </p>
           </div>
-          <NavLink to="/patient/avaliable-slots">
+          <NavLink to="/patient/book-appointment">
           <CommanButton
             label="📅 Book new appointment"
             className="text-[13px] pl-4.5 pt-2.5 pb-2.5 pr-4.5 font-inter "
