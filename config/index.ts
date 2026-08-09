@@ -14,4 +14,7 @@ export const CONFIG = {
   BOOK_APPOINTMENT:
     (import.meta.env.BOOK_APPOINTMENT as string) ||
     "http://localhost:3000/api/appointments/book-appointment",
+  CANCEL_APPOINTMENT:
+    import.meta.env.CANCEL_APPOINTMENT ||
+    "http://localhost:3000/api/patient/cancel-appointment",
 };
