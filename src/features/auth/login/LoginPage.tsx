@@ -5,6 +5,7 @@ import {
   clearToken,
   getRole,
   loginUser,
+  saveRole,
   saveToken,
 } from "../services/authApi";
 
@@ -68,10 +69,13 @@ export default function LoginPage() {
           "Login succeeded, but the server did not return an authentication token.",
         );
       }
-
       saveToken(data.token);
-
+      localStorage.setItem("login", "true");
       const role = getRole();
+
+      if (role) {
+        saveRole(role);
+      }
 
       if (!role) {
         clearToken();

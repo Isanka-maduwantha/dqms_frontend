@@ -46,6 +46,7 @@ function PatientDashboard() {
         console.log(appointments);
       } catch (err) {
         console.error("PatientDashboard fetch error:", err);
+        setData([]);
         setError(err instanceof Error ? err.message : "Something went wrong");
       } finally {
         setLoading(false);
@@ -55,25 +56,24 @@ function PatientDashboard() {
     getAppointments();
   }, []);
 
-  async function onCancel(id:string){
-    const token = localStorage.getItem('token');
-    try{
-      const response = await fetch(CONFIG.CANCEL_APPOINTMENT,{
-        method: 'POST',
+  async function onCancel(id: string) {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(CONFIG.CANCEL_APPOINTMENT, {
+        method: "POST",
         headers: {
-          "Content-Type": 'application/json',
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          _id:id,
-        })
-      }
-      )
-      if(!response.ok) throw new Error(`Server Error", ${response.status}`);
+          _id: id,
+        }),
+      });
+      if (!response.ok) throw new Error(`Server Error", ${response.status}`);
       const result = await response.json();
-      console.log(result.message)
-    } catch (err){
-      console.log("Error", err)
+      console.log(result.message);
+    } catch (err) {
+      console.log("Error", err);
     }
   }
   return (
@@ -112,7 +112,7 @@ function PatientDashboard() {
           <span className=" inline-block text-cyan-green border-b-2 pb-1 border-b-cyan-green text-[13px] font-bold">
             Upcoming
           </span>
-           <span className="  text-cyan-green pb-1  border-b-cyan-green text-[13px] font-bold">
+          <span className="  text-cyan-green pb-1  border-b-cyan-green text-[13px] font-bold">
             Past Visits
           </span>
         </div>
@@ -181,14 +181,15 @@ function PatientDashboard() {
                       <button
                         type="button"
                         onClick={() => onReschedule?.(item._id)}
-                        className="rounded-xl border border-gray-300 px-4 py-1.5 text-xs font-semibold text-gray-800 hover:bg-gray-50"
+                        className="rounded-xl border border-gray-300 px-4 py-1.5 text-xs font-semibold text-gray-800 hover:bg-gray-50 cursor-pointer"
                       >
                         Reschedule
                       </button>
                       <button
+                        disabled={item.status == "CANCELLED"}
                         type="button"
                         onClick={() => onCancel?.(item._id)}
-                        className="rounded-xl border border-gray-300 px-4 py-1.5 text-xs font-semibold text-gray-800 hover:bg-gray-50"
+                        className={`rounded-xl border border-gray-300 px-4 py-1.5 text-xs font-semibold text-gray-800${item.status == "CANCELLED" ? " border-white" : " cursor-pointer  hover:bg-border-grey "}`}
                       >
                         Cancel
                       </button>
