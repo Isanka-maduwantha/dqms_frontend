@@ -6,7 +6,7 @@ import { parseJsonResponse } from "../../../lib/utils/http";
 import { registerUser } from "../services/authApi";
 import type { RegisterFormData } from "../types/auth";
 import { NavLink } from "react-router-dom";
-import CommanButton from "../../../components/CommanButton";
+import CommonButton from "../../../components/CommanButton";
 
 function RegisterPage() {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -92,7 +92,7 @@ function RegisterPage() {
   };
 
   return (
-    <div className="grid grid-cols-10 h-full ">
+    <div className="grid grid-cols-10 h-full grow ">
       <div className="hero-panel col-span-4 bg-accent h-full"></div>
       <div className="form-panel col-span-6 pl-16 pr-16 pt-14 pb-14">
         <div className="header-text">
@@ -128,7 +128,7 @@ function RegisterPage() {
             value={formData.nic}
             onChange={handleChange}
             required
-            pattern="\d{12}"
+            pattern="^\d{12}[vV]?$"
           />
 
           <div className="email-psswd-container">
@@ -199,7 +199,7 @@ function RegisterPage() {
           </div>
           {/* Submit Button */}
 
-          <CommanButton
+          <CommonButton
             type="submit"
             disabled={isLoading}
             label={
@@ -207,10 +207,11 @@ function RegisterPage() {
                 ? "Completing registration..."
                 : "Complete registration →"
             }
+            className="pb-3.5 pl-3.25 pr-3.25 pt-3.25"
             containerProps={{
               className :"w-full",
             }}
-          ></CommanButton>
+          />
         </form>
         <p className="text-[14px] pt-4">
           Already have an account?{" "}
