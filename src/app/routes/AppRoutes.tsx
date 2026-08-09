@@ -11,8 +11,12 @@ import { ReceptionistDashboardPage } from "../../features/receptionist/Reception
 import ProtectedRoute, { type UserRole } from "../../components/ProtectedRoute";
 import { getRole } from "../../features/auth/services/authApi";
 import Unauthorized from "../../features/extra/Unauthorized";
+import DentistDashboardPage from "../../features/dentist/DentistDashboardPage";
+import BillingDashboardPage from "../../features/billing/BillingDashboardPage";
+import PatientBillingPage from "../../features/billing/PatientBillingPage";
+import InventoryDashboardPage from "../../features/inventory/InventoryDashboardPage";
 export default function AppRoutes() {
-  const currentUserRole: UserRole = getRole();
+  const currentUserRole = getRole() as UserRole;
 
   return (
     <>
@@ -58,7 +62,8 @@ export default function AppRoutes() {
             />
           }
         >
-          <Route path="/dentist/dashboard" element="" />
+          {/* Module 6 */}
+          <Route path="/dentist/dashboard" element={<DentistDashboardPage />} />
         </Route>
 
             <Route
@@ -70,9 +75,25 @@ export default function AppRoutes() {
           }
         >
           <Route path="/patient/dashboard" element={<PatientDashbaord/>} />
+          {/* Module 7: patient-facing invoices & payments */}
+          <Route path="/patient/billing" element={<PatientBillingPage />} />
         </Route>
 
-        
+        <Route
+          element={
+            <ProtectedRoute
+              userRole={currentUserRole}
+              allowedRoles={["admin", "receptionist", "dentist"]}
+            />
+          }
+        >
+          {/* Module 7: front-desk invoicing & instalment ledger */}
+          <Route path="/billing/dashboard" element={<BillingDashboardPage />} />
+          {/* Module 8 */}
+          <Route path="/inventory/dashboard" element={<InventoryDashboardPage />} />
+        </Route>
+
+
       </Routes>
     </>
   );

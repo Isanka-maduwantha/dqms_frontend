@@ -1,4 +1,4 @@
-import React, { type ReactElement } from 'react'
+import { type ReactElement } from 'react'
 import { Navigate,Outlet } from "react-router-dom"; 
 export type UserRole = "admin" | "dentist" | "receptionist" | "patient" | null;
 
