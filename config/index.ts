@@ -10,7 +10,7 @@ export const CONFIG = {
     "http://localhost:3000/api/patient/get-appointments",
   GET_AVAILABLE_SLOTS:
     (import.meta.env.GET_AVAILABLE_SLOTS as string) ||
-    "http://localhost:3000/api/appointments/availabe-slots",
+    "http://localhost:3000/api/appointments/available-slots",
   BOOK_APPOINTMENT:
     (import.meta.env.BOOK_APPOINTMENT as string) ||
     "http://localhost:3000/api/appointments/book-appointment",

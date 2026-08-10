@@ -188,6 +188,20 @@ const parseErrorMessage = (
   return fallback;
 };
 
+const readJsonResponse = async (response: Response): Promise<unknown> => {
+  const text = await response.text();
+
+  if (!text) return {};
+
+  try {
+    return JSON.parse(text) as unknown;
+  } catch {
+    throw new Error(
+      `The server returned a non-JSON response (${response.status}). Check that the backend API is running on ${API_BASE_URL}.`,
+    );
+  }
+};
+
 export const receptionistApi = {
 
   /**
@@ -352,6 +366,36 @@ export const receptionistApi = {
   },
 
   /**
+   * Search existing patient accounts for Scenario 3.
+   */
+  searchPatients: async (query: string): Promise<PatientRecord[]> => {
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery) return [];
+
+    const response = await fetch(
+      `${API_BASE_URL}/receptionist/patients/search?q=${encodeURIComponent(trimmedQuery)}`,
+      { method: 'GET', headers: getAuthHeaders() },
+    );
+
+    const json = await readJsonResponse(response);
+
+    if (!response.ok) {
+      throw new Error(parseErrorMessage(json, 'Failed to search patients.'));
+    }
+
+    if (
+      typeof json === 'object' &&
+      json !== null &&
+      'data' in json &&
+      Array.isArray(json.data)
+    ) {
+      return json.data as PatientRecord[];
+    }
+
+    return [];
+  },
+
+  /**
    * ==========================================================
    * SCENARIO 3
    * ==========================================================
@@ -365,7 +409,7 @@ export const receptionistApi = {
     ): Promise<AvailableSlotsResponse> => {
       const response =
         await fetch(
-          `${API_BASE_URL}/appointments/availale-slots?date=${encodeURIComponent(
+          `${API_BASE_URL}/appointments/available-slots?date=${encodeURIComponent(
             date,
           )}`,
           {
@@ -376,7 +420,7 @@ export const receptionistApi = {
         );
 
       const json: unknown =
-        await response.json();
+        await readJsonResponse(response);
 
       if (!response.ok) {
         throw new Error(
@@ -447,7 +491,7 @@ export const receptionistApi = {
         );
 
       const json: unknown =
-        await response.json();
+        await readJsonResponse(response);
 
       if (!response.ok) {
         throw new Error(

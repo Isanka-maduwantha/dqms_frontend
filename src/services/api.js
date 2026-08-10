@@ -37,7 +37,7 @@ export const receptionistService = {
 };
 
 export const appointmentService = {
-  getAvailableSlots: (date) => api.get('/appointments/availale-slots', { params: { date } }),
+  getAvailableSlots: (date) => api.get('/appointments/available-slots', { params: { date } }),
   bookAppointment: (bookingData) => api.post('/appointments/book-appointment', bookingData),
 };
 

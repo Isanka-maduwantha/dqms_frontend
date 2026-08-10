@@ -724,8 +724,13 @@ export const ReceptionistDashboardPage: React.FC = () => {
                               "Unnamed patient"}
                           </p>
                           <p className="text-[11px] text-gray-600">
-                            NIC: {reservationPatient.nic || "N/A"} · Gmail:{" "}
-                            {reservationPatient.email || "N/A"}
+                            Phone: {reservationPatient.phone || "N/A"}
+                          </p>
+                          <p className="text-[11px] text-gray-600">
+                            Gmail: {reservationPatient.email || "N/A"}
+                          </p>
+                          <p className="text-[11px] text-gray-600">
+                            NIC: {reservationPatient.nic || "N/A"}
                           </p>
                         </div>
                         <button
@@ -829,9 +834,6 @@ export const ReceptionistDashboardPage: React.FC = () => {
                     ? "Making Reservation..."
                     : "Make Reservation"}
                 </button>
-                <div className="p-3 bg-emerald-50/60 border border-emerald-200/50 rounded-xl text-xs text-emerald-900 font-medium text-center">
-                  Clinic Closed on Sunday
-                </div>
               </div>
             </div>
 
@@ -1214,7 +1216,6 @@ export const ReceptionistDashboardPage: React.FC = () => {
                             <button
                               type="button"
                               disabled={checkingInId === appointment._id}
-                              click={() => void handleCheckIn(appointment._id)}
                               onClick={() =>
                                 void handleCheckIn(appointment._id)
                               }
