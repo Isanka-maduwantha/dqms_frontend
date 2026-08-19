@@ -1,4 +1,4 @@
-import { CONFIG } from "@config";
+import { apiFetch } from "../../../lib/api/http";
 
 export interface LoginPayload {
   email: string;
@@ -13,39 +13,65 @@ export interface RegisterPayload {
   password: string;
 }
 
-export async function loginUser(payload: LoginPayload) {
-  const response = await fetch(
-    CONFIG?.LOGIN_API_URL || "http://localhost:3000/api/auth/login",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    },
-  );
+export interface AuthUser {
+  id: string;
+  name?: string;
+  email: string;
+  role: "patient" | "admin" | "dentist" | "receptionist";
+}
 
-  return response;
+interface AuthResponse {
+  message: string;
+  token: string;
+  user: AuthUser;
+}
+
+export async function loginUser(payload: LoginPayload) {
+  return apiFetch<AuthResponse>("/api/auth/login", {
+    method: "POST",
+    body: payload,
+    auth: false,
+  });
+}
+
+export async function adminLogin(payload: LoginPayload) {
+  return apiFetch<AuthResponse>("/api/admin/login", {
+    method: "POST",
+    body: payload,
+    auth: false,
+  });
 }
 
 export async function registerUser(payload: RegisterPayload) {
-  const response = await fetch(
-    CONFIG?.REGISTER_API_URL || "http://localhost:3000/api/auth/register",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    },
-  );
+  return apiFetch<{ message: string; user: AuthUser }>("/api/auth/register", {
+    method: "POST",
+    body: payload,
+    auth: false,
+  });
+}
 
-  return response;
+/** Persist the session after a successful login. */
+export function saveSession(token: string, user: AuthUser) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
+export function saveToken(token: string) {
+  localStorage.setItem("token", token);
+}
+
+export function clearSession() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 }
 
 function decodeBase64Url(base64Url: string) {
   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-  const padded = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, "=");
+  const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), "=");
   return atob(padded);
 }
 
-export function getUserFromToken() {
+export function getUserFromToken(): { id?: string; email?: string; role?: string } | null {
   const token = localStorage.getItem("token");
   if (!token) return null;
 
@@ -59,16 +85,27 @@ export function getUserFromToken() {
   }
 }
 
-export function saveToken(token: string) {
-  localStorage.setItem("token", token);
+/** Cached display info saved at login time (has `name`, unlike the raw JWT). */
+export function getStoredUser(): AuthUser | null {
+  const raw = localStorage.getItem("user");
+  if (!raw) return null;
+
+  try {
+    return JSON.parse(raw) as AuthUser;
+  } catch {
+    return null;
+  }
 }
 
 export function getRole() {
   const user = getUserFromToken();
   if (!user || typeof user !== "object") {
-    console.log("Token error");
     return null;
   }
 
   return (user as { role?: string }).role ?? null;
+}
+
+export function isLoggedIn(): boolean {
+  return Boolean(localStorage.getItem("token"));
 }
