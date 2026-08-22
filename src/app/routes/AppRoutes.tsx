@@ -1,37 +1,40 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { Route, Routes } from "react-router-dom";
 
-// import Navbar from "../../components/Navbar";
-
 import LoginPage from "../../features/auth/login/LoginPage";
-
-// @ts-expect-error
-import AdminDashboard from "../../features/admin/AdminDashboard";
-
-import PatientDashbaord from "../../features/patient/PatientDashboard";
-
+import AdminLoginPage from "../../features/auth/login/AdminLoginPage";
 import RegisterPage from "../../features/auth/register/RegisterPage";
-
-import { ReceptionistDashboardPage } from "../../features/receptionist/pages/ReceptionistDashboardPage";
-
-import ProtectedRoute, { type UserRole } from "../../components/ProtectedRoute";
-
-import { getRole } from "../../features/auth/services/authApi";
-
+import ProtectedRoute from "../../components/ProtectedRoute";
+import { useAuth } from "../../features/auth/AuthContext";
 import Unauthorized from "../../features/extra/Unauthorized";
-import DentistDashboardPage from "../../features/dentist/DentistDashboardPage";
-import BillingDashboardPage from "../../features/billing/BillingDashboardPage";
-import PatientBillingPage from "../../features/billing/PatientBillingPage";
-import InventoryDashboardPage from "../../features/inventory/InventoryDashboardPage";
-import FindSlots from "../../features/patient/FindSlots";
 import MainPage from "../../features/extra/MainPage";
+
+import PatientDashboard from "../../features/patient/PatientDashboard";
+import FindSlots from "../../features/patient/FindSlots";
+
+import ReceptionistLayout from "../../features/receptionist/ReceptionistLayout";
+import QueuePage from "../../features/receptionist/pages/QueuePage";
+import PatientsPage from "../../features/receptionist/pages/PatientsPage";
+import BookAppointmentPage from "../../features/receptionist/pages/BookAppointmentPage";
+import BillingPage from "../../features/receptionist/pages/BillingPage";
+
+import DentistLayout from "../../features/dentist/DentistLayout";
+import DentistQueuePage from "../../features/dentist/pages/DentistQueuePage";
+import DentistPatientSearchPage from "../../features/dentist/pages/DentistPatientSearchPage";
+import DentistPatientDetailPage from "../../features/dentist/pages/DentistPatientDetailPage";
+import DentistInventoryPage from "../../features/dentist/pages/DentistInventoryPage";
+
+import AdminLayout from "../../features/admin/AdminLayout";
+import AdminDashboardPage from "../../features/admin/pages/AdminDashboardPage";
+import AdminInventoryPage from "../../features/admin/pages/AdminInventoryPage";
+import AdminReportsPage from "../../features/admin/pages/AdminReportsPage";
+
 export default function AppRoutes() {
-  const currentUserRole: UserRole | null = getRole() as UserRole | null;
+  const { role } = useAuth();
 
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/help" element="" />
       <Route path="/support" element="" />
@@ -39,44 +42,36 @@ export default function AppRoutes() {
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/" element={<MainPage />} />
 
-      <Route
-        path="/receptionist/dashboard"
-        element={<ReceptionistDashboardPage />}
-      />
+      <Route element={<ProtectedRoute userRole={role} allowedRoles={["patient"]} />}>
+        <Route path="/patient/dashboard" element={<PatientDashboard />} />
+        <Route path="/patient/book-appointment" element={<FindSlots />} />
+      </Route>
 
-      {/* <Route
-          element={
-            <ProtectedRoute
-              userRole={currentUserRole}
-              allowedRoles={["admin", "dentist"]}
-            />
-          }
-        >
-        </Route> */}
-      <Route path="/dentist/dashboard" element={<DentistDashboardPage />} />
-      {/* <Route
-        element={
-          <ProtectedRoute
-            userRole={currentUserRole}
-            allowedRoles={["patient", "admin"]}
-          />
-        }
-      ></Route> */}
-      <Route path="/patient/dashboard" element={<PatientDashbaord />} />
-      <Route path="/patient/book-appointment" element={<FindSlots/>}/>
-      <Route path="/patient/billing" element={<PatientBillingPage />} />
-      {/* <Route
-        element={
-          <ProtectedRoute
-            userRole={currentUserRole}
-            allowedRoles={["admin", "receptionist", "dentist"]}
-          />
-        }
-      >
+      <Route element={<ProtectedRoute userRole={role} allowedRoles={["receptionist", "admin"]} />}>
+        <Route path="/receptionist" element={<ReceptionistLayout />}>
+          <Route path="dashboard" element={<QueuePage />} />
+          <Route path="book" element={<BookAppointmentPage />} />
+          <Route path="patients" element={<PatientsPage />} />
+          <Route path="billing" element={<BillingPage />} />
+        </Route>
+      </Route>
 
-      </Route> */}
-      <Route path="/inventory/dashboard" element={<InventoryDashboardPage />} />
-      <Route path="/billing/dashboard" element={<BillingDashboardPage />} />
+      <Route element={<ProtectedRoute userRole={role} allowedRoles={["dentist", "admin"]} />}>
+        <Route path="/dentist" element={<DentistLayout />}>
+          <Route path="dashboard" element={<DentistQueuePage />} />
+          <Route path="patients" element={<DentistPatientSearchPage />} />
+          <Route path="patients/:patientId" element={<DentistPatientDetailPage />} />
+          <Route path="inventory" element={<DentistInventoryPage />} />
+        </Route>
+      </Route>
+
+      <Route element={<ProtectedRoute userRole={role} allowedRoles={["admin"]} />}>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<AdminDashboardPage />} />
+          <Route path="inventory" element={<AdminInventoryPage />} />
+          <Route path="reports" element={<AdminReportsPage />} />
+        </Route>
+      </Route>
     </Routes>
   );
 }

@@ -1,92 +1,79 @@
-import { apiFetch } from "../../../lib/utils/apiFetch";
+import { apiFetch } from "../../../lib/api/http";
 import type {
   CalledAppointment,
   DentalChart,
-  Medication,
-  MaterialUsedInput,
-  PatientHistory,
-  ToothCondition,
-  TreatmentRecord,
-  TreatmentStatus,
+  DentistPatient,
+  InventoryItem,
+  TreatmentType,
 } from "../types/dentist";
 
-// F-6.1: Call Next Patient Trigger
-export async function callNextPatient(appointmentId?: string) {
+const BASE = "/api/dentist";
+
+export function callNextPatient(appointmentId?: string) {
   return apiFetch<{ success: boolean; message: string; appointment: CalledAppointment }>(
-    "/dentist/call-next",
+    `${BASE}/call-next`,
     { method: "POST", body: appointmentId ? { appointmentId } : {} },
   );
 }
 
-// F-6.2: Interactive 32-Teeth Chart
-export async function getDentalChart(patientId: string) {
-  return apiFetch<{ success: boolean; chart: DentalChart }>(`/dentist/chart/${patientId}`);
-}
-
-export async function updateTooth(
-  patientId: string,
-  toothNumber: number,
-  payload: { condition?: ToothCondition; notes?: string },
-) {
-  return apiFetch<{ success: boolean; message: string; chart: DentalChart }>(
-    `/dentist/chart/${patientId}/tooth/${toothNumber}`,
-    { method: "PUT", body: payload },
+export function searchDentistPatients(query: string) {
+  return apiFetch<{ success: boolean; data: DentistPatient[] }>(
+    `${BASE}/patients/search?q=${encodeURIComponent(query)}`,
   );
 }
 
-// F-6.3: Clinical Diagnosis & Note Logger
-export interface CreateTreatmentRecordPayload {
-  patientId: string;
-  appointmentId?: string;
-  diagnosis?: string;
-  clinicalNotes?: string;
-  procedures?: string[];
-  medications?: Medication[];
-  followUpDate?: string;
+export function getTreatmentTypes(search?: string) {
+  const qs = search ? `?search=${encodeURIComponent(search)}` : "";
+  return apiFetch<{ success: boolean; count: number; treatments: TreatmentType[] }>(
+    `${BASE}/treatment-types${qs}`,
+  );
 }
 
-export async function createTreatmentRecord(payload: CreateTreatmentRecordPayload) {
-  return apiFetch<{ success: boolean; record: TreatmentRecord }>("/dentist/treatment-records", {
-    method: "POST",
-    body: payload,
-  });
+export function getPatientHistory(patientId: string) {
+  return apiFetch<{
+    success: boolean;
+    patient: DentistPatient;
+    dentalChart: DentalChart | null;
+    treatmentRecords: DentalChart["treatmentRecords"];
+  }>(`${BASE}/patients/${patientId}/history`);
 }
 
-export interface UpdateTreatmentRecordPayload {
-  diagnosis?: string;
-  clinicalNotes?: string;
-  procedures?: string[];
-  medications?: Medication[];
-  materialsUsed?: MaterialUsedInput[];
-  followUpDate?: string;
-  status?: TreatmentStatus;
-}
-
-export interface LowStockWarning {
-  _id: string;
+export interface MaterialInput {
   itemName: string;
-  quantity: number;
-  lowStockThreshold: number;
+  quantityUsed: number;
 }
 
-export async function updateTreatmentRecord(id: string, payload: UpdateTreatmentRecordPayload) {
-  return apiFetch<{ success: boolean; record: TreatmentRecord; lowStockWarnings: LowStockWarning[] }>(
-    `/dentist/treatment-records/${id}`,
-    { method: "PUT", body: payload },
-  );
+export interface CreateTreatmentPayload {
+  diagnosis?: string;
+  treatment: string;
+  treatmentType?: string;
+  notes?: string;
+  treatmentDate?: string;
+  followUpDate?: string | null;
+  materialsUsed: MaterialInput[];
 }
 
-// F-6.4: Patient Medical History Timeline
-export async function getPatientHistory(patientId: string) {
-  return apiFetch<{ success: boolean } & PatientHistory>(`/dentist/history/${patientId}`);
+export function createTreatmentRecord(patientId: string, payload: CreateTreatmentPayload) {
+  return apiFetch<{
+    success: boolean;
+    message: string;
+    treatmentRecord: DentalChart["treatmentRecords"][number];
+    inventory: { deducted: boolean; materialsUsed: unknown[] };
+  }>(`${BASE}/patients/${patientId}/treatments`, { method: "POST", body: payload });
 }
 
-// F-6.5: X-Ray / Document Attachment Uploader
-export async function uploadAttachment(recordId: string, file: File) {
-  const form = new FormData();
-  form.append("file", file);
-  return apiFetch<{ success: boolean; attachment: { fileName: string; fileUrl: string }; record: TreatmentRecord }>(
-    `/dentist/treatment-records/${recordId}/attachments`,
-    { method: "POST", body: form, isForm: true },
+export function endTreatment(appointmentId: string) {
+  return apiFetch<{
+    success: boolean;
+    message: string;
+    appointment: Record<string, unknown>;
+    billing: { invoiceCreated: boolean; reason: string; invoice: Record<string, unknown> | null } | null;
+  }>(`${BASE}/appointments/${appointmentId}/end-treatment`, { method: "POST" });
+}
+
+export function getInventoryItems(search?: string) {
+  const qs = search ? `?search=${encodeURIComponent(search)}` : "";
+  return apiFetch<{ success: boolean; count: number; items: InventoryItem[] }>(
+    `/api/inventory/items${qs}`,
   );
 }

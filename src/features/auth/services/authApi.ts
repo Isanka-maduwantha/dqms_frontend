@@ -1,4 +1,4 @@
-import { CONFIG } from "@config";
+import { apiFetch } from "../../../lib/api/http";
 
 export interface LoginPayload {
   email: string;
@@ -13,68 +13,65 @@ export interface RegisterPayload {
   password: string;
 }
 
-interface JwtPayload {
-  id?: string;
-  email?: string;
-  role?: string;
-  iat?: number;
-  exp?: number;
-  [key: string]: unknown;
+export interface AuthUser {
+  id: string;
+  name?: string;
+  email: string;
+  role: "patient" | "admin" | "dentist" | "receptionist";
+}
+
+interface AuthResponse {
+  message: string;
+  token: string;
+  user: AuthUser;
 }
 
 export async function loginUser(payload: LoginPayload) {
-  const response = await fetch(
-    CONFIG?.LOGIN_API_URL ||
-      "http://localhost:3000/api/auth/login",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    },
-  );
-
-  return response;
+  return apiFetch<AuthResponse>("/api/auth/login", {
+    method: "POST",
+    body: payload,
+    auth: false,
+  });
 }
 
-export async function registerUser(
-  payload: RegisterPayload,
-) {
-  const response = await fetch(
-    CONFIG?.REGISTER_API_URL ||
-      "http://localhost:3000/api/auth/register",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    },
-  );
-
-  return response;
+export async function adminLogin(payload: LoginPayload) {
+  return apiFetch<AuthResponse>("/api/admin/login", {
+    method: "POST",
+    body: payload,
+    auth: false,
+  });
 }
 
-function decodeBase64Url(
-  base64Url: string,
-): string {
-  const base64 = base64Url
-    .replace(/-/g, "+")
-    .replace(/_/g, "/");
+export async function registerUser(payload: RegisterPayload) {
+  return apiFetch<{ message: string; user: AuthUser }>("/api/auth/register", {
+    method: "POST",
+    body: payload,
+    auth: false,
+  });
+}
 
-  const padding =
-    (4 - (base64.length % 4)) % 4;
+/** Persist the session after a successful login. */
+export function saveSession(token: string, user: AuthUser) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
+}
 
-  const padded = base64.padEnd(
-    base64.length + padding,
-    "=",
-  );
+export function saveToken(token: string) {
+  localStorage.setItem("token", token);
+}
 
+export function clearSession() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+}
+
+function decodeBase64Url(base64Url: string) {
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), "=");
   return atob(padded);
 }
 
-export function getUserFromToken(): JwtPayload | null {
+export function getUserFromToken(): { id?: string; email?: string; role?: string } | null {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -110,14 +107,16 @@ export function getUserFromToken(): JwtPayload | null {
   }
 }
 
-export function saveToken(token: string): void {
-  if (!token || typeof token !== "string") {
-    throw new Error(
-      "A valid authentication token is required.",
-    );
-  }
+/** Cached display info saved at login time (has `name`, unlike the raw JWT). */
+export function getStoredUser(): AuthUser | null {
+  const raw = localStorage.getItem("user");
+  if (!raw) return null;
 
-  localStorage.setItem("token", token);
+  try {
+    return JSON.parse(raw) as AuthUser;
+  } catch {
+    return null;
+  }
 }
 
 export function saveRole(role: string): void {
@@ -146,17 +145,13 @@ export function getRole(): string | null {
   }
 
   const user = getUserFromToken();
-
-  if (!user) {
+  if (!user || typeof user !== "object") {
     return null;
   }
 
-  if (
-    typeof user.role !== "string" ||
-    user.role.trim() === ""
-  ) {
-    return null;
-  }
+  return (user as { role?: string }).role ?? null;
+}
 
-  return user.role.trim().toLowerCase();
+export function isLoggedIn(): boolean {
+  return Boolean(localStorage.getItem("token"));
 }

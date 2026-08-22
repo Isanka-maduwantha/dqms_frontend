@@ -1,4 +1,4 @@
-import React, { type ComponentPropsWithoutRef, type ReactNode } from "react";
+import { type ComponentPropsWithoutRef, type ReactNode } from "react";
 type ButtonProps = ComponentPropsWithoutRef<"button"> & {
   label?: string;
   children?: ReactNode;

@@ -1,4 +1,4 @@
-import React, { useState, type ComponentPropsWithoutRef } from "react";
+import { type ComponentPropsWithoutRef } from "react";
 
 type buttonProps = ComponentPropsWithoutRef<"button"> & {
   label: string;
