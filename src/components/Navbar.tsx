@@ -1,6 +1,19 @@
 import { NavLink } from "react-router-dom";
 import logo from "../assets/span.brand-mark.png";
+import { clearToken } from "../features/auth/services/authApi";
+import { useState } from "react";
+
 function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() =>
+    Boolean(localStorage.getItem("token")),
+  );
+
+  const handleLogout = () => {
+    clearToken();
+    localStorage.setItem("login", "false");
+    setIsLoggedIn(false);
+  };
+
   return (
     <nav className="flex justify-between h-20 items-center pl-10 pr-10 font-inter bg-white border-b border-border-grey">
       <div className="brand flex items-center">
@@ -30,16 +43,36 @@ function Navbar() {
         </li>
       </ul>
       <div className="top-actions flex gap-2.5 font-inter items-center text-[12px] h-full">
-        <NavLink to="/login" className="text-light">
-          <button className=" bg-white border-border-grey border rounded-full p-1 pl-4 pr-4  text-black  ">
-            Login
-          </button>
-        </NavLink>
-        <NavLink to="/register" className="text-light">
-          <button className=" bg-accent rounded-2xl pl-4 pr-4 p-1 text-white">
-            Register
-          </button>
-        </NavLink>
+        {isLoggedIn ? (
+          <>
+            <NavLink to="/login" className="text-light">
+              <button className=" bg-white border-border-grey border rounded-full p-1 pl-4 pr-4  text-black  ">
+                Profile
+              </button>
+            </NavLink>
+            <NavLink to="/login" className="text-light">
+              <button
+                className=" bg-accent rounded-2xl pl-4 pr-4 p-1 text-white"
+                onClick={handleLogout}
+              >
+                logout
+              </button>
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login" className="text-light">
+              <button className=" bg-white border-border-grey border rounded-full p-1 pl-4 pr-4  text-black  ">
+                Login
+              </button>
+            </NavLink>
+            <NavLink to="/register" className="text-light">
+              <button className=" bg-accent rounded-2xl pl-4 pr-4 p-1 text-white">
+                Register
+              </button>
+            </NavLink>
+          </>
+        )}
       </div>
     </nav>
   );

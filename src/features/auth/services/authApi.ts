@@ -73,14 +73,36 @@ function decodeBase64Url(base64Url: string) {
 
 export function getUserFromToken(): { id?: string; email?: string; role?: string } | null {
   const token = localStorage.getItem("token");
-  if (!token) return null;
+
+  if (!token) {
+    return null;
+  }
 
   try {
-    const payload = token.split(".")[1];
-    const decoded = decodeBase64Url(payload);
-    return JSON.parse(decoded);
+    const tokenParts = token.split(".");
+
+    if (tokenParts.length !== 3) {
+      return null;
+    }
+
+    const decoded = decodeBase64Url(tokenParts[1]);
+
+    const payload: unknown = JSON.parse(decoded);
+
+    if (
+      typeof payload !== "object" ||
+      payload === null
+    ) {
+      return null;
+    }
+
+    return payload as JwtPayload;
   } catch (error) {
-    console.error("Failed to parse token", error);
+    console.error(
+      "Failed to parse authentication token:",
+      error,
+    );
+
     return null;
   }
 }
@@ -97,7 +119,31 @@ export function getStoredUser(): AuthUser | null {
   }
 }
 
-export function getRole() {
+export function saveRole(role: string): void {
+  if (!role || typeof role !== "string") {
+    throw new Error("A valid user role is required.");
+  }
+
+  localStorage.setItem("role", role.trim().toLowerCase());
+}
+
+export function clearToken(): void {
+  localStorage.removeItem("token");
+  localStorage.removeItem("role");
+  localStorage.setItem("login", "false");
+}
+
+export function getToken(): string | null {
+  return localStorage.getItem("token");
+}
+
+export function getRole(): string | null {
+  const storedRole = localStorage.getItem("role");
+
+  if (storedRole && storedRole.trim() !== "") {
+    return storedRole.trim().toLowerCase();
+  }
+
   const user = getUserFromToken();
   if (!user || typeof user !== "object") {
     return null;
