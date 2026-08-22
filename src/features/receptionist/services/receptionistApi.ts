@@ -1,151 +1,166 @@
-import { apiFetch } from "../../../lib/api/http";
-import type {
-  AvailableSlot,
-  PatientBilling,
-  PatientSummary,
-  ReceptionistAppointment,
-  VisitPurpose,
-} from "../types/receptionist";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  'http://localhost:3000/api';
 
-const BASE = "/api/receptionist";
+const getAuthHeaders = (): HeadersInit => {
+  const token =
+    localStorage.getItem('token');
 
-// ---------------------------------------------------------------------------
-// Patients
-// ---------------------------------------------------------------------------
+  return {
+    Authorization:
+      `Bearer ${token}`,
+    'Content-Type':
+      'application/json',
+  };
+};
 
-export function getAllPatients() {
-  return apiFetch<{ success: boolean; data: PatientSummary[] }>(`${BASE}/patients`);
-}
+export interface TokenItem {
+  id: string;
 
-export function searchPatients(query: string) {
-  return apiFetch<{ success: boolean; data: PatientSummary[] }>(
-    `${BASE}/patients/search?q=${encodeURIComponent(query)}`,
-  );
-}
+  tokenNumber: number;
 
-export interface AddPatientPayload {
-  name: string;
-  nic: string;
+  patientName: string;
+
   phone?: string;
+
+  status:
+    | 'Waiting'
+    | 'In Consultation'
+    | 'Completed'
+    | 'Cancelled'
+    | 'BOOKED'
+    | 'ARRIVED';
+
+  isEmergency: boolean;
+
+  appointmentType:
+    | 'Pre-booked'
+    | 'Walk-in';
+
+  createdAt: string;
+
+  appointmentId?: string;
+}
+
+/**
+ * ==========================================================
+ * SCENARIO 4
+ * ==========================================================
+ *
+ * Patient account information required by the receptionist.
+ *
+ * NOTE:
+ * Age, gender and address are intentionally NOT included.
+ */
+export interface PatientData {
+  patientName: string;
+
+  phone: string;
+
+  nic: string;
+
   email: string;
+
   password: string;
 }
 
-export function addPatient(payload: AddPatientPayload) {
-  return apiFetch<{ success: boolean; message: string; newPatient: PatientSummary }>(
-    `${BASE}/patient`,
-    { method: "POST", body: payload },
-  );
-}
+export interface PatientRecord {
+  _id?: string;
 
-export function updatePatient(patientId: string, payload: Partial<AddPatientPayload>) {
-  return apiFetch<{ success: boolean; updated: PatientSummary }>(
-    `${BASE}/patient/${patientId}`,
-    { method: "PATCH", body: payload },
-  );
-}
+  id?: string;
 
-export function deletePatient(patientId: string) {
-  return apiFetch<{ success: boolean; message: string }>(`${BASE}/patient/${patientId}`, {
-    method: "DELETE",
-  });
-}
+  name?: string;
 
-// ---------------------------------------------------------------------------
-// Appointments & queue
-// ---------------------------------------------------------------------------
+  patientName?: string;
 
-export function getTodayAppointments(date?: string) {
-  const qs = date ? `?date=${date}` : "";
-  return apiFetch<{ success: boolean; data: ReceptionistAppointment[] }>(
-    `${BASE}/today${qs}`,
-  );
-}
+  phone?: string;
 
-export function getQueue(date?: string) {
-  const qs = date ? `?date=${date}` : "";
-  return apiFetch<{ success: boolean; data: ReceptionistAppointment[] }>(
-    `${BASE}/queue${qs}`,
-  );
-}
+  email?: string;
 
-export function checkInAppointment(appointmentId: string) {
-  return apiFetch<{
-    success: boolean;
-    message: string;
-    tokenNumber: number;
-    appointment: ReceptionistAppointment;
-  }>(`${BASE}/check-in/${appointmentId}`, { method: "PATCH" });
-}
+  nic?: string;
 
-export interface BookForPatientPayload {
-  patientId: string;
-  appointmentDate: string;
-  startTime: string;
-  type?: string;
-  visitPurpose?: VisitPurpose;
-}
+  age?: string | number;
 
-export function bookAppointmentForPatient(payload: BookForPatientPayload) {
-  return apiFetch<{ success: boolean; message: string; appointment: ReceptionistAppointment }>(
-    `${BASE}/book-appointment`,
-    { method: "POST", body: payload },
-  );
-}
-
-export interface WalkInPayload {
-  name: string;
-  phone: string;
-  nic: string;
-  appointmentDate?: string;
-  startTime?: string;
-  endTime?: string;
-  age?: number;
   gender?: string;
+
+  address?: string;
+
+  role?: string;
+}
+
+export interface AppointmentPatient {
+  _id?: string;
+
+  name?: string;
+
+  phone?: string;
+
+  email?: string;
+
+  nic?: string;
+
+  age?: string | number;
+
+  gender?: string;
+
   address?: string;
 }
 
-export function generateWalkInToken(payload: WalkInPayload) {
-  return apiFetch<{
-    success: boolean;
-    message: string;
-    token: string;
-    walkInAppointment: ReceptionistAppointment;
-    patient: PatientSummary;
-  }>(`${BASE}/walk-in`, { method: "POST", body: payload });
+export interface AppointmentItem {
+  _id: string;
+
+  patientId:
+    | AppointmentPatient
+    | string;
+
+  appointmentDate: string;
+
+  startTime: string;
+
+  endTime: string;
+
+  status:
+    | 'BOOKED'
+    | 'ARRIVED'
+    | 'CANCELLED'
+    | 'COMPLETED'
+    | string;
+
+  tokenNumber?:
+    | number
+    | null;
+
+  createdAt?: string;
+
+  updatedAt?: string;
 }
 
-export function getAvailableSlots(date: string) {
-  return apiFetch<{ success: boolean; date: string; slots: AvailableSlot[]; message?: string }>(
-    `/api/appointments/available-slots?date=${date}`,
-  );
+export interface AvailableSlot {
+  time: string;
+
+  available: boolean;
+
+  reason: string;
 }
 
-// ---------------------------------------------------------------------------
-// Billing
-// ---------------------------------------------------------------------------
+export interface AvailableSlotsResponse {
+  date: string;
 
-export function getPatientBilling(patientId: string) {
-  return apiFetch<PatientBilling & { success: boolean }>(
-    `${BASE}/patients/${patientId}/billing`,
-  );
+  slots: AvailableSlot[];
+
+  message?: string;
 }
 
-export interface RecordPaymentPayload {
-  amount: number;
-  method: "CASH" | "CARD" | "BANK_TRANSFER" | "ONLINE" | "OTHER";
-  notes?: string;
-}
+interface AppointmentResponse {
+  success?: boolean;
 
-export function recordPayment(
-  patientId: string,
-  invoiceId: string,
-  payload: RecordPaymentPayload,
-) {
-  return apiFetch<{ success: boolean; message: string }>(
-    `${BASE}/patients/${patientId}/invoices/${invoiceId}/payments`,
-    { method: "POST", body: payload },
-  );
+  message?: string;
+
+  appointment?:
+    | AppointmentItem
+    | null;
+
+  tokenNumber?: number;
 }
 
 const parseErrorMessage = (

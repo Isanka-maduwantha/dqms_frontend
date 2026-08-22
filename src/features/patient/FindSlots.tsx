@@ -1,77 +1,80 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import DateSelector from "./DateSelector";
 import SlotButton from "../../components/SlotButton";
 import CommonButton from "../../components/CommanButton";
-import FormSelect from "../../components/FormSelect";
-import Alert from "../../components/ui/Alert";
-import { ApiError } from "../../lib/api/http";
-import { bookAppointment } from "./services/patientApi";
-import type { VisitPurpose } from "./types/patient";
+import { CONFIG } from "@config";
 
-function add15Minutes(timeStr: string) {
-  const [hours, minutes] = timeStr.split(":").map(Number);
-  const date = new Date();
-  date.setHours(hours, minutes, 0, 0);
-  date.setMinutes(date.getMinutes() + 15);
-  return date.toTimeString().slice(0, 5);
-}
-
-function findEvening(time: string) {
-  const parts = time.split(":");
-  return parseInt(parts[0]) + parseInt(parts[1]);
-}
-
-const VISIT_PURPOSES: { value: VisitPurpose; label: string; hint: string }[] = [
-  { value: "NEW_TREATMENT", label: "New treatment", hint: "A billable procedure will be performed." },
-  { value: "FOLLOW_UP", label: "Follow-up", hint: "Reviewing a previous treatment. No new charge." },
-  { value: "CHECKUP", label: "Checkup", hint: "Routine examination. No new charge." },
-];
+type Appointment = {
+  doctorId?: string;
+  appointmentDate: string; // 'YYYY-MM-DD'
+  startTime: string; // '09:15'
+  endTime: string; // '09:30'
+  type: string;
+  status: string;
+};
 
 function FindSlots() {
-  const navigate = useNavigate();
   const [date, setDate] = useState<string>("");
   const [slotArray, setSlotArray] = useState<string[]>([]);
   const [time, setTime] = useState<string>("");
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [type, setType] = useState("CHECKUP");
-  const [visitPurpose, setVisitPurpose] = useState<VisitPurpose>("NEW_TREATMENT");
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   const handleClick = (slot: string) => {
     setTime(slot);
     setSelectedSlot(slot);
   };
+  function add15Minutes(timeStr:string) {
+    const [hours, minutes] = timeStr.split(":").map(Number);
+
+    // 2. Create a Date object set to today with those times
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+
+    // 3. Add 15 minutes
+    date.setMinutes(date.getMinutes() + 15);
+
+    // 4. Format back to HH:MM string
+    return date.toTimeString().slice(0, 5);
+  }
   const updateDate = (selectedDate: string) => {
     setDate(selectedDate);
-    setTime("");
-    setSelectedSlot(null);
   };
   const setSlots = React.useCallback((slots: Array<string>) => {
     setSlotArray(slots);
+    // console.log(slots);
   }, []);
-
-  async function handleBookAppointment() {
-    if (!date || !time) return;
-    setSaving(true);
-    setError(null);
+  function findEvening(time: string) {
+    const parts = time.split(":");
+    return parseInt(parts[0]) + parseInt(parts[1]);
+  }
+  async function bookAppointment() {
+    // console.log("Appointmnt is Booked");
+    const body: Appointment = {
+      appointmentDate: date,
+      startTime: time,
+      endTime: add15Minutes(time),
+      type: type,
+      status: "BOOKED",
+    };
+    const token = localStorage.getItem("token");
     try {
-      await bookAppointment({
-        appointmentDate: date,
-        startTime: time,
-        endTime: add15Minutes(time),
-        type,
-        visitPurpose,
+      const response = await fetch(CONFIG.BOOK_APPOINTMENT, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
       });
-      navigate("/patient/dashboard");
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Failed to book appointment.");
-    } finally {
-      setSaving(false);
+      console.log(response);
+      if (!response.ok) throw new Error(`HTTP error Status ${response.status}`);
+
+      const result = await response.json();
+      console.log("Success", result);
+    } catch (error) {
+      console.log(error);
     }
   }
-
   return (
     <div className="flex flex-col grow pl-10 pr-10 pt-9 pb-9">
       <div className="main-text">
@@ -85,7 +88,7 @@ function FindSlots() {
       <div className="content gap-5 pt-4 grid grid-cols-5">
         <div className="left-bar col-span-1 flex flex-col gap-5">
           <DateSelector updateSlots={setSlots} handleDateUpdate={updateDate} />
-          <div className="appointment-type rounded-[14px] p-5.5 flex flex-col gap-3 border border-border-grey">
+          <div className="appointment-type rounded-[14px] p-5.5 flex flex-col gap-1.5 border border-border-grey">
             <h4 className="text-[14px] font-manrope font-bold border-bor">
               Appointment type
             </h4>
@@ -98,27 +101,12 @@ function FindSlots() {
                 setType(e.target.value);
               }}
             >
-              <option value="CHECKUP">Checkup</option>
+              <option value={""}>Choose appointment type</option>
               <option value="NEW_PATIENT">New patient</option>
+              <option value="CHECKUP">Checkup</option>
               <option value="EMERGENCY">Emergency</option>
               <option value="OTHER">Other</option>
             </select>
-
-            <FormSelect
-              label="Visit purpose"
-              padding="0"
-              value={visitPurpose}
-              onChange={(e) => setVisitPurpose(e.target.value as VisitPurpose)}
-            >
-              {VISIT_PURPOSES.map((p) => (
-                <option key={p.value} value={p.value}>
-                  {p.label}
-                </option>
-              ))}
-            </FormSelect>
-            <p className="text-[11px] text-muted-green">
-              {VISIT_PURPOSES.find((p) => p.value === visitPurpose)?.hint}
-            </p>
           </div>
         </div>
         <div className="col-span-3 avaliable-slots-container p-5 pb-14 border border-border-grey rounded-[14px] min-w-3/6">
@@ -127,9 +115,6 @@ function FindSlots() {
           </h3>
           <p className="text-[12px] text-muted-green">{`Showing results for ${date}`}</p>
           <div className="slots-container flex gap-2 flex-wrap text-[12px] text-green-text-1 font-semibold">
-            {slotArray.length === 0 && (
-              <p className="text-[12px] text-muted-green pt-3">No available slots for this date.</p>
-            )}
             {slotArray.map((slot: string) => (
               <React.Fragment key={slot}>
                 {findEvening(slot) === 12 ? (
@@ -166,21 +151,15 @@ function FindSlots() {
               <span className="font-bold">{time || "Not selected"}</span>
             </div>
             <div className="pb-1.5 text-sm text-gray-700 flex justify-between text-[11px]">
-              <span>Visit purpose:</span>{" "}
-              <span className="font-bold">{visitPurpose}</span>
+              <span>Appointment Type:</span>{" "}
+              <span className="font-bold">{type || "Not selected"}</span>
             </div>
-            {error && (
-              <div className="pb-2">
-                <Alert kind="error">{error}</Alert>
-              </div>
-            )}
             <CommonButton
-              label={saving ? "Booking…" : "Book Appointment"}
+              label="Book Appointment"
               className="w-full text-[12px] p-1.5 "
               style={{ fontSize: "12px", marginTop: "10px" }}
-              disabled={!date || !time || saving}
               onClick={() => {
-                void handleBookAppointment();
+                bookAppointment();
               }}
             />
           </div>
