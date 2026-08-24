@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import CommonButton from "../../components/CommanButton";
-import { getAvailableSlots } from "./services/patientApi";
+import { CONFIG } from "@config";
 
 interface ChildProps {
   handleDateUpdate: (date: string) => void;
@@ -18,11 +18,35 @@ export default function DateSelector({
 
   const fetchAvailableSlots = useCallback(
     async (dateStr: string) => {
+      const token = localStorage.getItem("token");
+      const url = `${CONFIG.GET_AVAILABLE_SLOTS}?date=${dateStr}`;
+
       try {
-        const res = await getAvailableSlots(dateStr);
-        const slotArray = (res.slots || [])
-          .filter((slot) => slot.available)
-          .map((slot) => slot.time);
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Slots fetching error");
+        }
+
+        const res = await response.json();
+        const slots = Array.isArray(res?.slots) ? res.slots : [];
+        const slotArray = (slots as Array<string | { time?: string }>).reduce<
+          string[]
+        >((acc, slot) => {
+          const slotTime = typeof slot === "string" ? slot : slot.time;
+
+          if (slotTime) {
+            acc.push(slotTime);
+          }
+
+          return acc;
+        }, []);
 
         updateSlots(slotArray);
       } catch (err) {

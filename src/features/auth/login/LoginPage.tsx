@@ -1,114 +1,171 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { loginUser } from "../services/authApi";
-import { useAuth } from "../AuthContext";
-import { ApiError } from "../../../lib/api/http";
+import {
+  clearToken,
+  getRole,
+  loginUser,
+  saveRole,
+  saveToken,
+} from "../services/authApi";
+
 import type { LoginFormData } from "../types/auth";
 import FormInput from "../../../components/FormInput";
 import CommonButton from "../../../components/CommanButton";
 
-const ROLE_HOME: Record<string, string> = {
-  patient: "/patient/dashboard",
-  receptionist: "/receptionist/dashboard",
-  dentist: "/dentist/dashboard",
-  admin: "/admin/dashboard",
-};
-
 export default function LoginPage() {
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] =
+    useState<LoginFormData>({
+      email: "",
+      password: "",
+    });
+
+  const [loading, setLoading] =
+    useState<boolean>(false);
+
+  const [error, setError] =
+    useState<string | null>(null);
+
   const navigate = useNavigate();
-  const { login } = useAuth();
+
+  const handleLogin = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
 
     setLoading(true);
     setError(null);
 
+    /*
+     * Remove the previous browser session before
+     * starting a new login.
+     */
+    clearToken();
+
     try {
-      const data = await loginUser(formData);
-      login(data.token, data.user);
-      navigate(ROLE_HOME[data.user.role] || "/");
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Login failed. Please try again.");
+      const response = await loginUser(formData);
+
+      const data: unknown = await response.json();
+
+      if (!response.ok) {
+        const message =
+          typeof data === "object" &&
+          data !== null &&
+          "message" in data &&
+          typeof data.message === "string"
+            ? data.message
+            : "Login failed.";
+
+        throw new Error(message);
+      }
+
+      if (
+        typeof data !== "object" ||
+        data === null ||
+        !("token" in data) ||
+        typeof data.token !== "string"
+      ) {
+        throw new Error(
+          "Login succeeded, but the server did not return an authentication token.",
+        );
+      }
+      saveToken(data.token);
+      localStorage.setItem("login", "true");
+      const role = getRole();
+
+      if (role) {
+        saveRole(role);
+      }
+
+      if (!role) {
+        clearToken();
+
+        throw new Error(
+          "Login succeeded, but the user role could not be determined.",
+        );
+      }
+
+      if (
+        role !== "patient" &&
+        role !== "receptionist" &&
+        role !== "admin" &&
+        role !== "dentist"
+      ) {
+        clearToken();
+
+        throw new Error(
+          `Unsupported user role: ${role}`,
+        );
+      }
+
+      navigate(`/${role}/dashboard`, {
+        replace: true,
+      });
+    } catch (loginError: unknown) {
+      const message =
+        loginError instanceof Error
+          ? loginError.message
+          : "Unable to login.";
+
+      setError(message);
+
+      console.error("Login error:", loginError);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="grid grid-cols-2 grow font-inter">
-      <div className="body-area col-span-1 bg-accent hidden md:flex items-end p-14">
-        <div className="text-white space-y-3 max-w-sm">
-          <span className="text-5xl">🦷</span>
-          <h2 className="font-manrope text-2xl font-bold leading-snug">
-            One portal for your whole visit.
-          </h2>
-          <p className="text-white/80 text-sm">
-            Patients, front desk, dentists and admins all work from the same
-            live record.
-          </p>
-        </div>
-      </div>
-      <div className="form-area col-span-2 md:col-span-1 pl-8 pr-8 md:pl-15 md:pr-15 pt-13 pb-13 content-center">
-        <div className="content">
-          <h2 className="text-2xl text-green-text-1 text-left">Welcome back</h2>
-          <p className="text-[12px] text-left text-muted-green">
-            Enter your credentials to access your portal.
-          </p>
-        </div>
-        <form onSubmit={handleLogin}>
-          <FormInput
-            label="Email Address"
-            type="email"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, email: e.target.value }))
-            }
-            required
-          />
-          <FormInput
-            label="Password"
-            type="password"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, password: e.target.value }))
-            }
-            required
-          />
 
-          {error && (
-            <p className="pt-2 text-[12px] text-red-600" role="alert">
-              {error}
+      <div className="grid grid-cols-2 grow  font-inter">
+        <div className="body-area col-span-1 bg-accent"></div>
+        <div className="form-area col-span-1 pl-15 pr-15 pt-13 pb-13  content-center">
+          <div className="content">
+            <h2 className="text-2xl text-green-text-1 text-left">
+              Welcome Back
+            </h2>
+            <p className="text-[12px] text-left">
+              Enter your credentials to access your portal.
             </p>
-          )}
-
-          <div className="login-btn pt-3">
-            <CommonButton
-              label={loading ? "Signing in..." : "Login"}
-              type="submit"
-              disabled={loading}
-              className="pb-3.5 pl-3.25 pr-3.25 pt-3.25"
-            />
           </div>
-        </form>
+          <form onSubmit={handleLogin}>
+            <FormInput
+              label="Email Address"
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, email: e.target.value }))
+              }
+              required
+            />
+            <FormInput
+              label="Password"
+              type="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, password: e.target.value }))
+              }
+              required
+            />
+            <div className="login-btn pt-3">
+              <CommonButton
+                label={loading ? "Signing in..." : "Login"}
+                type="submit"
+                disabled={loading}
+                className="pb-3.5 pl-3.25 pr-3.25 pt-3.25"
+              />
+            </div>
+          </form>
 
-        <div className="text-[14px] pt-3.5">
-          <span>Don't have an account? </span>
-          <Link to="/register" className="text-accent font-bold">
-            Register here
-          </Link>
-        </div>
-        <div className="text-[12px] pt-2 text-muted-green">
-          <span>Clinic administrator? </span>
-          <Link to="/admin/login" className="text-accent font-bold">
-            Sign in here
-          </Link>
+          {/* Register Link */}
+          <div className="text-[14px] pt-3.5">
+            <span>Don't have an account? </span>
+            <Link to="/register" className="text-accent font-bold">
+              Register here
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+
   );
 }

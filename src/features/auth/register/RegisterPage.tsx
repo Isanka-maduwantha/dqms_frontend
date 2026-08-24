@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import FormInput from "../../../components/FormInput";
+import { parseJsonResponse } from "../../../lib/utils/http";
 import { registerUser } from "../services/authApi";
-import { ApiError } from "../../../lib/api/http";
 import type { RegisterFormData } from "../types/auth";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import CommonButton from "../../../components/CommanButton";
 
 function RegisterPage() {
@@ -21,7 +21,6 @@ function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [agreeToTerms, setAgreeToTerms] = useState<boolean>(false);
-  const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -54,7 +53,7 @@ function RegisterPage() {
     try {
       setIsLoading(true);
 
-      await registerUser({
+      const response = await registerUser({
         name: formData.Name,
         nic: formData.nic,
         phone: formData.phone,
@@ -62,13 +61,30 @@ function RegisterPage() {
         password: formData.password,
       });
 
-      alert("Patient registration successful! You can now log in.");
-      navigate("/login");
+      const data = await parseJsonResponse<{ message?: string }>(response);
+
+      if (!response.ok) {
+        throw new Error(
+          (data as { message?: string }).message ||
+            `Registration failed (Status: ${response.status})`,
+        );
+      }
+
+      alert("Patient Registration Successful!");
+
+      // Clear form on success
+      setFormData({
+        Name: "",
+        nic: "",
+        phone: "",
+        email: "",
+        password: "",
+      });
     } catch (err: unknown) {
       const errorMessage =
-        err instanceof ApiError
+        err instanceof Error
           ? err.message
-          : "Registration failed. Please make sure your server is running.";
+          : "Registration failed. Please make sure your server is running on port 3000.";
       setError(errorMessage);
     } finally {
       setIsLoading(false);
