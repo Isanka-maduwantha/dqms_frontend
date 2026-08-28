@@ -23,7 +23,7 @@ export function rescheduleAppointment(_id: string, appointmentDate: string, star
 
 export function getAvailableSlots(date: string) {
   return apiFetch<{ success: boolean; date: string; slots: AvailableSlot[]; message?: string }>(
-    `/api/appointments/available-slots?date=${date}`,
+    `/api/appointments//available-slots?date=${date}`,
   );
 }
 

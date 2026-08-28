@@ -1,14 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap");
 @import "tailwindcss";
 @theme {
   --font-manrope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;
-  --color-muted-green: #5B6F67;
-  --color-cyan-green: #0A3B2C;
-  --color-accent : #0E7A50;
-  --color-border-grey: #DDEAE3;
-  --color-green-text-1: #0F231C;
+  --color-muted-green: #5b6f67;
+  --color-cyan-green: #0a3b2c;
+  --color-accent: #0e7a50;
+  --color-border-grey: #ddeae3;
+  --color-green-text-1: #0f231c;
+
+  /* Glassmorphism Color Tints */
+  --color-glass-base: rgba(255, 255, 255, 0.65);
+  --color-glass-surface: rgba(255, 255, 255, 0.45);
+  --color-glass-border: rgba(255, 255, 255, 0.5);
+  --color-glass-border-subtle: rgba(221, 234, 227, 0.4);
+  --color-glass-dark: rgba(10, 59, 44, 0.55);
+
+  /* Glass Backdrops & Shadows */
+  --backdrop-blur-glass: blur(16px);
+  --backdrop-blur-glass-sm: blur(8px);
+  --shadow-glass: 0 8px 32px 0 rgba(15, 35, 28, 0.08);
+  --shadow-glass-lg: 0 12px 40px 0 rgba(10, 59, 44, 0.15);
 }
-
-
-

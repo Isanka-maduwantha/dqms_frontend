@@ -3,17 +3,17 @@ import { NavLink } from "react-router-dom";
 
 export const MainPage: React.FC = () => {
   return (
-    <div className="min-h-screen grow bg-white font-inter text-muted-green px-8 sm:px-14 flex flex-col items-center">
-      <main className="w-full  mx-auto space-y-32 md:space-y-44">
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#f2f7f4] via-[#e2eee7] to-[#d3e5dc] font-inter text-muted-green px-8 sm:px-14 flex flex-col items-center py-10">
+      <main className="w-full max-w-6xl mx-auto space-y-24 md:space-y-36">
+        
         {/* Hero Section */}
-        <section className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center pb-16 pt-16">
+        <section className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center pt-8 pb-12">
           <div className="space-y-8">
-            <span className="inline-block px-3.5 py-1 bg-accent/10 text-accent font-semibold text-xs rounded-full uppercase tracking-wider">
+            <span className="inline-block px-4 py-1.5 bg-accent/10 border border-accent/20 text-accent font-bold text-xs rounded-full uppercase tracking-wider backdrop-blur-sm shadow-sm">
               HIPAA-COMPLIANT CLINICAL NETWORK
             </span>
             <h1 className="font-manrope text-4xl lg:text-5xl font-extrabold text-green-text-1 leading-tight">
-              Dental care that <span className="text-accent">keeps pace</span>{" "}
-              with your day.
+              Dental care that <span className="text-accent">keeps pace</span> with your day.
             </h1>
             <p className="text-muted-green text-base max-w-md leading-relaxed">
               Book appointments, track your live queue position and manage your
@@ -21,30 +21,35 @@ export const MainPage: React.FC = () => {
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <NavLink to="/login">
-                <button className="px-6 py-3 bg-accent text-white font-medium text-sm rounded-full flex items-center gap-2 hover:opacity-90 transition-opacity">
+                <button className="px-6 py-3.5 bg-accent hover:bg-cyan-green text-white font-medium text-sm rounded-full flex items-center gap-2 transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]">
                   Get started <span>→</span>
                 </button>
               </NavLink>
               <NavLink to="/lobby">
-                <button className="px-6 py-3 border border-border-grey text-green-text-1 font-medium text-sm rounded-full hover:bg-gray-50 transition-colors">
+                <button className="px-6 py-3.5 bg-white/40 hover:bg-white/70 backdrop-blur-md border border-white/60 text-green-text-1 font-medium text-sm rounded-full transition-all duration-200 shadow-glass hover:shadow-glass-lg active:scale-[0.98]">
                   View live queue
                 </button>
               </NavLink>
             </div>
-            <div className="flex items-center gap-8 pt-6 text-xs text-muted-green border-t border-border-grey/50">
-              <span>🛡️ HIPAA compliant</span>
-              <span>🔒 256-bit encrypted</span>
-              <span>✓ ISO 27001</span>
+            <div className="flex items-center gap-6 pt-6 text-xs font-medium text-muted-green border-t border-white/40">
+              <span className="flex items-center gap-1.5">🛡️ HIPAA compliant</span>
+              <span className="flex items-center gap-1.5">🔒 256-bit encrypted</span>
+              <span className="flex items-center gap-1.5">✓ ISO 27001</span>
             </div>
           </div>
 
-          <div className="bg-accent h-[400px] lg:h-[460px] rounded-2xl flex items-center justify-center shadow-lg relative overflow-hidden">
-            <span className="text-9xl select-none">🦷</span>
+          {/* Hero Visual Container */}
+          <div className="bg-gradient-to-br from-[#0e7a50] to-[#0a3b2c] h-[400px] lg:h-[460px] rounded-3xl flex items-center justify-center shadow-glass-lg relative overflow-hidden border border-white/30">
+            <div className="absolute -top-16 -right-16 w-60 h-60 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-16 -left-16 w-60 h-60 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+            <span className="text-9xl select-none drop-shadow-2xl relative z-10 transition-transform duration-300 hover:scale-110 cursor-pointer">
+              🦷
+            </span>
           </div>
         </section>
 
         {/* Stats Grid */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 pb-14">
+        <section className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
           {[
             { label: "PATIENTS TREATED", val: "18k+" },
             { label: "AVERAGE WAIT TIME", val: "24m" },
@@ -53,12 +58,12 @@ export const MainPage: React.FC = () => {
           ].map((stat, i) => (
             <div
               key={i}
-              className="py-10 px-6 bg-accent/5 rounded-xl text-center border border-border-grey/30 flex flex-col justify-center space-y-2"
+              className="py-8 px-6 bg-white/40 backdrop-blur-md rounded-2xl text-center border border-white/60 shadow-glass flex flex-col justify-center space-y-2 hover:bg-white/60 hover:scale-[1.02] transition-all duration-200"
             >
-              <div className="font-manrope text-3xl md:text-4xl font-bold text-green-text-1">
+              <div className="font-manrope text-3xl md:text-4xl font-extrabold text-green-text-1">
                 {stat.val}
               </div>
-              <div className="text-[11px] font-semibold text-muted-green tracking-wider uppercase">
+              <div className="text-[11px] font-bold text-muted-green tracking-wider uppercase">
                 {stat.label}
               </div>
             </div>
@@ -66,17 +71,17 @@ export const MainPage: React.FC = () => {
         </section>
 
         {/* Services Section */}
-        <section className="space-y-16 text-center pb-14 pt-14 flex flex-col justify-center items-center">
-          <div className="space-y-4 max-w-xl mx-auto  ">
-            <span className="px-3.5 py-1 bg-accent/10 text-accent font-semibold text-xs rounded-full uppercase tracking-wider">
+        <section className="space-y-12 text-center flex flex-col justify-center items-center">
+          <div className="space-y-4 max-w-xl mx-auto">
+            <span className="px-4 py-1.5 bg-accent/10 border border-accent/20 text-accent font-bold text-xs rounded-full uppercase tracking-wider backdrop-blur-sm">
               Services
             </span>
-            <h2 className="font-manrope text-2xl md:text-4xl font-bold text-green-text-1">
+            <h2 className="font-manrope text-3xl md:text-4xl font-bold text-green-text-1">
               Everything your smile needs, under one roof
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 text-left pt-5.5">
+          <div className="grid md:grid-cols-3 gap-8 text-left w-full">
             {[
               {
                 title: "General Dentistry",
@@ -96,10 +101,10 @@ export const MainPage: React.FC = () => {
             ].map((service, i) => (
               <div
                 key={i}
-                className="p-8 border border-border-grey rounded-2xl space-y-5 bg-white hover:border-accent/40 transition-colors flex flex-col justify-between"
+                className="p-8 bg-white/40 backdrop-blur-md border border-white/60 rounded-3xl space-y-5 shadow-glass hover:bg-white/70 hover:shadow-glass-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
               >
                 <div className="space-y-4">
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-xl">
+                  <div className="w-14 h-14 bg-white/80 border border-white/80 rounded-2xl flex items-center justify-center text-2xl shadow-sm">
                     {service.icon}
                   </div>
                   <h3 className="font-manrope text-xl font-bold text-green-text-1">
@@ -115,17 +120,17 @@ export const MainPage: React.FC = () => {
         </section>
 
         {/* How It Works Section */}
-        <section className="bg-accent/5 rounded-3xl p-10 md:p-20 text-center space-y-16 border border-border-grey/40 flex flex-col items-center gap-5.5">
+        <section className="bg-white/40 backdrop-blur-md rounded-3xl p-10 md:p-16 text-center space-y-12 border border-white/60 shadow-glass flex flex-col items-center">
           <div className="space-y-4 max-w-xl mx-auto">
-            <span className="px-3.5 py-1 bg-accent/10 text-accent font-semibold text-xs rounded-full uppercase tracking-wider">
+            <span className="px-4 py-1.5 bg-accent/10 border border-accent/20 text-accent font-bold text-xs rounded-full uppercase tracking-wider backdrop-blur-sm">
               How It Works
             </span>
-            <h2 className="font-manrope text-2xl md:text-4xl font-bold text-green-text-1">
+            <h2 className="font-manrope text-3xl md:text-4xl font-bold text-green-text-1">
               From booking to check-out, in three steps
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12 text-left">
+          <div className="grid md:grid-cols-3 gap-10 text-left w-full">
             {[
               {
                 num: "01",
@@ -143,8 +148,8 @@ export const MainPage: React.FC = () => {
                 desc: "Watch the lobby screen for your turn and consultation room.",
               },
             ].map((step, i) => (
-              <div key={i} className="space-y-5">
-                <span className="w-10 h-10 rounded-full bg-green-text-1 text-white flex items-center justify-center text-sm font-bold shadow-sm">
+              <div key={i} className="p-6 rounded-2xl bg-white/30 border border-white/40 backdrop-blur-sm space-y-4 shadow-sm hover:bg-white/50 transition-all duration-200">
+                <span className="w-10 h-10 rounded-xl bg-accent text-white flex items-center justify-center text-sm font-bold shadow-md">
                   {step.num}
                 </span>
                 <h3 className="font-manrope text-xl font-bold text-green-text-1">
@@ -159,9 +164,9 @@ export const MainPage: React.FC = () => {
         </section>
 
         {/* About & Live Stats */}
-        <section className="grid md:grid-cols-3 gap-12 lg:gap-16 items-center pt-14 pb-14">
+        <section className="grid md:grid-cols-3 gap-12 lg:gap-16 items-center">
           <div className="md:col-span-2 space-y-6">
-            <span className="px-3.5 py-1 bg-accent/10 text-accent font-semibold text-xs rounded-full uppercase tracking-wider">
+            <span className="px-4 py-1.5 bg-accent/10 border border-accent/20 text-accent font-bold text-xs rounded-full uppercase tracking-wider backdrop-blur-sm">
               About Dental Surgery
             </span>
             <h2 className="font-manrope text-3xl md:text-4xl font-bold text-green-text-1 leading-snug">
@@ -176,42 +181,44 @@ export const MainPage: React.FC = () => {
             <div className="pt-2">
               <a
                 href="#learn-more"
-                className="inline-flex items-center gap-2 font-semibold text-sm text-green-text-1 hover:underline"
+                className="inline-flex items-center gap-2 font-semibold text-sm text-accent hover:text-cyan-green transition-colors"
               >
                 Learn more about our practice <span>→</span>
               </a>
             </div>
           </div>
 
-          {/* Live Desk Card */}
-          <div className="bg-green-text-1 text-white p-8 rounded-2xl space-y-6 text-xs font-mono shadow-md">
+          {/* Live Desk Glass Card */}
+          <div className="bg-[#0f231c]/90 backdrop-blur-lg border border-white/20 text-white p-8 rounded-3xl space-y-6 text-xs font-mono shadow-glass-lg relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full blur-2xl pointer-events-none" />
             <div className="flex justify-between border-b border-white/10 pb-4">
               <span className="text-white/70">Today's queue</span>
-              <span className="font-bold text-sm">18 patients</span>
+              <span className="font-bold text-sm text-accent">18 patients</span>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-4">
               <span className="text-white/70">Avg. wait</span>
-              <span className="font-bold text-sm">24 minutes</span>
+              <span className="font-bold text-sm text-accent">24 minutes</span>
             </div>
             <div className="flex justify-between">
               <span className="text-white/70">Rooms active</span>
-              <span className="font-bold text-sm">4 / 4</span>
+              <span className="font-bold text-sm text-emerald-400">4 / 4</span>
             </div>
           </div>
         </section>
 
         {/* CTA Banner */}
-        <section className="bg-accent rounded-3xl p-12 md:p-20 text-center space-y-8 text-white shadow-xl flex flex-col items-center gap-5">
-          <div className="space-y-4 max-w-xl mx-auto">
+        <section className="bg-gradient-to-br from-[#0e7a50] to-[#0a3b2c] rounded-3xl p-12 md:p-16 text-center space-y-8 text-white shadow-glass-lg border border-white/20 relative overflow-hidden flex flex-col items-center">
+          <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="space-y-4 max-w-xl mx-auto relative z-10">
             <h2 className="font-manrope text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
               Ready to book your next visit?
             </h2>
-            <p className="text-base text-white/90">
+            <p className="text-base text-white/80">
               Create a patient account in under two minutes.
             </p>
           </div>
-          <NavLink to="/register">
-            <button className="px-8 py-4 bg-white text-green-text-1 font-bold text-sm rounded-full hover:bg-gray-100 transition-colors shadow-md">
+          <NavLink to="/register" className="relative z-10">
+            <button className="px-8 py-4 bg-white text-green-text-1 font-bold text-sm rounded-full hover:bg-white/90 transition-all duration-200 shadow-lg hover:scale-105 active:scale-95">
               Create your account →
             </button>
           </NavLink>
