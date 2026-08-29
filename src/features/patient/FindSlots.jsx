@@ -10,11 +10,11 @@ import { ApiError } from "../../lib/api/http";
 import { formatDate } from "../../lib/utils/format";
 import { bookAppointment } from "./services/patientApi";
 
-function add15Minutes(timeStr) {
+function add30Mins(timeStr) {
   const [hours, minutes] = timeStr.split(":").map(Number);
   const date = new Date();
   date.setHours(hours, minutes, 0, 0);
-  date.setMinutes(date.getMinutes() + 15);
+  date.setMinutes(date.getMinutes() + 30);
   return date.toTimeString().slice(0, 5);
 }
 
@@ -75,7 +75,7 @@ function FindSlots() {
       await bookAppointment({
         appointmentDate: date,
         startTime: time,
-        endTime: add15Minutes(time),
+        endTime: add30Mins(time),
         type,
         visitPurpose,
       });
@@ -246,7 +246,7 @@ function FindSlots() {
               <div className="flex justify-between py-1.5 border-b border-slate-100">
                 <span className="text-slate-500">Time Slot:</span>
                 <span className={`font-bold ${time ? "text-blue-600 font-extrabold" : "text-slate-400"}`}>
-                  {time ? `${time} (${add15Minutes(time)})` : "Not selected"}
+                  {time ? `${time} (${add30Mins(time)})` : "Not selected"}
                 </span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100">
