@@ -23,6 +23,7 @@ import AdminLayout from "../../features/admin/AdminLayout";
 import AdminDashboardPage from "../../features/admin/pages/AdminDashboardPage";
 import AdminInventoryPage from "../../features/admin/pages/AdminInventoryPage";
 import AdminReportsPage from "../../features/admin/pages/AdminReportsPage";
+import Lobby from "../../features/extra/Lobby";
 
 export default function AppRoutes() {
   const { role } = useAuth();
@@ -32,6 +33,7 @@ export default function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/lobby" element={<Lobby />}/>
       <Route path="/help" element={<HelpSupportPage type="help" />} />
       <Route path="/support" element={<HelpSupportPage type="support" />} />
       <Route path="/security" element={<HelpSupportPage type="security" />} />

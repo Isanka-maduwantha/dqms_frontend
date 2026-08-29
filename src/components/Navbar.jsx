@@ -61,17 +61,29 @@ function Navbar() {
             Home
           </NavLink>
           <a
-            href="#services"
+            href="/#services"
             className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/50 transition-all duration-200"
           >
             Services
           </a>
           <a
-            href="#about"
+            href="/#about"
             className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/50 transition-all duration-200"
           >
             About Practice
           </a>
+                    <NavLink
+            to="/lobby"
+            className={({ isActive }) =>
+              `px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                isActive
+                  ? "bg-white text-blue-600 shadow-sm font-bold"
+                  : "text-slate-600 hover:text-blue-600 hover:bg-white/50"
+              }`
+            }
+          >
+           Lobby
+          </NavLink>
           <NavLink
             to="/patient/book-appointment"
             className={({ isActive }) =>
