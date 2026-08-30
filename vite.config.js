@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
-import path from 'path';
+import { fileURLToPath, URL } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
+
 export default defineConfig({
     plugins: [
         react(),
@@ -11,8 +12,8 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            // 👈 Maps the "@config" keyword to your actual config folder
-            '@config': path.resolve(__dirname, './config'),
+            // Maps the "@config" keyword to your actual config folder
+            '@config': fileURLToPath(new URL('./config', import.meta.url)),
         },
     },
 });
