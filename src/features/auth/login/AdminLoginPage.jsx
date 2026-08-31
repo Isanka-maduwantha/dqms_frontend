@@ -51,15 +51,15 @@ export default function AdminLoginPage() {
     <div className="grow min-h-[calc(100vh-5rem)] flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-5xl grid lg:grid-cols-12 rounded-3xl overflow-hidden glass-card border border-white/80 shadow-2xl">
         {/* Left Hero Panel */}
-        <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 p-8 sm:p-12 text-white flex flex-col justify-between relative overflow-hidden hidden md:flex">
-          <div className="absolute -top-20 -right-20 w-60 h-60 bg-sky-500/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-[#041d14] to-[#06281e] p-8 sm:p-12 text-white flex flex-col justify-between relative overflow-hidden hidden md:flex">
+          <div className="absolute -top-20 -right-20 w-60 h-60 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 space-y-3">
             <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-2xl shadow-inner">
               🛡️
             </div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-sky-400 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-teal-400 block">
               Restricted Access
             </span>
             <h2 className="font-manrope text-2xl sm:text-3xl font-extrabold text-white leading-tight">
@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
         {/* Right Form Panel */}
         <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 flex flex-col justify-center bg-white/70 backdrop-blur-xl">
           <div className="mb-6 text-left">
-            <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#0E7A50] uppercase tracking-wider">
               Administration Area
             </span>
             <h1 className="font-manrope text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
@@ -136,7 +136,7 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="text-xs font-bold text-slate-500 hover:text-blue-600 focus:outline-none px-1"
+                  className="text-xs font-bold text-slate-500 hover:text-[#0E7A50] focus:outline-none px-1"
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
@@ -155,7 +155,7 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="pt-6 mt-6 border-t border-slate-100 text-xs text-slate-600 text-center">
-            <Link to="/login" className="text-blue-600 font-bold hover:underline">
+            <Link to="/login" className="text-[#0E7A50] font-bold hover:underline">
               ← Return to patient & staff sign in
             </Link>
           </div>

@@ -5,60 +5,62 @@
   --font-manrope: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  /* Primary Blue Theme Colors */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-  --color-primary-950: #0f172a;
+  /* Primary Medical Emerald Green Theme Colors (#0E7A50 accent anchor) */
+  --color-primary-50: #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-200: #bbf7d0;
+  --color-primary-300: #86efac;
+  --color-primary-400: #4ade80;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #0E7A50;
+  --color-primary-700: #0b6341;
+  --color-primary-800: #094f34;
+  --color-primary-900: #063d28;
+  --color-primary-950: #022115;
 
-  /* Backward-compatible color aliases mapped to bluish aesthetic */
-  --color-accent: #2563eb;
-  --color-cyan-green: #0f2744;
-  --color-muted-green: #64748b;
+  /* Backward-compatible color aliases mapped to green aesthetic */
+  --color-accent: #0E7A50;
+  --color-accent-hover: #0b6341;
+  --color-accent-light: #10b981;
+  --color-cyan-green: #063d28;
+  --color-muted-green: #52796f;
   --color-border-grey: #e2e8f0;
-  --color-green-text-1: #0f172a;
+  --color-green-text-1: #063d28;
 
-  /* Bluish Glassmorphism Color Tokens */
-  --color-glass-base: rgba(255, 255, 255, 0.78);
-  --color-glass-surface: rgba(255, 255, 255, 0.6);
+  /* Emerald Glassmorphism Color Tokens */
+  --color-glass-base: rgba(255, 255, 255, 0.8);
+  --color-glass-surface: rgba(255, 255, 255, 0.62);
   --color-glass-border: rgba(255, 255, 255, 0.85);
   --color-glass-border-subtle: rgba(203, 213, 225, 0.5);
-  --color-glass-dark: rgba(15, 31, 56, 0.88);
-  --color-glass-blue-tint: rgba(37, 99, 235, 0.07);
+  --color-glass-dark: rgba(6, 40, 30, 0.92);
+  --color-glass-green-tint: rgba(14, 122, 80, 0.07);
 
   /* Glass Backdrops & Shadows */
   --backdrop-blur-glass: blur(18px);
   --backdrop-blur-glass-sm: blur(10px);
   --backdrop-blur-glass-lg: blur(28px);
   
-  --shadow-glass: 0 10px 35px -5px rgba(37, 99, 235, 0.07), 0 2px 10px -2px rgba(15, 23, 42, 0.04);
-  --shadow-glass-lg: 0 20px 45px -10px rgba(37, 99, 235, 0.14), 0 4px 16px -2px rgba(15, 23, 42, 0.06);
-  --shadow-glass-glow: 0 0 25px rgba(59, 130, 246, 0.35);
+  --shadow-glass: 0 10px 35px -5px rgba(14, 122, 80, 0.07), 0 2px 10px -2px rgba(15, 23, 42, 0.04);
+  --shadow-glass-lg: 0 20px 45px -10px rgba(14, 122, 80, 0.14), 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+  --shadow-glass-glow: 0 0 25px rgba(14, 122, 80, 0.35);
 }
 
 /* Base Body Background Styling */
 body {
-  background: radial-gradient(circle at 10% 10%, rgba(219, 234, 254, 0.6) 0%, rgba(240, 246, 255, 0.85) 45%, rgba(238, 242, 255, 0.75) 100%);
+  background: radial-gradient(circle at 10% 10%, rgba(220, 252, 231, 0.55) 0%, rgba(240, 253, 244, 0.85) 45%, rgba(244, 251, 247, 0.75) 100%);
   min-height: 100vh;
   color: #1e293b;
   font-family: "Inter", sans-serif;
   overflow-x: hidden;
 }
 
-/* Bluish Glass Card & Component Classes */
+/* Emerald Glass Card & Component Classes */
 .glass-card {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 10px 30px -5px rgba(37, 99, 235, 0.06), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 10px 30px -5px rgba(14, 122, 80, 0.06), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
   border-radius: 16px;
   position: relative;
 }
@@ -68,40 +70,40 @@ body {
 }
 .glass-card-interactive:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(147, 197, 253, 0.8);
-  box-shadow: 0 18px 40px -8px rgba(37, 99, 235, 0.12), 0 0 15px rgba(59, 130, 246, 0.15);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(134, 239, 172, 0.8);
+  box-shadow: 0 18px 40px -8px rgba(14, 122, 80, 0.12), 0 0 15px rgba(14, 122, 80, 0.15);
 }
 
 .glass-card-dark {
-  background: linear-gradient(135deg, rgba(15, 31, 56, 0.94) 0%, rgba(13, 23, 44, 0.96) 100%);
+  background: linear-gradient(135deg, rgba(6, 40, 30, 0.94) 0%, rgba(4, 28, 20, 0.96) 100%);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 20px 45px -10px rgba(10, 25, 47, 0.35);
+  box-shadow: 0 20px 45px -10px rgba(2, 33, 21, 0.45);
   border-radius: 20px;
 }
 
-.glass-glow-blue {
-  box-shadow: 0 0 35px -5px rgba(59, 130, 246, 0.4);
+.glass-glow-green {
+  box-shadow: 0 0 35px -5px rgba(14, 122, 80, 0.4);
 }
 
 .glossy-gradient-btn {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #0284c7 100%);
+  background: linear-gradient(135deg, #0E7A50 0%, #0b6341 50%, #10b981 100%);
   background-size: 200% 200%;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 15px -1px rgba(37, 99, 235, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 15px -1px rgba(14, 122, 80, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glossy-gradient-btn:hover:not(:disabled) {
   background-position: right center;
   transform: translateY(-1px);
-  box-shadow: 0 8px 25px -2px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  box-shadow: 0 8px 25px -2px rgba(14, 122, 80, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 .glossy-gradient-btn:active:not(:disabled) {
   transform: translateY(1px) scale(0.98);
-  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 2px 10px rgba(14, 122, 80, 0.3);
 }
 
 /* Animations */
@@ -144,5 +146,5 @@ body {
   background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(96, 165, 250, 0.8);
+  background: rgba(14, 122, 80, 0.7);
 }

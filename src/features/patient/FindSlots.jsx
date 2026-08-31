@@ -102,7 +102,7 @@ function FindSlots() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6 text-left">
       {/* Header */}
       <div>
-        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+        <span className="text-xs font-bold text-[#0E7A50] uppercase tracking-wider">
           Appointment Booking
         </span>
         <h1 className="font-manrope text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
@@ -151,7 +151,7 @@ function FindSlots() {
               ))}
             </FormSelect>
 
-            <div className="p-3 rounded-xl bg-blue-50/70 border border-blue-100 text-[11px] text-blue-800 leading-relaxed">
+            <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-100 text-[11px] text-emerald-900 leading-relaxed">
               💡 {VISIT_PURPOSES.find((p) => p.value === visitPurpose)?.hint}
             </div>
           </Card>
@@ -169,7 +169,7 @@ function FindSlots() {
                   {date ? `Showing results for ${formatDate(date)}` : "Select a date to view slots"}
                 </p>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold">
+              <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold">
                 {slotArray.length} slots available
               </span>
             </div>
@@ -245,7 +245,7 @@ function FindSlots() {
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100">
                 <span className="text-slate-500">Time Slot:</span>
-                <span className={`font-bold ${time ? "text-blue-600 font-extrabold" : "text-slate-400"}`}>
+                <span className={`font-bold ${time ? "text-[#0E7A50] font-extrabold" : "text-slate-400"}`}>
                   {time ? `${time} (${add30Mins(time)})` : "Not selected"}
                 </span>
               </div>

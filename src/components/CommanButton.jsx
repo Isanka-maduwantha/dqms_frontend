@@ -14,17 +14,17 @@ export default function CommonButton({
 
   const variants = {
     primary:
-      "glossy-gradient-btn text-white shadow-md shadow-blue-600/25 border border-blue-400/40 hover:shadow-lg hover:shadow-blue-600/35",
+      "glossy-gradient-btn text-white shadow-md shadow-emerald-700/25 border border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-700/35",
     secondary:
-      "bg-white/80 hover:bg-white text-slate-700 border border-slate-200/90 shadow-sm hover:shadow hover:text-blue-600 backdrop-blur-md",
+      "bg-white/80 hover:bg-white text-slate-700 border border-slate-200/90 shadow-sm hover:shadow hover:text-[#0E7A50] backdrop-blur-md",
     danger:
       "bg-gradient-to-r from-rose-600 to-red-500 hover:from-rose-700 hover:to-red-600 text-white shadow-md shadow-rose-600/20 border border-rose-400/30",
     success:
       "bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-white shadow-md shadow-emerald-600/20 border border-emerald-400/30",
     outline:
-      "border-2 border-blue-600 text-blue-600 hover:bg-blue-50/70 active:bg-blue-100 font-bold",
+      "border-2 border-[#0E7A50] text-[#0E7A50] hover:bg-emerald-50/70 active:bg-emerald-100 font-bold",
     ghost:
-      "text-slate-600 hover:bg-slate-100/70 hover:text-blue-600",
+      "text-slate-600 hover:bg-slate-100/70 hover:text-[#0E7A50]",
   };
 
   const currentVariantClass = variants[variant] || variants.primary;

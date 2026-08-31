@@ -11,20 +11,20 @@ export const MainPage = () => {
   return (
     <div className="w-full font-inter text-slate-600 flex flex-col items-center">
       {/* Background ambient lighting orbs */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-tr from-blue-400/20 via-sky-300/20 to-indigo-400/20 rounded-full blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-tr from-emerald-400/20 via-teal-300/20 to-emerald-600/15 rounded-full blur-[100px] pointer-events-none -z-10" />
 
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-20 sm:space-y-32">
         {/* Hero Section */}
         <section className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center pt-4 pb-8">
           <div className="lg:col-span-7 space-y-7 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-200/80 text-blue-700 font-bold text-xs uppercase tracking-wider backdrop-blur-md shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-200/80 text-emerald-800 font-bold text-xs uppercase tracking-wider backdrop-blur-md shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#0E7A50] animate-ping" />
               <span>Smart Clinical Queue & Patient Portal</span>
             </div>
 
             <h1 className="font-manrope text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.12]">
               Precision dental care that{" "}
-              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#0E7A50] via-emerald-600 to-teal-500 bg-clip-text text-transparent">
                 respects your time.
               </span>
             </h1>
@@ -35,13 +35,13 @@ export const MainPage = () => {
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <NavLink to="/register">
-                <button className="px-7 py-3.5 glossy-gradient-btn text-white font-bold text-sm rounded-2xl flex items-center gap-2.5 shadow-lg shadow-blue-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                <button className="px-7 py-3.5 glossy-gradient-btn text-white font-bold text-sm rounded-2xl flex items-center gap-2.5 shadow-lg shadow-emerald-700/30 hover:scale-[1.02] active:scale-[0.98] transition-all">
                   <span>Get Started Now</span>
                   <span>→</span>
                 </button>
               </NavLink>
               <NavLink to="/patient/book-appointment">
-                <button className="px-7 py-3.5 bg-white/80 hover:bg-white backdrop-blur-md border border-slate-200/90 text-slate-800 font-bold text-sm rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md hover:border-blue-300 active:scale-[0.98] flex items-center gap-2">
+                <button className="px-7 py-3.5 bg-white/80 hover:bg-white backdrop-blur-md border border-slate-200/90 text-slate-800 font-bold text-sm rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md hover:border-emerald-300 hover:text-[#0E7A50] active:scale-[0.98] flex items-center gap-2">
                   <span>📅</span>
                   <span>Find Available Slots</span>
                 </button>
@@ -54,11 +54,11 @@ export const MainPage = () => {
                 <span>HIPAA Compliant</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-[10px]">🔒</span>
+                <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px]">🔒</span>
                 <span>256-Bit SSL Encrypted</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-[10px]">⚡</span>
+                <span className="w-5 h-5 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-[10px]">⚡</span>
                 <span>Live Queue Sync</span>
               </div>
             </div>
@@ -68,14 +68,14 @@ export const MainPage = () => {
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
               {/* Glossy Mesh Card */}
-              <div className="relative rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-700 to-slate-900 p-8 text-white shadow-2xl overflow-hidden border border-white/20">
-                <div className="absolute -top-24 -right-24 w-64 h-64 bg-sky-400/20 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-500/30 rounded-full blur-3xl pointer-events-none" />
+              <div className="relative rounded-3xl bg-gradient-to-br from-emerald-800 via-[#0E7A50] to-slate-900 p-8 text-white shadow-2xl overflow-hidden border border-white/20">
+                <div className="absolute -top-24 -right-24 w-64 h-64 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-emerald-500/30 rounded-full blur-3xl pointer-events-none" />
 
                 {/* Card Header */}
                 <div className="flex justify-between items-center pb-6 border-b border-white/15">
                   <div>
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-sky-200">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-teal-200">
                       Live Queue Monitor
                     </div>
                     <div className="text-xl font-manrope font-bold text-white">
@@ -90,7 +90,7 @@ export const MainPage = () => {
 
                 {/* Token Hero Display */}
                 <div className="my-8 text-center py-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 shadow-inner">
-                  <div className="text-xs font-semibold text-sky-200 uppercase tracking-widest mb-1">
+                  <div className="text-xs font-semibold text-teal-200 uppercase tracking-widest mb-1">
                     Currently Calling Token
                   </div>
                   <div className="text-6xl font-black font-manrope tracking-tight text-white drop-shadow-md">
@@ -98,7 +98,7 @@ export const MainPage = () => {
                   </div>
                   <div className="text-xs font-medium text-white/80 mt-2 flex items-center justify-center gap-1.5">
                     <span>Estimated Wait:</span>
-                    <span className="font-bold text-sky-300">~6 mins</span>
+                    <span className="font-bold text-teal-300">~6 mins</span>
                   </div>
                 </div>
 
@@ -110,14 +110,14 @@ export const MainPage = () => {
                   </div>
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
                     <span className="text-white/60 block text-[10px] uppercase">Total Waiting</span>
-                    <span className="font-bold text-sm text-sky-300">3 Patients</span>
+                    <span className="font-bold text-sm text-teal-300">3 Patients</span>
                   </div>
                 </div>
               </div>
 
               {/* Floating Badge */}
               <div className="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur-xl border border-white p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-float hidden sm:flex">
-                <div className="w-10 h-10 rounded-xl bg-blue-500 text-white flex items-center justify-center text-xl shadow-md shadow-blue-500/30">
+                <div className="w-10 h-10 rounded-xl bg-[#0E7A50] text-white flex items-center justify-center text-xl shadow-md shadow-emerald-700/30">
                   🦷
                 </div>
                 <div>
@@ -155,7 +155,7 @@ export const MainPage = () => {
         {/* Services Section */}
         <section id="services" className="space-y-12 text-center flex flex-col items-center">
           <div className="space-y-3 max-w-xl mx-auto">
-            <span className="px-3.5 py-1.5 bg-blue-500/10 border border-blue-200 text-blue-700 font-bold text-xs rounded-full uppercase tracking-wider">
+            <span className="px-3.5 py-1.5 bg-emerald-500/10 border border-emerald-200 text-emerald-800 font-bold text-xs rounded-full uppercase tracking-wider">
               Comprehensive Care
             </span>
             <h2 className="font-manrope text-3xl sm:text-4xl font-extrabold text-slate-900">
@@ -210,7 +210,7 @@ export const MainPage = () => {
                 className="glass-card glass-card-interactive p-7 flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-sky-400 text-white flex items-center justify-center text-2xl shadow-md shadow-blue-500/20">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0E7A50] to-teal-400 text-white flex items-center justify-center text-2xl shadow-md shadow-emerald-700/20">
                     {service.icon}
                   </div>
                   <h3 className="font-manrope text-lg font-bold text-slate-900">
@@ -224,7 +224,7 @@ export const MainPage = () => {
                   {service.tags.map((tag, tIndex) => (
                     <span
                       key={tIndex}
-                      className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 text-[10px] font-semibold"
+                      className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 text-[10px] font-semibold"
                     >
                       {tag}
                     </span>
@@ -238,7 +238,7 @@ export const MainPage = () => {
         {/* How It Works Section */}
         <section className="glass-card p-8 sm:p-14 text-center space-y-12 border border-white/80 shadow-glass flex flex-col items-center">
           <div className="space-y-3 max-w-xl mx-auto">
-            <span className="px-3.5 py-1.5 bg-blue-500/10 border border-blue-200 text-blue-700 font-bold text-xs rounded-full uppercase tracking-wider">
+            <span className="px-3.5 py-1.5 bg-emerald-500/10 border border-emerald-200 text-emerald-800 font-bold text-xs rounded-full uppercase tracking-wider">
               Patient Journey
             </span>
             <h2 className="font-manrope text-3xl sm:text-4xl font-extrabold text-slate-900">
@@ -268,7 +268,7 @@ export const MainPage = () => {
                 key={i}
                 className="p-6 rounded-2xl bg-white/70 border border-white/90 backdrop-blur-sm space-y-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200"
               >
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-400 text-white flex items-center justify-center text-sm font-bold shadow-md shadow-blue-500/25">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0E7A50] to-teal-400 text-white flex items-center justify-center text-sm font-bold shadow-md shadow-emerald-700/25">
                   {step.num}
                 </span>
                 <h3 className="font-manrope text-lg font-bold text-slate-900">
@@ -285,7 +285,7 @@ export const MainPage = () => {
         {/* Practice Overview & Live Monitor */}
         <section id="about" className="grid md:grid-cols-12 gap-10 items-center">
           <div className="md:col-span-7 space-y-6 text-left">
-            <span className="px-3.5 py-1.5 bg-blue-500/10 border border-blue-200 text-blue-700 font-bold text-xs rounded-full uppercase tracking-wider">
+            <span className="px-3.5 py-1.5 bg-emerald-500/10 border border-emerald-200 text-emerald-800 font-bold text-xs rounded-full uppercase tracking-wider">
               About Our Practice
             </span>
             <h2 className="font-manrope text-3xl sm:text-4xl font-extrabold text-slate-900 leading-snug">
@@ -295,11 +295,11 @@ export const MainPage = () => {
               Our clinic combines modern dental diagnostics with a hybrid queue engine. By seamlessly balancing pre-booked appointments and urgent walk-ins, we eliminate waiting room congestion and keep patients informed at every step.
             </p>
             <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-100">
+              <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-100">
                 <div className="font-bold text-slate-900 text-sm mb-1">Digitized Dental Charts</div>
                 <p className="text-xs text-slate-600">Full treatment history, diagnosis notes, and follow-up tracking.</p>
               </div>
-              <div className="p-4 rounded-xl bg-sky-50/70 border border-sky-100">
+              <div className="p-4 rounded-xl bg-teal-50/70 border border-teal-100">
                 <div className="font-bold text-slate-900 text-sm mb-1">Itemized Invoicing</div>
                 <p className="text-xs text-slate-600">Automated invoices based on official clinical treatment catalogues.</p>
               </div>
@@ -310,7 +310,7 @@ export const MainPage = () => {
             <div className="glass-card-dark p-8 space-y-5 shadow-2xl relative overflow-hidden text-xs">
               <div className="flex justify-between items-center border-b border-white/10 pb-4">
                 <span className="text-slate-300 font-semibold">Today's Clinic Activity</span>
-                <span className="font-bold text-sky-400 bg-sky-400/10 px-2.5 py-1 rounded-full border border-sky-400/20">
+                <span className="font-bold text-teal-300 bg-teal-400/10 px-2.5 py-1 rounded-full border border-teal-400/20">
                   Live Operations
                 </span>
               </div>
@@ -324,7 +324,7 @@ export const MainPage = () => {
               </div>
               <div className="flex justify-between border-b border-white/10 pb-3 text-slate-300">
                 <span>Average Consultation Time</span>
-                <span className="font-bold text-sky-300">14.2 Mins</span>
+                <span className="font-bold text-teal-300">14.2 Mins</span>
               </div>
               <div className="flex justify-between text-slate-300">
                 <span>System Security</span>
@@ -371,10 +371,10 @@ export const MainPage = () => {
                 <button
                   type="button"
                   onClick={() => toggleFaq(idx)}
-                  className="w-full px-6 py-4.5 text-left flex justify-between items-center gap-4 font-bold text-sm text-slate-800 hover:text-blue-600 cursor-pointer"
+                  className="w-full px-6 py-4.5 text-left flex justify-between items-center gap-4 font-bold text-sm text-slate-800 hover:text-[#0E7A50] cursor-pointer"
                 >
                   <span>{faq.q}</span>
-                  <span className="text-blue-600 text-lg transition-transform duration-200">
+                  <span className="text-[#0E7A50] text-lg transition-transform duration-200">
                     {activeFaq === idx ? "−" : "+"}
                   </span>
                 </button>
@@ -389,22 +389,22 @@ export const MainPage = () => {
         </section>
 
         {/* CTA Banner */}
-        <section className="rounded-3xl bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 p-10 sm:p-16 text-center space-y-6 text-white shadow-2xl relative overflow-hidden border border-white/20 flex flex-col items-center">
-          <div className="absolute -top-24 -right-24 w-80 h-80 bg-sky-400/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-indigo-500/30 rounded-full blur-3xl pointer-events-none" />
+        <section className="rounded-3xl bg-gradient-to-r from-emerald-900 via-[#0E7A50] to-teal-800 p-10 sm:p-16 text-center space-y-6 text-white shadow-2xl relative overflow-hidden border border-white/20 flex flex-col items-center">
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-emerald-500/30 rounded-full blur-3xl pointer-events-none" />
 
           <div className="space-y-3 max-w-xl mx-auto relative z-10">
             <h2 className="font-manrope text-3xl sm:text-4xl font-extrabold leading-tight">
               Ready to schedule your visit?
             </h2>
-            <p className="text-sm sm:text-base text-blue-100">
+            <p className="text-sm sm:text-base text-emerald-100">
               Create your patient account in under 2 minutes and book your preferred slot.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 relative z-10 pt-2">
             <NavLink to="/register">
-              <button className="px-8 py-3.5 bg-white text-blue-700 font-bold text-sm rounded-xl hover:bg-blue-50 transition-all duration-200 shadow-lg hover:scale-105 active:scale-95">
+              <button className="px-8 py-3.5 bg-white text-emerald-900 font-bold text-sm rounded-xl hover:bg-emerald-50 transition-all duration-200 shadow-lg hover:scale-105 active:scale-95">
                 Create Patient Account →
               </button>
             </NavLink>

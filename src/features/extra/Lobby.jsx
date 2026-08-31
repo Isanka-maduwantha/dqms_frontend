@@ -317,14 +317,14 @@ function Lobby() {
   return (
     <div className="w-full font-inter text-slate-700 min-h-screen relative flex flex-col items-center">
       {/* Background ambient lighting orbs */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-tr from-blue-400/20 via-sky-300/20 to-indigo-400/20 rounded-full blur-[110px] pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-10 w-[500px] h-[300px] bg-gradient-to-br from-indigo-300/15 to-blue-500/15 rounded-full blur-[90px] pointer-events-none -z-10" />
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-tr from-emerald-400/20 via-teal-300/20 to-emerald-600/15 rounded-full blur-[110px] pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[300px] bg-gradient-to-br from-teal-300/15 to-emerald-500/15 rounded-full blur-[90px] pointer-events-none -z-10" />
 
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
         {/* Top Header Bar */}
         <header className="glass-card p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 border border-white/80 shadow-glass">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-sky-400 p-0.5 shadow-md shadow-blue-500/25 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0E7A50] via-emerald-600 to-teal-400 p-0.5 shadow-md shadow-emerald-700/25 flex items-center justify-center shrink-0">
               <div className="w-full h-full bg-white/95 rounded-[14px] flex items-center justify-center text-2xl backdrop-blur-sm">
                 🦷
               </div>
@@ -332,7 +332,7 @@ function Lobby() {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="font-manrope font-extrabold text-lg sm:text-xl text-slate-900 tracking-tight">
-                  Dental<span className="text-blue-600">Surgery</span>
+                  Dental<span className="text-[#0E7A50]">Surgery</span>
                 </h1>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-[11px] font-bold">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -348,13 +348,13 @@ function Lobby() {
           {/* Right Header Controls & Live Clock */}
           <div className="flex flex-wrap items-center justify-between md:justify-end gap-3 sm:gap-4 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
             {/* Live Clock Badge */}
-            <div className="px-4 py-2 rounded-2xl bg-slate-900 text-white shadow-md border border-slate-800 flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-sky-400 animate-ping" />
+            <div className="px-4 py-2 rounded-2xl bg-[#041d14] text-white shadow-md border border-emerald-900/40 flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-teal-400 animate-ping" />
               <div className="text-right">
-                <div className="font-manrope font-extrabold text-base sm:text-lg tracking-wider text-sky-300">
+                <div className="font-manrope font-extrabold text-base sm:text-lg tracking-wider text-teal-300">
                   {timeString}
                 </div>
-                <div className="text-[10px] uppercase font-semibold text-slate-400 tracking-wider">
+                <div className="text-[10px] uppercase font-semibold text-emerald-200/60 tracking-wider">
                   {dateString}
                 </div>
               </div>
@@ -367,7 +367,7 @@ function Lobby() {
                 onClick={() => setAudioEnabled(!audioEnabled)}
                 className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center gap-1.5 shadow-xs ${
                   audioEnabled
-                    ? "bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-800 hover:bg-emerald-100"
                     : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200"
                 }`}
                 title={audioEnabled ? "Voice announcements enabled" : "Voice announcements muted"}
@@ -379,7 +379,7 @@ function Lobby() {
               <button
                 type="button"
                 onClick={() => void fetchData(false)}
-                className="p-2 rounded-xl bg-white hover:bg-blue-50 border border-slate-200 text-slate-600 hover:text-blue-600 transition-all shadow-xs"
+                className="p-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 text-slate-600 hover:text-[#0E7A50] transition-all shadow-xs"
                 title="Refresh queue now"
               >
                 <span className="text-sm">🔄</span>
@@ -388,7 +388,7 @@ function Lobby() {
               <button
                 type="button"
                 onClick={toggleFullscreen}
-                className="p-2 rounded-xl bg-white hover:bg-blue-50 border border-slate-200 text-slate-600 hover:text-blue-600 transition-all shadow-xs"
+                className="p-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 text-slate-600 hover:text-[#0E7A50] transition-all shadow-xs"
                 title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen Kiosk Mode"}
               >
                 <span className="text-sm">{isFullscreen ? "✕" : "⛶"}</span>
@@ -416,10 +416,10 @@ function Lobby() {
         {/* Main Grid: Currently Calling Hero + Clinic Info Panel */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Hero Calling Card (8 cols) */}
-          <section className="lg:col-span-8 rounded-3xl bg-gradient-to-br from-blue-700 via-indigo-800 to-slate-950 p-6 sm:p-8 text-white shadow-2xl relative overflow-hidden border border-white/20 flex flex-col justify-between space-y-6">
+          <section className="lg:col-span-8 rounded-3xl bg-gradient-to-br from-emerald-800 via-[#0E7A50] to-slate-950 p-6 sm:p-8 text-white shadow-2xl relative overflow-hidden border border-white/20 flex flex-col justify-between space-y-6">
             {/* Background glowing gradients */}
-            <div className="absolute -top-28 -right-28 w-80 h-80 bg-sky-400/25 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-28 -left-28 w-80 h-80 bg-indigo-500/30 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -top-28 -right-28 w-80 h-80 bg-teal-400/25 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-28 -left-28 w-80 h-80 bg-emerald-500/30 rounded-full blur-3xl pointer-events-none" />
 
             {/* Calling Card Top Row */}
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/15">
@@ -427,12 +427,12 @@ function Lobby() {
                 className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider backdrop-blur-md border ${
                   isCurrentCallingActive
                     ? "bg-emerald-500/20 border-emerald-400/30 text-emerald-300"
-                    : "bg-sky-500/20 border-sky-400/30 text-sky-200"
+                    : "bg-teal-500/20 border-teal-400/30 text-teal-200"
                 }`}
               >
                 <span
                   className={`w-2.5 h-2.5 rounded-full ${
-                    isCurrentCallingActive ? "bg-emerald-400 animate-ping" : "bg-sky-400 animate-pulse"
+                    isCurrentCallingActive ? "bg-emerald-400 animate-ping" : "bg-teal-400 animate-pulse"
                   }`}
                 />
                 <span>{isCurrentCallingActive ? "Currently Calling" : "Next In Line"}</span>
@@ -461,7 +461,7 @@ function Lobby() {
             {/* Massive Calling Token Visual */}
             <div className="relative z-10 my-2 flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="space-y-2 text-center md:text-left">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-sky-200">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">
                   {isCurrentCallingActive ? "Active Consultation Token" : "Upcoming Scheduled Token"}
                 </div>
                 <div className="text-6xl sm:text-7xl lg:text-8xl font-black font-manrope tracking-tight text-white drop-shadow-[0_10px_25px_rgba(0,0,0,0.45)]">
@@ -475,7 +475,7 @@ function Lobby() {
 
               {/* Broadcast Speech Box */}
               <div className="w-full md:max-w-xs rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-4.5 space-y-3 shadow-inner">
-                <div className="flex items-center justify-between text-[11px] font-bold text-sky-200 uppercase tracking-wider">
+                <div className="flex items-center justify-between text-[11px] font-bold text-teal-200 uppercase tracking-wider">
                   <span>Audio Guidance</span>
                   <span className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -483,8 +483,8 @@ function Lobby() {
                   </span>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-950/40 border border-white/10 text-xs text-white/90 font-medium leading-relaxed">
-                  “<strong className="text-sky-300">{getTokenValue(currentCall)}</strong> please
-                  proceed to <span className="underline decoration-sky-400">{getRoomName(currentCall)}</span>”
+                  “<strong className="text-teal-300">{getTokenValue(currentCall)}</strong> please
+                  proceed to <span className="underline decoration-teal-400">{getRoomName(currentCall)}</span>”
                 </div>
                 <div className="flex items-center justify-between text-[11px] text-white/70 pt-1">
                   <span>Slot Time:</span>
@@ -498,7 +498,7 @@ function Lobby() {
             {/* Procedure & Destination Room Banner */}
             <div className="relative z-10 rounded-2xl bg-white/10 backdrop-blur-md p-4 sm:p-5 border border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
-                <div className="text-[11px] uppercase tracking-wider font-bold text-sky-200">
+                <div className="text-[11px] uppercase tracking-wider font-bold text-teal-200">
                   {getProcedureLabel(currentCall)}
                 </div>
                 <div className="font-manrope text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
@@ -515,12 +515,12 @@ function Lobby() {
                   className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-bold text-xs border ${
                     isCurrentCallingActive
                       ? "bg-emerald-400/20 text-emerald-300 border-emerald-400/30"
-                      : "bg-sky-400/20 text-sky-200 border-sky-400/30"
+                      : "bg-teal-400/20 text-teal-200 border-teal-400/30"
                   }`}
                 >
                   <span
                     className={`w-1.5 h-1.5 rounded-full ${
-                      isCurrentCallingActive ? "bg-emerald-400 animate-ping" : "bg-sky-300"
+                      isCurrentCallingActive ? "bg-emerald-400 animate-ping" : "bg-teal-300"
                     }`}
                   />
                   <span>{isCurrentCallingActive ? "In Session" : "Scheduled Slot"}</span>
@@ -538,21 +538,21 @@ function Lobby() {
             <div className="glass-card p-5 sm:p-6 space-y-4 border border-white/80 shadow-glass">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#0E7A50]">
                     Clinic Zone
                   </span>
                   <h2 className="font-manrope text-lg font-extrabold text-slate-900">
                     Main Waiting Lobby
                   </h2>
                 </div>
-                <span className="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-100">
+                <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-100">
                   Zone A • Fl. 1
                 </span>
               </div>
 
               {/* Wayfinding Visual */}
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-sky-50/60 border border-blue-100/80 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center text-2xl shadow-md shadow-blue-500/20 shrink-0">
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50/60 border border-emerald-100/80 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#0E7A50] text-white flex items-center justify-center text-2xl shadow-md shadow-emerald-700/20 shrink-0">
                   📍
                 </div>
                 <div className="space-y-0.5">
@@ -569,7 +569,7 @@ function Lobby() {
               <div className="grid grid-cols-2 gap-2.5 pt-1">
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
                   <div className="text-xs text-slate-500 font-semibold">Total Waiting</div>
-                  <div className="font-manrope text-xl font-black text-blue-600 mt-0.5">
+                  <div className="font-manrope text-xl font-black text-[#0E7A50] mt-0.5">
                     {Math.max(upcoming.length, 1)} Patients
                   </div>
                 </div>
@@ -590,11 +590,11 @@ function Lobby() {
               </div>
               <ul className="space-y-2 text-xs text-slate-600 leading-relaxed">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-600 font-bold">•</span>
+                  <span className="text-[#0E7A50] font-bold">•</span>
                   <span>Please have your <strong>NIC / Patient ID</strong> ready when your token is called.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-600 font-bold">•</span>
+                  <span className="text-[#0E7A50] font-bold">•</span>
                   <span>If your token does not appear within 20 minutes of estimated wait, please visit <strong>Desk 01</strong>.</span>
                 </li>
               </ul>
@@ -609,7 +609,7 @@ function Lobby() {
               <h2 className="font-manrope text-xl font-extrabold text-slate-900">
                 Upcoming Queue Sequence
               </h2>
-              <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200/80">
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200/80">
                 {upcoming.length} In Line
               </span>
             </div>
@@ -666,12 +666,12 @@ function Lobby() {
                         className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold border ${
                           isPreparing
                             ? "bg-amber-500/15 text-amber-800 border-amber-300/80"
-                            : "bg-blue-500/10 text-blue-700 border-blue-200/80"
+                            : "bg-emerald-500/10 text-emerald-800 border-emerald-200/80"
                         }`}
                       >
                         <span
                           className={`w-1.5 h-1.5 rounded-full ${
-                            isPreparing ? "bg-amber-500 animate-pulse" : "bg-blue-500"
+                            isPreparing ? "bg-amber-500 animate-pulse" : "bg-emerald-500"
                           }`}
                         />
                         {statusStr === "ARRIVED" ? "Arrived" : isPreparing ? "Preparing" : "Booked"}
@@ -686,7 +686,7 @@ function Lobby() {
                       <div className="text-xs font-bold text-slate-700 truncate mt-0.5">
                         {getDisplayName(item)}
                       </div>
-                      <div className="text-[10px] font-medium text-blue-600 truncate mt-0.5">
+                      <div className="text-[10px] font-medium text-[#0E7A50] truncate mt-0.5">
                         {getProcedureLabel(item)}
                       </div>
                     </div>

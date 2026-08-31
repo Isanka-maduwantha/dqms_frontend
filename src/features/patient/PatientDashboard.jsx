@@ -73,7 +73,7 @@ function PatientDashboard() {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+          <span className="text-xs font-bold text-[#0E7A50] uppercase tracking-wider">
             Patient Portal
           </span>
           <h1 className="font-manrope text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
@@ -95,18 +95,18 @@ function PatientDashboard() {
       {actionError && <Alert kind="error">{actionError}</Alert>}
 
       {/* Active Care Banner Card */}
-      <div className="rounded-3xl bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-white/20">
-        <div className="absolute -top-16 -right-16 w-56 h-56 bg-sky-400/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="rounded-3xl bg-gradient-to-r from-emerald-800 via-[#0E7A50] to-teal-800 p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-white/20">
+        <div className="absolute -top-16 -right-16 w-56 h-56 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-sky-200 text-xs font-bold border border-white/20">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-teal-200 text-xs font-bold border border-white/20">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               Active Patient Record
             </span>
             <h2 className="font-manrope text-xl sm:text-2xl font-bold">
               Manage your dental wellness journey with precision.
             </h2>
-            <p className="text-xs sm:text-sm text-blue-100/80 max-w-xl">
+            <p className="text-xs sm:text-sm text-emerald-100/80 max-w-xl">
               Always check in upon arrival at the front desk to receive your live queue token. Cancellations within 24 hours can be rescheduled directly below.
             </p>
           </div>
@@ -114,7 +114,7 @@ function PatientDashboard() {
             <div className="text-3xl font-extrabold font-manrope">
               {data.filter((d) => d.status === "BOOKED" && d.appointmentDate >= today).length}
             </div>
-            <div className="text-[11px] font-semibold text-sky-200 uppercase tracking-wider mt-0.5">
+            <div className="text-[11px] font-semibold text-teal-200 uppercase tracking-wider mt-0.5">
               Upcoming Visits
             </div>
           </div>
@@ -130,7 +130,7 @@ function PatientDashboard() {
             onClick={() => setTab("upcoming")}
             className={`pb-3 text-xs sm:text-sm font-bold border-b-2 transition-all duration-200 cursor-pointer ${
               tab === "upcoming"
-                ? "text-blue-600 border-blue-600"
+                ? "text-[#0E7A50] border-[#0E7A50]"
                 : "text-slate-500 border-transparent hover:text-slate-800"
             }`}
           >
@@ -141,7 +141,7 @@ function PatientDashboard() {
             onClick={() => setTab("past")}
             className={`pb-3 text-xs sm:text-sm font-bold border-b-2 transition-all duration-200 cursor-pointer ${
               tab === "past"
-                ? "text-blue-600 border-blue-600"
+                ? "text-[#0E7A50] border-[#0E7A50]"
                 : "text-slate-500 border-transparent hover:text-slate-800"
             }`}
           >
@@ -153,7 +153,7 @@ function PatientDashboard() {
         <div className="p-6">
           {loading ? (
             <div className="py-12 text-center text-slate-500 text-xs flex flex-col items-center gap-2">
-              <svg className="animate-spin h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-6 w-6 text-[#0E7A50]" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
@@ -197,7 +197,7 @@ function PatientDashboard() {
                     <tr key={item._id} className="hover:bg-slate-50/60 transition-colors">
                       <td className="py-4 pr-4 font-bold text-slate-800">
                         <div className="flex items-center gap-2">
-                          <span className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+                          <span className="w-7 h-7 rounded-lg bg-emerald-50 text-[#0E7A50] flex items-center justify-center text-xs">
                             📅
                           </span>
                           <div>
@@ -225,7 +225,7 @@ function PatientDashboard() {
                             <button
                               type="button"
                               onClick={() => setRescheduling(item)}
-                              className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50/50 transition-all shadow-xs cursor-pointer"
+                              className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-[#0E7A50] hover:border-emerald-300 hover:bg-emerald-50/50 transition-all shadow-xs cursor-pointer"
                             >
                               Reschedule
                             </button>
@@ -330,7 +330,7 @@ function RescheduleModal({ appointment, onClose, onDone }) {
               setDate(e.target.value);
               void loadSlots(e.target.value);
             }}
-            className="w-full bg-white border border-slate-200 rounded-xl py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            className="w-full bg-white border border-slate-200 rounded-xl py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-[#0E7A50] focus:ring-2 focus:ring-emerald-100"
             required
           />
         </div>
@@ -353,9 +353,9 @@ function RescheduleModal({ appointment, onClose, onDone }) {
                   onClick={() => setTime(slot.time)}
                   className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                     time === slot.time
-                      ? "glossy-gradient-btn text-white shadow-md shadow-blue-500/30 border-blue-400"
+                      ? "glossy-gradient-btn text-white shadow-md shadow-emerald-700/30 border-emerald-400"
                       : slot.available
-                      ? "bg-white text-slate-700 border-slate-200 hover:border-blue-300 hover:text-blue-600"
+                      ? "bg-white text-slate-700 border-slate-200 hover:border-emerald-300 hover:text-[#0E7A50]"
                       : "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed opacity-50"
                   }`}
                 >

@@ -58,26 +58,26 @@ export default function LoginPage() {
     <div className="grow min-h-[calc(100vh-5rem)] flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-5xl grid lg:grid-cols-12 rounded-3xl overflow-hidden glass-card border border-white/80 shadow-2xl">
         {/* Left Hero Brand Panel */}
-        <div className="lg:col-span-5 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-800 p-8 sm:p-12 text-white flex flex-col justify-between relative overflow-hidden hidden md:flex">
-          <div className="absolute -top-20 -right-20 w-60 h-60 bg-sky-400/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-indigo-500/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="lg:col-span-5 bg-gradient-to-br from-emerald-800 via-[#0E7A50] to-teal-900 p-8 sm:p-12 text-white flex flex-col justify-between relative overflow-hidden hidden md:flex">
+          <div className="absolute -top-20 -right-20 w-60 h-60 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/30 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 space-y-3">
             <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-2xl shadow-inner">
               🦷
             </div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-sky-200 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-teal-200 block">
               Dental Surgery Portal
             </span>
             <h2 className="font-manrope text-2xl sm:text-3xl font-extrabold text-white leading-tight">
               One unified platform for your entire visit.
             </h2>
-            <p className="text-xs sm:text-sm text-blue-100/80 leading-relaxed">
+            <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed">
               Patients, front desk reception, dentists and clinic administrators all work from the same live clinical record.
             </p>
           </div>
 
-          <div className="relative z-10 space-y-3 pt-8 border-t border-white/15 text-xs text-blue-100">
+          <div className="relative z-10 space-y-3 pt-8 border-t border-white/15 text-xs text-emerald-100">
             <div className="flex items-center gap-2.5">
               <span className="w-5 h-5 rounded-full bg-emerald-400/20 text-emerald-300 flex items-center justify-center font-bold">✓</span>
               <span>Live token queue tracking</span>
@@ -96,7 +96,7 @@ export default function LoginPage() {
         {/* Right Form Panel */}
         <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 flex flex-col justify-center bg-white/70 backdrop-blur-xl">
           <div className="mb-6 text-left">
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#0E7A50] uppercase tracking-wider">
               Patient & Staff Sign In
             </span>
             <h1 className="font-manrope text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
@@ -147,7 +147,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="text-xs font-bold text-slate-500 hover:text-blue-600 focus:outline-none px-1"
+                  className="text-xs font-bold text-slate-500 hover:text-[#0E7A50] focus:outline-none px-1"
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
@@ -168,12 +168,12 @@ export default function LoginPage() {
           <div className="pt-6 mt-6 border-t border-slate-100 text-xs text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div>
               <span>New patient? </span>
-              <Link to="/register" className="text-blue-600 font-bold hover:underline">
+              <Link to="/register" className="text-[#0E7A50] font-bold hover:underline">
                 Create account →
               </Link>
             </div>
             <div>
-              <Link to="/admin/login" className="text-slate-500 hover:text-blue-600 font-semibold">
+              <Link to="/admin/login" className="text-slate-500 hover:text-[#0E7A50] font-semibold">
                 🛡️ Admin Sign In
               </Link>
             </div>

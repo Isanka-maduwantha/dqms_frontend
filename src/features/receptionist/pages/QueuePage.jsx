@@ -71,7 +71,7 @@ export default function QueuePage() {
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+          <span className="text-xs font-bold text-[#0E7A50] uppercase tracking-wider">
             Reception Desk
           </span>
           <h1 className="font-manrope text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
@@ -95,7 +95,7 @@ export default function QueuePage() {
           <button
             type="button"
             onClick={() => void load(date)}
-            className="p-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-slate-50 shadow-xs"
+            className="p-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-[#0E7A50] hover:bg-slate-50 shadow-xs"
             title="Refresh schedule"
           >
             🔄
@@ -109,7 +109,7 @@ export default function QueuePage() {
       <Card className="space-y-4 border border-white/80">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2.5">
-            <span className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm font-bold">
+            <span className="w-8 h-8 rounded-xl bg-emerald-50 text-[#0E7A50] flex items-center justify-center text-sm font-bold">
               🪑
             </span>
             <div>
@@ -121,7 +121,7 @@ export default function QueuePage() {
               </p>
             </div>
           </div>
-          <span className="px-3 py-1 rounded-full bg-blue-500/10 text-blue-700 font-bold text-xs border border-blue-200/60">
+          <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-800 font-bold text-xs border border-emerald-200/60">
             {queue.length} Waiting
           </span>
         </div>
@@ -139,9 +139,9 @@ export default function QueuePage() {
             {queue.map((appointment) => (
               <div
                 key={appointment._id}
-                className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/90 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-blue-300 transition-all duration-200"
+                className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/90 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-200"
               >
-                <div className="w-12 h-12 rounded-2xl glossy-gradient-btn text-white font-extrabold text-base flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
+                <div className="w-12 h-12 rounded-2xl glossy-gradient-btn text-white font-extrabold text-base flex items-center justify-center shrink-0 shadow-md shadow-emerald-700/20">
                   {appointment.tokenNumber}
                 </div>
                 <div className="min-w-0 flex-1">
@@ -207,7 +207,7 @@ export default function QueuePage() {
               <tbody className="divide-y divide-slate-100">
                 {today.map((appointment) => (
                   <tr key={appointment._id} className="hover:bg-slate-50/60 transition-colors">
-                    <td className="py-3.5 pr-4 font-bold text-blue-700">
+                    <td className="py-3.5 pr-4 font-bold text-emerald-800">
                       {appointment.startTime}
                     </td>
                     <td className="py-3.5 pr-4">
@@ -224,7 +224,7 @@ export default function QueuePage() {
                     </td>
                     <td className="py-3.5 pr-4">
                       {appointment.tokenNumber ? (
-                        <span className="font-extrabold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100">
+                        <span className="font-extrabold text-[#0E7A50] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
                           #{appointment.tokenNumber}
                         </span>
                       ) : (

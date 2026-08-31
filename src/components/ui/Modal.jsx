@@ -32,9 +32,9 @@ export default function Modal({
         className={`relative w-full ${width} bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/80 max-h-[90vh] flex flex-col z-10 animate-scaleIn overflow-hidden`}
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4.5 border-b border-slate-100 bg-gradient-to-r from-blue-50/50 to-white/50 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4.5 border-b border-slate-100 bg-gradient-to-r from-emerald-50/50 to-white/50 shrink-0">
           <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#0E7A50]"></span>
             <h3 className="font-manrope font-bold text-base text-slate-800 tracking-tight">
               {title}
             </h3>

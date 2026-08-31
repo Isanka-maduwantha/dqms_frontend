@@ -2,8 +2,8 @@ import { titleCase } from "../lib/utils/format";
 
 const CONFIGS = {
   BOOKED: {
-    classes: "bg-blue-500/10 text-blue-700 border-blue-200/80",
-    dot: "bg-blue-500",
+    classes: "bg-emerald-500/10 text-emerald-800 border-emerald-200/80",
+    dot: "bg-emerald-600",
     icon: "📅",
   },
   ARRIVED: {
@@ -12,8 +12,8 @@ const CONFIGS = {
     icon: "🪑",
   },
   IN_CONSULTATION: {
-    classes: "bg-indigo-500/10 text-indigo-700 border-indigo-200/80",
-    dot: "bg-indigo-500 animate-pulse",
+    classes: "bg-teal-600/10 text-teal-900 border-teal-300/80",
+    dot: "bg-teal-600 animate-pulse",
     icon: "🩺",
   },
   COMPLETED: {
@@ -47,8 +47,8 @@ const CONFIGS = {
     icon: "⚠️",
   },
   ACTIVE: {
-    classes: "bg-sky-500/10 text-sky-700 border-sky-200/80",
-    dot: "bg-sky-500",
+    classes: "bg-teal-500/10 text-teal-800 border-teal-200/80",
+    dot: "bg-teal-500",
     icon: "●",
   },
   INACTIVE: {
