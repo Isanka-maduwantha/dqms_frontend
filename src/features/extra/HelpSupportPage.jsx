@@ -75,7 +75,7 @@ export default function HelpSupportPage({ type = "help" }) {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-8 text-left">
       <div className="space-y-2">
-        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+        <span className="text-xs font-bold text-[#0E7A50] uppercase tracking-wider">
           {content.tag}
         </span>
         <h1 className="font-manrope text-3xl sm:text-4xl font-extrabold text-slate-900 flex items-center gap-3">
@@ -91,7 +91,7 @@ export default function HelpSupportPage({ type = "help" }) {
         {content.items.map((item, idx) => (
           <Card key={idx} className="p-6 border border-white/80 space-y-2">
             <h3 className="font-manrope font-bold text-base text-slate-900 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-600" />
+              <span className="w-2 h-2 rounded-full bg-[#0E7A50]" />
               <span>{item.q}</span>
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-4">
@@ -101,7 +101,7 @@ export default function HelpSupportPage({ type = "help" }) {
         ))}
       </div>
 
-      <div className="p-6 rounded-3xl bg-blue-50/80 border border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-6 rounded-3xl bg-emerald-50/80 border border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <h4 className="font-manrope font-bold text-sm text-slate-900">
             Need further assistance?

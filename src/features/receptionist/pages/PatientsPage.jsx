@@ -186,7 +186,7 @@ export default function PatientsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+          <span className="text-xs font-bold text-[#0E7A50] uppercase tracking-wider">
             Patient Registry
           </span>
           <h1 className="font-manrope text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
@@ -237,7 +237,7 @@ export default function PatientsPage() {
                 setQuery("");
                 void load();
               }}
-              className="text-xs text-blue-600 font-bold hover:underline"
+              className="text-xs text-[#0E7A50] font-bold hover:underline"
             >
               Clear Search Filter
             </button>
@@ -269,9 +269,9 @@ export default function PatientsPage() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {patients.map((patient) => (
-                  <tr key={patient._id} className="hover:bg-blue-50/40 transition-colors">
+                  <tr key={patient._id} className="hover:bg-emerald-50/40 transition-colors">
                     <td className="py-3.5 px-6 font-bold text-slate-900 flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
+                      <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs">
                         {(patient.name || "P").charAt(0).toUpperCase()}
                       </div>
                       <span>{patient.name}</span>
@@ -285,7 +285,7 @@ export default function PatientsPage() {
                         <button
                           type="button"
                           onClick={() => navigate(`/receptionist/billing?patientId=${patient._id}`)}
-                          className="rounded-xl border border-blue-200 bg-blue-50/80 px-2.5 py-1.5 text-[11px] font-bold text-blue-700 hover:bg-blue-100 transition-colors shadow-2xs cursor-pointer"
+                          className="rounded-xl border border-emerald-200 bg-emerald-50/80 px-2.5 py-1.5 text-[11px] font-bold text-emerald-800 hover:bg-emerald-100 transition-colors shadow-2xs cursor-pointer"
                         >
                           💳 Billing
                         </button>

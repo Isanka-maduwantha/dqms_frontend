@@ -33,7 +33,7 @@ export default function FormSelect({
           className={`w-full appearance-none bg-white/80 backdrop-blur-sm border rounded-xl py-2.5 pl-3.5 pr-10 text-sm text-slate-800 outline-none transition-all duration-200 shadow-sm cursor-pointer ${
             error
               ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 bg-rose-50/30"
-              : "border-slate-200/90 hover:border-slate-300 focus:border-blue-500 focus:ring-3 focus:ring-blue-400/20 focus:bg-white"
+              : "border-slate-200/90 hover:border-slate-300 focus:border-[#0E7A50] focus:ring-3 focus:ring-emerald-400/20 focus:bg-white"
           } ${className}`}
           {...props}
         >

@@ -66,7 +66,7 @@ export default function DateSelector({ updateSlots, handleDateUpdate }) {
           <span>📅</span>
           <span>Select Visit Date</span>
         </span>
-        <span className="text-xs font-semibold text-blue-600">
+        <span className="text-xs font-semibold text-[#0E7A50]">
           Next 7 Days
         </span>
       </div>
@@ -82,8 +82,8 @@ export default function DateSelector({ updateSlots, handleDateUpdate }) {
               onClick={() => handleDateChange(day.dateKey)}
               className={`flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-200 cursor-pointer ${
                 isSelected
-                  ? "glossy-gradient-btn text-white shadow-md shadow-blue-500/30 font-bold scale-105"
-                  : "bg-white/80 hover:bg-white text-slate-700 border border-slate-200/80 hover:border-blue-300 shadow-2xs"
+                  ? "glossy-gradient-btn text-white shadow-md shadow-emerald-700/30 font-bold scale-105"
+                  : "bg-white/80 hover:bg-white text-slate-700 border border-slate-200/80 hover:border-emerald-300 shadow-2xs"
               }`}
             >
               <span className="text-[10px] uppercase font-bold opacity-80">
@@ -93,7 +93,7 @@ export default function DateSelector({ updateSlots, handleDateUpdate }) {
                 {day.dayNum}
               </span>
               {day.isToday && (
-                <span className={`w-1 h-1 rounded-full mt-1 ${isSelected ? "bg-white" : "bg-blue-600"}`} />
+                <span className={`w-1 h-1 rounded-full mt-1 ${isSelected ? "bg-white" : "bg-[#0E7A50]"}`} />
               )}
             </button>
           );
@@ -114,7 +114,7 @@ export default function DateSelector({ updateSlots, handleDateUpdate }) {
               void handleDateChange(e.target.value);
             }
           }}
-          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800 outline-none focus:border-blue-500"
+          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800 outline-none focus:border-[#0E7A50]"
         />
       </div>
     </div>

@@ -23,20 +23,20 @@ function Navbar() {
   const dashboardPath = user?.role ? ROLE_HOME[user.role] || "/" : "/";
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/75 border-b border-blue-100/60 shadow-[0_4px_25px_-5px_rgba(37,99,235,0.06)] transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/75 border-b border-emerald-100/60 shadow-[0_4px_25px_-5px_rgba(14,122,80,0.06)] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo */}
         <div className="flex items-center">
           <NavLink to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-blue-500 to-sky-400 p-0.5 shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0E7A50] via-emerald-600 to-teal-400 p-0.5 shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform duration-200 flex items-center justify-center">
               <div className="w-full h-full bg-white/95 rounded-[10px] flex items-center justify-center p-1.5 backdrop-blur-sm">
                 <img src={logo} alt="Dental Surgery" className="w-full h-full object-contain" />
               </div>
             </div>
             <div className="flex flex-col">
               <span className="font-manrope font-extrabold text-[17px] text-slate-900 tracking-tight flex items-center gap-1.5">
-                Dental<span className="text-blue-600 font-extrabold">Surgery</span>
-                <span className="inline-block w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                Dental<span className="text-[#0E7A50] font-extrabold">Surgery</span>
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               </span>
               <span className="text-[10px] font-semibold text-slate-500 tracking-wider uppercase -mt-0.5">
                 Clinical Portal
@@ -53,8 +53,8 @@ function Navbar() {
             className={({ isActive }) =>
               `px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                 isActive
-                  ? "bg-white text-blue-600 shadow-sm font-bold"
-                  : "text-slate-600 hover:text-blue-600 hover:bg-white/50"
+                  ? "bg-white text-[#0E7A50] shadow-sm font-bold"
+                  : "text-slate-600 hover:text-[#0E7A50] hover:bg-white/50"
               }`
             }
           >
@@ -62,13 +62,13 @@ function Navbar() {
           </NavLink>
           <a
             href="/#services"
-            className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/50 transition-all duration-200"
+            className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-[#0E7A50] hover:bg-white/50 transition-all duration-200"
           >
             Services
           </a>
           <a
             href="/#about"
-            className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/50 transition-all duration-200"
+            className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-[#0E7A50] hover:bg-white/50 transition-all duration-200"
           >
             About Practice
           </a>
@@ -77,8 +77,8 @@ function Navbar() {
             className={({ isActive }) =>
               `px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                 isActive
-                  ? "bg-white text-blue-600 shadow-sm font-bold"
-                  : "text-slate-600 hover:text-blue-600 hover:bg-white/50"
+                  ? "bg-white text-[#0E7A50] shadow-sm font-bold"
+                  : "text-slate-600 hover:text-[#0E7A50] hover:bg-white/50"
               }`
             }
           >
@@ -89,8 +89,8 @@ function Navbar() {
             className={({ isActive }) =>
               `px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                 isActive
-                  ? "bg-white text-blue-600 shadow-sm font-bold"
-                  : "text-slate-600 hover:text-blue-600 hover:bg-white/50"
+                  ? "bg-white text-[#0E7A50] shadow-sm font-bold"
+                  : "text-slate-600 hover:text-[#0E7A50] hover:bg-white/50"
               }`
             }
           >
@@ -104,7 +104,7 @@ function Navbar() {
             <div className="flex items-center gap-3">
               <NavLink
                 to={dashboardPath}
-                className="px-4 py-2 rounded-xl bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold hover:bg-blue-100 transition-all shadow-sm flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-bold hover:bg-emerald-100 transition-all shadow-sm flex items-center gap-1.5"
               >
                 <span>👤</span>
                 <span>{user.name || user.email?.split("@")[0] || "Dashboard"}</span>
@@ -120,12 +120,12 @@ function Navbar() {
           ) : (
             <>
               <NavLink to="/login">
-                <button className="px-4 py-2 rounded-xl bg-white/80 hover:bg-white border border-slate-200/80 text-slate-700 text-xs font-bold hover:text-blue-600 transition-all duration-200 shadow-sm hover:shadow active:scale-95">
+                <button className="px-4 py-2 rounded-xl bg-white/80 hover:bg-white border border-slate-200/80 text-slate-700 text-xs font-bold hover:text-[#0E7A50] transition-all duration-200 shadow-sm hover:shadow active:scale-95">
                   Sign In
                 </button>
               </NavLink>
               <NavLink to="/register">
-                <button className="px-4 py-2 rounded-xl glossy-gradient-btn text-white text-xs font-bold shadow-md shadow-blue-600/25 active:scale-95 flex items-center gap-1.5">
+                <button className="px-4 py-2 rounded-xl glossy-gradient-btn text-white text-xs font-bold shadow-md shadow-emerald-700/25 active:scale-95 flex items-center gap-1.5">
                   <span>Register</span>
                   <span>→</span>
                 </button>
@@ -159,28 +159,28 @@ function Navbar() {
           <NavLink
             to="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-[#0E7A50]"
           >
             Home
           </NavLink>
           <a
             href="#services"
             onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-[#0E7A50]"
           >
             Services
           </a>
           <a
             href="#about"
             onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-[#0E7A50]"
           >
             About Practice
           </a>
           <NavLink
             to="/patient/book-appointment"
             onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-[#0E7A50]"
           >
             Book Appointment
           </NavLink>
@@ -190,7 +190,7 @@ function Navbar() {
                 <NavLink
                   to={dashboardPath}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 rounded-xl bg-blue-50 text-blue-700 font-bold text-xs"
+                  className="w-full text-center py-2.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-xs"
                 >
                   My Portal
                 </NavLink>

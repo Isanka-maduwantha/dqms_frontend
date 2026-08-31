@@ -15,17 +15,17 @@ function FooterBar() {
 
         <ul className="flex items-center gap-6 font-medium">
           <li>
-            <NavLink to="/help" className="hover:text-blue-600 transition-colors">
+            <NavLink to="/help" className="hover:text-[#0E7A50] transition-colors">
               Help Center
             </NavLink>
           </li>
           <li>
-            <NavLink to="/support" className="hover:text-blue-600 transition-colors">
+            <NavLink to="/support" className="hover:text-[#0E7A50] transition-colors">
               Support Desk
             </NavLink>
           </li>
           <li>
-            <NavLink to="/security" className="hover:text-blue-600 transition-colors">
+            <NavLink to="/security" className="hover:text-[#0E7A50] transition-colors">
               HIPAA & Security
             </NavLink>
           </li>

@@ -183,7 +183,7 @@ function RegisterFrom() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="text-xs font-bold text-slate-500 hover:text-blue-600 focus:outline-none px-1"
+                className="text-xs font-bold text-slate-500 hover:text-[#0E7A50] focus:outline-none px-1"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -248,11 +248,11 @@ function RegisterFrom() {
                   setFieldErrors((prev) => ({ ...prev, terms: null }));
                 }
               }}
-              className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+              className="mt-0.5 rounded border-slate-300 text-[#0E7A50] focus:ring-emerald-500 cursor-pointer"
             />
             <span className="leading-tight">
-              I agree to the <span className="text-blue-600 font-semibold">Terms of Service</span> and{" "}
-              <span className="text-blue-600 font-semibold">Privacy Policy</span>, including secure electronic storage of my dental health records.
+              I agree to the <span className="text-[#0E7A50] font-semibold">Terms of Service</span> and{" "}
+              <span className="text-[#0E7A50] font-semibold">Privacy Policy</span>, including secure electronic storage of my dental health records.
             </span>
           </label>
           {fieldErrors.terms && (

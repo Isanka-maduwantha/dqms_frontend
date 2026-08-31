@@ -4,7 +4,7 @@ import CommonButton from "../../components/CommanButton";
 function Unauthorized() {
   return (
     <div className="grow flex flex-col items-center justify-center gap-5 text-center p-8 sm:p-14 min-h-[70vh]">
-      <div className="w-20 h-20 rounded-3xl bg-blue-500/10 border border-blue-200/80 flex items-center justify-center text-4xl shadow-lg shadow-blue-500/10">
+      <div className="w-20 h-20 rounded-3xl bg-emerald-500/10 border border-emerald-200/80 flex items-center justify-center text-4xl shadow-lg shadow-emerald-700/10">
         🛡️
       </div>
       <div className="max-w-md space-y-2">

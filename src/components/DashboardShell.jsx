@@ -19,7 +19,7 @@ export default function DashboardShell({
   };
 
   return (
-    <div className="flex grow w-full font-inter bg-gradient-to-br from-slate-50 via-blue-50/40 to-slate-100 min-h-screen text-slate-800">
+    <div className="flex grow w-full font-inter bg-gradient-to-br from-slate-50 via-emerald-50/30 to-slate-100 min-h-screen text-slate-800">
       {/* Mobile Drawer Overlay */}
       {mobileOpen && (
         <div
@@ -30,23 +30,23 @@ export default function DashboardShell({
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static inset-y-0 left-0 z-50 w-64 shrink-0 bg-gradient-to-b from-[#0a1832] via-[#0d1e3d] to-[#081226] text-white flex flex-col border-r border-blue-900/40 shadow-2xl transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed md:static inset-y-0 left-0 z-50 w-64 shrink-0 bg-gradient-to-b from-[#041d14] via-[#06281e] to-[#03140e] text-white flex flex-col border-r border-emerald-900/40 shadow-2xl transition-transform duration-300 md:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Sidebar Brand Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-400 p-0.5 shadow-md shadow-blue-500/25 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#0E7A50] to-teal-400 p-0.5 shadow-md shadow-emerald-900/40 flex items-center justify-center">
               <div className="w-full h-full bg-white/95 rounded-[10px] flex items-center justify-center p-1 backdrop-blur-sm">
                 <img src={logo} alt="" className="w-full h-full object-contain" />
               </div>
             </div>
             <div className="flex flex-col">
               <span className="font-manrope font-extrabold text-[15px] tracking-tight">
-                Dental<span className="text-sky-400">Surgery</span>
+                Dental<span className="text-teal-300">Surgery</span>
               </span>
-              <span className="text-[10px] font-semibold text-blue-300/80 uppercase tracking-wider">
+              <span className="text-[10px] font-semibold text-emerald-300/80 uppercase tracking-wider">
                 {roleLabel} Portal
               </span>
             </div>
@@ -62,7 +62,7 @@ export default function DashboardShell({
 
         {/* Sidebar Navigation */}
         <nav className="flex flex-col gap-1.5 px-3.5 py-6 grow overflow-y-auto">
-          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-blue-300/60">
+          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-emerald-300/60">
             Navigation Menu
           </div>
           {navItems.map((item) => (
@@ -74,7 +74,7 @@ export default function DashboardShell({
               className={({ isActive }) =>
                 `flex items-center gap-3.5 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 ${
                   isActive
-                    ? "bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-lg shadow-blue-600/30 font-bold"
+                    ? "bg-gradient-to-r from-[#0E7A50] to-emerald-600 text-white shadow-lg shadow-emerald-950/40 font-bold"
                     : "text-slate-300 hover:bg-white/10 hover:text-white"
                 }`
               }
@@ -88,12 +88,12 @@ export default function DashboardShell({
         {/* User Card & Logout */}
         <div className="p-4 border-t border-white/10 bg-black/20 backdrop-blur-sm">
           <div className="flex items-center gap-3 mb-3 px-1">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-500 to-sky-400 flex items-center justify-center font-bold text-white text-xs shadow-md shadow-blue-500/20">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center font-bold text-white text-xs shadow-md shadow-emerald-900/30">
               {(user?.name || user?.email || "U").charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0 flex-1 text-[12px]">
               <div className="font-bold text-white truncate">{user?.name || user?.email || "Staff User"}</div>
-              <div className="text-blue-300/70 text-[11px] truncate flex items-center gap-1">
+              <div className="text-emerald-300/70 text-[11px] truncate flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                 <span>{roleLabel}</span>
               </div>
@@ -128,7 +128,7 @@ export default function DashboardShell({
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
               <span className="hidden sm:inline">Clinic Portal</span>
               <span className="hidden sm:inline">/</span>
-              <span className="text-blue-600 font-bold">{roleLabel} Area</span>
+              <span className="text-[#0E7A50] font-bold">{roleLabel} Area</span>
             </div>
           </div>
 

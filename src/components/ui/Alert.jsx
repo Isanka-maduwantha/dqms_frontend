@@ -10,7 +10,7 @@ const STYLES = {
     badge: "Success",
   },
   info: {
-    container: "bg-blue-500/10 text-blue-800 border-blue-200/90 shadow-blue-500/5",
+    container: "bg-emerald-500/10 text-emerald-900 border-emerald-200/90 shadow-emerald-500/5",
     icon: "ℹ️",
     badge: "Notice",
   },

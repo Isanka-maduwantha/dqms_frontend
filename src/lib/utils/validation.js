@@ -59,11 +59,11 @@ export function getPasswordStrength(password) {
   } else if (passedCount === 3 || passedCount === 4) {
     score = 3;
     label = "Good";
-    color = "bg-sky-500";
+    color = "bg-teal-500";
   } else if (passedCount === 5) {
     score = 4;
     label = "Strong";
-    color = "bg-emerald-500";
+    color = "bg-[#0E7A50]";
   }
 
   return { score, label, color, rules, isStrong: passedCount >= 4 && password.length >= 8 };
