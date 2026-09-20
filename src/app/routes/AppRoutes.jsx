@@ -24,6 +24,7 @@ import AdminDashboardPage from "../../features/admin/pages/AdminDashboardPage";
 import AdminInventoryPage from "../../features/admin/pages/AdminInventoryPage";
 import AdminReportsPage from "../../features/admin/pages/AdminReportsPage";
 import Lobby from "../../features/extra/Lobby";
+import ManageProfilePage from "../../features/profile/ManageProfilePage";
 
 export default function AppRoutes() {
   const { role } = useAuth();
@@ -39,6 +40,18 @@ export default function AppRoutes() {
       <Route path="/security" element={<HelpSupportPage type="security" />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/" element={<MainPage />} />
+
+      {/* Shared profile portal */}
+      <Route
+        element={
+          <ProtectedRoute
+            userRole={role}
+            allowedRoles={["patient", "receptionist", "dentist", "admin"]}
+          />
+        }
+      >
+        <Route path="/profile" element={<ManageProfilePage />} />
+      </Route>
 
       {/* Patient Portal */}
       <Route element={<ProtectedRoute userRole={role} allowedRoles={["patient"]} />}>
@@ -89,3 +102,4 @@ export default function AppRoutes() {
     </Routes>
   );
 }
+

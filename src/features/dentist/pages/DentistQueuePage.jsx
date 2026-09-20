@@ -82,15 +82,15 @@ export default function DentistQueuePage() {
             <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-800 text-white shadow-2xl space-y-4 border border-white/20">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-sky-200 text-xs font-bold border border-white/20">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Currently In Consultation</span>
+                <span>{current.isPriority ? "🚨 EMERGENCY PRIORITY" : "Currently In Consultation"}</span>
               </div>
 
               <div className="flex flex-col items-center">
                 <div className="text-xs font-semibold uppercase tracking-widest text-sky-200">
-                  Assigned Token
+                  {current.isPriority ? "Priority Patient" : "Assigned Token"}
                 </div>
                 <div className="text-5xl sm:text-6xl font-black font-manrope my-1">
-                  #{current.tokenNumber}
+                  {current.isPriority ? "🚨" : `#${current.tokenNumber}`}
                 </div>
               </div>
 
@@ -102,7 +102,7 @@ export default function DentistQueuePage() {
                   {current.phone || "No phone"} • {current.email}
                 </p>
                 <p className="text-xs text-sky-200 font-semibold mt-1">
-                  Slot: {current.startTime} – {current.endTime}
+                  {current.isPriority ? "Emergency priority — called before normal queue" : `Appointment ${current.appointmentNumber ? `#${current.appointmentNumber}` : "—"} • Token #${current.tokenNumber}`}
                 </p>
               </div>
             </div>

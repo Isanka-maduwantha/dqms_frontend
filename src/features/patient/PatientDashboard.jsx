@@ -7,7 +7,7 @@ import Alert from "../../components/ui/Alert";
 import Card from "../../components/ui/Card";
 import EmptyState from "../../components/ui/EmptyState";
 import { ApiError } from "../../lib/api/http";
-import { formatDate, titleCase, todayISODate } from "../../lib/utils/format";
+import { formatDate, todayISODate } from "../../lib/utils/format";
 import {
   cancelAppointment,
   getAvailableSlots,
@@ -107,7 +107,7 @@ function PatientDashboard() {
               Manage your dental wellness journey with precision.
             </h2>
             <p className="text-xs sm:text-sm text-emerald-100/80 max-w-xl">
-              Always check in upon arrival at the front desk to receive your live queue token. Cancellations within 24 hours can be rescheduled directly below.
+              Always check in upon arrival at the front desk to receive your live queue token. You can reschedule a booked appointment by choosing another available date and clinic period below.
             </p>
           </div>
           <div className="shrink-0 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 text-center min-w-[140px]">
@@ -169,7 +169,7 @@ function PatientDashboard() {
               title={`No ${tab} appointments`}
               description={
                 tab === "upcoming"
-                  ? "You don't have any upcoming visits booked yet. Select a slot to schedule your next appointment."
+                  ? "You don't have any upcoming visits booked yet. Select a clinic period to schedule your next appointment."
                   : "No past appointment history found on your record."
               }
               action={
@@ -185,10 +185,10 @@ function PatientDashboard() {
               <table className="w-full text-left text-xs">
                 <thead>
                   <tr className="text-[11px] uppercase tracking-wider text-slate-500 border-b border-slate-100">
-                    <th className="pb-3 pr-4 font-bold">Date & Time</th>
-                    <th className="pb-3 pr-4 font-bold">Visit Type</th>
-                    <th className="pb-3 pr-4 font-bold">Purpose</th>
+                    <th className="pb-3 pr-4 font-bold">Date & Period</th>
+                    <th className="pb-3 pr-4 font-bold">Appointment Number</th>
                     <th className="pb-3 pr-4 font-bold">Status</th>
+                    <th className="pb-3 pr-4 font-bold">Queue Token</th>
                     <th className="pb-3 pr-4 font-bold text-right">Actions</th>
                   </tr>
                 </thead>
@@ -203,21 +203,22 @@ function PatientDashboard() {
                           <div>
                             <div>{formatDate(item.appointmentDate)}</div>
                             <div className="text-[11px] font-normal text-slate-500">
-                              {item.startTime} {item.endTime ? `– ${item.endTime}` : ""}
+                              {item.appointmentPeriod || "Period not set"} {item.startTime && item.endTime ? `• ${item.startTime}–${item.endTime}` : ""}
+                            </div>
+                            <div className="text-[11px] font-extrabold text-[#0E7A50] mt-0.5">
+                              Appointment #{item.appointmentNumber ?? "—"}
                             </div>
                           </div>
                         </div>
                       </td>
-                      <td className="py-4 pr-4 text-slate-700">
-                        <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold text-[11px]">
-                          {titleCase(item.type)}
-                        </span>
-                      </td>
-                      <td className="py-4 pr-4 text-slate-700">
-                        {titleCase(item.visitPurpose || "General Treatment")}
+                      <td className="py-4 pr-4 font-bold text-[#0E7A50]">
+                        #{item.appointmentNumber ?? "—"}
                       </td>
                       <td className="py-4 pr-4">
                         <StatusBadge status={item.status} />
+                      </td>
+                      <td className="py-4 pr-4 font-semibold text-slate-700">
+                        {item.tokenNumber ? `#${item.tokenNumber}` : "Assigned at check-in"}
                       </td>
                       <td className="py-4 pr-4 text-right">
                         {item.status === "BOOKED" && item.appointmentDate >= today ? (
@@ -255,9 +256,12 @@ function PatientDashboard() {
       <RescheduleModal
         appointment={rescheduling}
         onClose={() => setRescheduling(null)}
-        onDone={() => {
+        onDone={(result) => {
           setRescheduling(null);
           void load();
+          if (result?.appointmentNumber) {
+            setActionError(`Appointment rescheduled successfully. Your new appointment number is #${result.appointmentNumber}.`);
+          }
         }}
       />
     </div>
@@ -265,49 +269,46 @@ function PatientDashboard() {
 }
 
 function RescheduleModal({ appointment, onClose, onDone }) {
-  const [date, setDate] = useState(todayISODate());
-  const [slots, setSlots] = useState([]);
-  const [time, setTime] = useState("");
-  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [date, setDate] = useState(appointment?.appointmentDate || todayISODate());
+  const [periods, setPeriods] = useState([]);
+  const [period, setPeriod] = useState(appointment?.appointmentPeriod || "");
+  const [loadingPeriods, setLoadingPeriods] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
 
-  const loadSlots = useCallback(async (targetDate) => {
-    setLoadingSlots(true);
-    setTime("");
+  const loadPeriods = useCallback(async (targetDate) => {
+    setLoadingPeriods(true);
+    setPeriod("");
     try {
       const res = await getAvailableSlots(targetDate);
-      setSlots(res.slots || []);
-    } catch {
-      setSlots([]);
+      setPeriods(res.periods || []);
+    } catch (err) {
+      setPeriods([]);
+      setError(err instanceof ApiError ? err.message : "Failed to load appointment periods.");
     } finally {
-      setLoadingSlots(false);
+      setLoadingPeriods(false);
     }
   }, []);
 
   useEffect(() => {
     if (appointment) {
-      setDate(todayISODate());
+      setDate(appointment.appointmentDate || todayISODate());
+      setPeriod(appointment.appointmentPeriod || "");
       setError(null);
-      void loadSlots(todayISODate());
+      void loadPeriods(appointment.appointmentDate || todayISODate());
     }
-  }, [appointment, loadSlots]);
+  }, [appointment, loadPeriods]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!appointment || !time) return;
-    setSaving(true);
-    setError(null);
+    if (!appointment || !period) {
+      setError("Please select an available appointment period.");
+      return;
+    }
+    setSaving(true); setError(null);
     try {
-      const [h, m] = time.split(":").map(Number);
-      const endDate = new Date();
-      endDate.setHours(h, m + 15, 0, 0);
-      const endTime = `${String(endDate.getHours()).padStart(2, "0")}:${String(
-        endDate.getMinutes()
-      ).padStart(2, "0")}`;
-
-      await rescheduleAppointment(appointment._id, date, time, endTime);
-      onDone();
+      const result = await rescheduleAppointment(appointment._id, date, period);
+      onDone(result);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Failed to reschedule appointment.");
     } finally {
@@ -318,65 +319,10 @@ function RescheduleModal({ appointment, onClose, onDone }) {
   return (
     <Modal open={Boolean(appointment)} title="Reschedule Appointment" onClose={onClose}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
-        <div>
-          <label className="font-inter text-xs font-bold text-slate-700 block mb-1.5">
-            Select New Appointment Date
-          </label>
-          <input
-            type="date"
-            value={date}
-            min={todayISODate()}
-            onChange={(e) => {
-              setDate(e.target.value);
-              void loadSlots(e.target.value);
-            }}
-            className="w-full bg-white border border-slate-200 rounded-xl py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-[#0E7A50] focus:ring-2 focus:ring-emerald-100"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="font-inter text-xs font-bold text-slate-700 block mb-1.5">
-            Available 15-Minute Slots
-          </label>
-          {loadingSlots ? (
-            <p className="text-xs text-slate-500 py-3">Checking available clinical slots…</p>
-          ) : slots.length === 0 ? (
-            <p className="text-xs text-slate-500 py-3">No available slots found for this date.</p>
-          ) : (
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-48 overflow-y-auto p-1">
-              {slots.map((slot) => (
-                <button
-                  key={slot.time}
-                  type="button"
-                  disabled={!slot.available}
-                  onClick={() => setTime(slot.time)}
-                  className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                    time === slot.time
-                      ? "glossy-gradient-btn text-white shadow-md shadow-emerald-700/30 border-emerald-400"
-                      : slot.available
-                      ? "bg-white text-slate-700 border-slate-200 hover:border-emerald-300 hover:text-[#0E7A50]"
-                      : "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed opacity-50"
-                  }`}
-                >
-                  {slot.time}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
+        <div><label className="font-inter text-xs font-bold text-slate-700 block mb-1.5">Select New Appointment Date</label><input type="date" value={date} min={todayISODate()} onChange={(e) => { setDate(e.target.value); void loadPeriods(e.target.value); }} className="w-full bg-white border border-slate-200 rounded-xl py-2.5 px-3.5 text-sm" required /></div>
+        <div><label className="font-inter text-xs font-bold text-slate-700 block mb-1.5">Available Appointment Periods</label>{loadingPeriods ? <p className="text-xs text-slate-500 py-3">Checking availability…</p> : periods.length === 0 ? <p className="text-xs text-slate-500 py-3">No available periods found for this date.</p> : <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">{periods.map((item) => <button key={item.period} type="button" disabled={!item.available} onClick={() => setPeriod(item.period)} className={`p-3 rounded-xl border text-left ${period === item.period ? "border-emerald-500 bg-emerald-50" : item.available ? "border-slate-200 bg-white hover:border-emerald-300" : "border-slate-200 bg-slate-50 opacity-50"}`}><div className="font-bold text-sm">{item.label}</div><div className="text-[11px] text-slate-500">{item.startTime} – {item.endTime}</div><div className="text-[11px] font-bold text-[#0E7A50] mt-1">{item.remaining} seats remaining</div></button>)}</div>}</div>
         {error && <Alert kind="error">{error}</Alert>}
-
-        <div className="pt-2">
-          <CommonButton
-            label="Confirm Reschedule"
-            type="submit"
-            loading={saving ? "Saving changes…" : false}
-            disabled={!time || saving}
-            className="w-full py-2.5"
-          />
-        </div>
+        <CommonButton label="Confirm Reschedule" type="submit" loading={saving ? "Saving changes…" : false} disabled={!period || saving} className="w-full py-2.5" />
       </form>
     </Modal>
   );

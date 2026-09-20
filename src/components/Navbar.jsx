@@ -94,7 +94,7 @@ function Navbar() {
               }`
             }
           >
-            Book Slot
+            Book Appointment
           </NavLink>
         </nav>
 
@@ -106,8 +106,15 @@ function Navbar() {
                 to={dashboardPath}
                 className="px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-bold hover:bg-emerald-100 transition-all shadow-sm flex items-center gap-1.5"
               >
-                <span>👤</span>
+                <span>🏠</span>
                 <span>{user.name || user.email?.split("@")[0] || "Dashboard"}</span>
+              </NavLink>
+              <NavLink
+                to="/profile"
+                className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold hover:bg-emerald-50 hover:text-[#0E7A50] transition-all shadow-sm flex items-center gap-1.5"
+              >
+                <span>👤</span>
+                <span>Profile</span>
               </NavLink>
               <button
                 type="button"
@@ -194,6 +201,13 @@ function Navbar() {
                 >
                   My Portal
                 </NavLink>
+                <NavLink
+                  to="/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center py-2.5 rounded-xl border border-emerald-200 bg-white text-emerald-800 font-bold text-xs"
+                >
+                  Manage Profile
+                </NavLink>
                 <button
                   type="button"
                   onClick={() => {
@@ -227,3 +241,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

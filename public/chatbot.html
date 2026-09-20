@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dental Surgery · Kurunegala Chatbot</title>
+
+    <meta
+    name="description"
+    content="Your virtual dental assistant for  Dental Surgery Clinic in Sri Lanka — appointments, services, pricing in Rs, and expert advice."
+    />
+
+    <!-- Tailwind + Fonts + Icons -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* ── ROOT ── */
+        :root {
+            --primary: #0b7e3d;
+            --primary-light: #e6f7ed;
+            --primary-dark: #065f2c;
+            --accent: #16a34a;
+            --accent-light: #f0fdf4;
+            --green-extra-light: #f7fef9;
+            --green-border: #bbf7d0;
+            --gray-bg: #f8fafc;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.14);
+            --radius: 20px;
+        }
+
+        * {
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 45%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        /* ── SCROLLBAR ── */
+        #chat-messages {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #86efac transparent;
+        }
+        #chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        #chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #chat-messages::-webkit-scrollbar-thumb {
+            background: #86efac;
+            border-radius: 10px;
+        }
+        #chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #4ade80;
+        }
+
+        /* ── MESSAGE ANIMATION ── */
+        .msg-enter {
+            animation: msgIn 0.35s ease-out forwards;
+        }
+        @keyframes msgIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px) scale(0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ── TYPING DOTS ── */
+        .typing-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: dotPulse 1.2s ease-in-out infinite;
+        }
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes dotPulse {
+            0%,
+            60%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            30% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* ── QUICK REPLY ── */
+        .quick-btn {
+            transition: all 0.2s ease;
+            border: 1.5px solid #dcfce7;
+            background: #ffffff;
+        }
+        .quick-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        .quick-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ── INPUT ── */
+        #chat-input {
+            transition: all 0.2s ease;
+        }
+        #chat-input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(11, 126, 61, 0.15);
+        }
+
+        /* ── SEND ── */
+        .send-btn {
+            transition: all 0.2s ease;
+        }
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(11, 126, 61, 0.30);
+        }
+        .send-btn:active {
+            transform: scale(0.93);
+        }
+
+        /* ── BRAND ── */
+        .brand-glow {
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.20);
+        }
+
+        /* ── TOOTH BOUNCE ── */
+        .tooth-icon {
+            display: inline-block;
+            animation: toothBounce 2s ease-in-out infinite;
+        }
+        @keyframes toothBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        /* ── HEADER WAVE ── */
+        .header-wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 28px;
+            background: #f0fdf4;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+        @media (max-width: 640px) {
+            .header-wave {
+                height: 16px;
+            }
+        }
+
+        /* ── BG DECORATION ── */
+        .bg-circle-one {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 9999px;
+            background: rgba(34, 197, 94, 0.06);
+            top: 100px;
+            left: -120px;
+            pointer-events: none;
+        }
+        .bg-circle-two {
+            position: fixed;
+            width: 380px;
+            height: 380px;
+            border-radius: 9999px;
+            background: rgba(11, 126, 61, 0.05);
+            right: -150px;
+            bottom: -100px;
+            pointer-events: none;
+        }
+
+        /* ── PRICE HIGHLIGHT ── */
+        .price-tag {
+            display: inline-block;
+            background: #dcfce7;
+            color: #065f2c;
+            font-weight: 700;
+            padding: 0 10px;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        /* ── SRI LANKA FLAG ACCENT ── */
+        .sri-lanka-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2px 10px 2px 6px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        .sri-lanka-badge i {
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BG DECORATION -->
+    <div class="bg-circle-one"></div>
+    <div class="bg-circle-two"></div>
+
+    <!-- ─── HEADER ─── -->
+    <header class="relative bg-gradient-to-r from-[#065f2c] via-[#0b7e3d] to-[#16a34a] text-white shadow-lg">
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between relative z-10">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur border border-white/20 rounded-full flex items-center justify-center tooth-icon shadow-sm">
+                    <i class="fas fa-tooth text-xl sm:text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-extrabold tracking-tight brand-glow">
+                        Dental Surgery
+                    </h1>
+                    <p class="text-xs sm:text-sm text-green-50/90 -mt-0.5 flex items-center gap-1.5">
+                        <span>Virtual Assistant</span>
+                        <span class="sri-lanka-badge">
+                            <i class="fas fa-flag"></i> Sri Lanka
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="/"
+                class="flex items-center gap-2 px-3 py-2 rounded-full bg-white/15 hover:bg-white/25 border border-white/10 transition text-white text-xs font-semibold no-underline"
+                aria-label="Back to Home" title="Back to Home">
+                <i class="fas fa-home text-xs"></i>
+                <span>Home</span>
+            </a>
+            <span class="hidden sm:flex items-center gap-1.5 text-xs bg-white/15 border border-white/10 px-3 py-1.5 rounded-full">
+                <span class="w-2 h-2 bg-green-200 rounded-full animate-pulse"></span>
+                Online
+            </span>
+            <button id="reset-chat"
+            class="w-9 h-9 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/25 transition text-white/90 hover:text-white"
+            aria-label="Reset chat">
+            <i class="fas fa-comment-slash text-sm"></i>
+        </button>
+    </div>
+
+</div>
+
+<div class="header-wave"></div>
+</header>
+
+<!-- ─── MAIN ─── -->
+<main class="max-w-3xl mx-auto px-4 sm:px-6 pb-8 -mt-2 relative z-10">
+
+    <div class="bg-white rounded-2xl shadow-[0_8px_40px_rgba(11,126,61,0.12)] overflow-hidden border border-green-100 backdrop-blur-sm">
+
+        <!-- MESSAGES -->
+        <div id="chat-messages"
+        class="h-[380px] sm:h-[440px] overflow-y-auto p-4 sm:p-6 space-y-3.5 bg-white"
+        role="log" aria-label="Chat messages" aria-live="polite">
+        <!-- Rendered by JS -->
+    </div>
+
+    <!-- QUICK REPLIES -->
+    <div id="quick-replies"
+    class="px-4 sm:px-6 pb-3 flex flex-wrap gap-2 border-b border-green-100 bg-white">
+    <!-- Rendered by JS -->
+</div>
+
+<!-- INPUT -->
+<div class="p-4 sm:p-6 pt-4 bg-[#f7fef9]">
+
+    <form id="chat-form" class="flex items-center gap-3">
+
+        <div class="relative flex-1">
+            <input id="chat-input" type="text"
+            class="w-full py-3 pl-4 pr-10 bg-white border border-green-100 rounded-xl text-sm text-gray-800 placeholder-gray-400 outline-none transition"
+            placeholder="Type your message…" autocomplete="off" aria-label="Chat message input" />
+            <button type="button" id="voice-btn"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#0b7e3d] transition text-sm"
+            aria-label="Voice input">
+            <i class="fas fa-microphone"></i>
+        </button>
+    </div>
+
+    <button type="submit"
+    class="send-btn w-12 h-12 bg-[#0b7e3d] hover:bg-[#065f2c] text-white rounded-xl flex items-center justify-center shadow-md shadow-green-600/20 transition"
+    aria-label="Send message">
+    <i class="fas fa-paper-plane text-sm"></i>
+</button>
+
+</form>
+
+<p class="text-[10px] text-gray-400 text-center mt-2.5">
+    <i class="fas fa-shield-alt mr-1 text-[10px] text-green-500"></i>
+    AI assistant for informational purposes only. For emergencies, call <strong class="text-gray-600">011-2-345-678</strong>.
+</p>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="text-center mt-5 text-xs text-gray-400">
+    &copy; 2025 Dental Surgery · Sri Lanka
+    &middot;
+    <a href="#" class="underline hover:text-[#0b7e3d] transition" id="footer-link">
+        Privacy Policy
+    </a>
+    &middot;
+    <span class="inline-flex items-center gap-1">
+        <i class="fas fa-phone-alt text-[10px] text-green-600"></i>
+        011-2-345-678
+    </span>
+</div>
+
+</main>
+
+<script>
+    // ═══════════════════════════════════════════════════════════════
+    //  1.  DATA  –  SRI LANKA DENTAL KNOWLEDGE BASE
+    // ═══════════════════════════════════════════════════════════════
+
+    const botName = "Dental Surgery Assistant";
+
+    // ── Quick Replies ──
+    const quickReplies = [
+        { id: "hours", label: "📅 Hours", icon: "fa-clock" },
+        { id: "appt", label: "📋 Appointment", icon: "fa-calendar-check" },
+        { id: "services", label: "🦷 Services", icon: "fa-tooth" },
+        { id: "prices", label: "💰 Prices (Rs)", icon: "fa-rupee-sign" },
+        { id: "emergency", label: "🚨 Emergency", icon: "fa-ambulance" },
+        { id: "insurance", label: "💳 Insurance", icon: "fa-shield-alt" },
+        { id: "location", label: "📍 Location", icon: "fa-map-pin" },
+    ];
+
+    // ── FAQ  (expanded for Sri Lanka) ──
+    const faq = {
+
+        // ─── HOURS ───
+        hours: {
+            q: "What are your office hours?",
+            a: `🕐 <strong>Dental Surgery – Kurunegala</strong><br><br>
+        • Mon–Thu: 8:00 AM – 6:00 PM<br>
+        • Friday: 8:00 AM – 4:00 PM<br>
+        • Saturday: 9:00 AM – 1:00 PM<br>
+        • Sunday: <em>Closed</em><br><br>
+        We also offer extended evening hours on <strong>Tuesdays</strong> until 7:30 PM by appointment.<br><br>
+        <i class="fas fa-phone-alt text-green-600"></i> Call 011-2-345-678 to book.`
+        },
+
+        // ─── APPOINTMENT ───
+        appt: {
+            q: "How do I schedule an appointment?",
+            a: `📋 <strong>Book an appointment</strong> with us:<br><br>
+        • 📞 <strong>Call:</strong> 011-2-345-678<br>
+        • ✉️ <strong>Email:</strong> info@dentalsurgery.lk<br>
+        • 💬 <strong>WhatsApp:</strong> +94 77 123 4567<br>
+        • 🌐 <strong>Online portal:</strong> (coming soon!)<br><br>
+        We recommend booking <strong>2–3 weeks</strong> ahead for routine cleanings. For emergencies, we offer same-day slots — just call us!`
+        },
+
+        // ─── SERVICES ───
+        services: {
+            q: "What dental services do you offer?",
+            a: `🦷 <strong>Full-service dental care</strong> in Sri Lanka:<br><br>
+        • 🧼 <strong>Preventive</strong> – Cleanings, exams, X‑rays, fluoride<br>
+        • 🦷 <strong>Restorative</strong> – Fillings, crowns, bridges, root canals<br>
+        • ✨ <strong>Cosmetic</strong> – Whitening, veneers, bonding, smile makeovers<br>
+        • 🦴 <strong>Orthodontics</strong> – Braces (metal & ceramic), Invisalign®<br>
+        • 👶 <strong>Pediatric</strong> – Gentle care for children 3+<br>
+        • 🚨 <strong>Emergency</strong> – Same-day pain relief, extractions<br>
+        • 🔬 <strong>Advanced</strong> – Dental implants, gum treatments, wisdom teeth removal<br><br>
+        <i class="fas fa-rupee-sign text-green-600"></i> Ask about our <strong>payment plans</strong> and <strong>insurance</strong> coverage!`
+        },
+
+        // ─── PRICES (Sri Lanka Rupees) ───
+        prices: {
+            q: "What are your prices in Sri Lanka Rupees?",
+            a: `💰 <strong>Estimated prices (LKR)</strong> — subject to consultation:<br><br>
+        • <strong>Routine Cleaning</strong>    <span class="price-tag">Rs 5,000 – 10,000</span><br>
+        • <strong>Fillings</strong> (per tooth)   <span class="price-tag">Rs 3,500 – 15,000</span><br>
+        • <strong>Root Canal</strong> (per tooth)  <span class="price-tag">Rs 18,000 – 45,000</span><br>
+        • <strong>Extraction</strong> (simple)    <span class="price-tag">Rs 2,500 – 8,000</span><br>
+        • <strong>Wisdom Tooth</strong> removal   <span class="price-tag">Rs 10,000 – 30,000</span><br>
+        • <strong>Crown</strong> (per tooth)      <span class="price-tag">Rs 22,000 – 60,000</span><br>
+        • <strong>Bridge</strong> (per unit)      <span class="price-tag">Rs 20,000 – 55,000</span><br>
+        • <strong>Dentures</strong> (full set)    <span class="price-tag">Rs 35,000 – 80,000</span><br>
+        • <strong>Braces</strong> (metal)         <span class="price-tag">Rs 85,000 – 150,000</span><br>
+        • <strong>Braces</strong> (ceramic)       <span class="price-tag">Rs 120,000 – 200,000</span><br>
+        • <strong>Invisalign®</strong>            <span class="price-tag">Rs 180,000 – 350,000</span><br>
+        • <strong>Teeth Whitening</strong> (in‑office) <span class="price-tag">Rs 18,000 – 40,000</span><br>
+        • <strong>Take‑home Whitening</strong>    <span class="price-tag">Rs 10,000 – 20,000</span><br>
+        • <strong>Dental Implant</strong> (per tooth) <span class="price-tag">Rs 90,000 – 200,000</span><br>
+        • <strong>Veneers</strong> (per tooth)    <span class="price-tag">Rs 25,000 – 65,000</span><br>
+        • <strong>Gum Treatment</strong> (scaling) <span class="price-tag">Rs 6,000 – 15,000</span><br><br>
+        <i class="fas fa-info-circle text-green-600"></i> Prices vary based on complexity. We offer <strong>free initial consultations</strong> and <strong>flexible payment plans</strong>.`
+        },
+
+        // ─── EMERGENCY ───
+        emergency: {
+            q: "Do you handle dental emergencies?",
+            a: `🚨 <strong>Yes – we offer same-day emergency care!</strong><br><br>
+        ⚠️ For severe pain, swelling, bleeding, or a knocked‑out tooth:<br><br>
+        • 📞 <strong>Call immediately:</strong> 011-2-345-678<br>
+        • 📱 <strong>WhatsApp:</strong> +94 77 123 4567<br><br>
+        <strong>After‑hours:</strong> Our answering service connects you with the on‑call dentist.<br><br>
+        <i class="fas fa-hospital text-red-500"></i> For life‑threatening emergencies, call <strong>1990</strong> (ambulance) or visit the nearest hospital.`
+        },
+
+        // ─── INSURANCE (Sri Lanka) ───
+        insurance: {
+            q: "What insurance do you accept?",
+            a: `💳 <strong>We accept major Sri Lankan insurance plans</strong>, including:<br><br>
+        • 🏦 <strong>AIA Insurance</strong><br>
+        • 🏦 <strong>Ceylinco Life</strong><br>
+        • 🏦 <strong>HNB Assurance</strong><br>
+        • 🏦 <strong>SLIC</strong> (Sri Lanka Insurance)<br>
+        • 🏦 <strong>Softlogic Life</strong><br>
+        • 🏦 <strong>Union Assurance</strong><br>
+        • 🏦 <strong>Janashakthi Insurance</strong><br><br>
+        We also accept <strong>cash</strong>, <strong>credit/debit cards</strong>, and <strong>HSA/FSA</strong>.<br><br>
+        <i class="fas fa-question-circle text-green-600"></i> Contact us to verify your coverage — we’ll handle the paperwork!`
+        },
+
+        // ─── LOCATION ───
+        location: {
+            q: "Where are you located?",
+            a: `📍 <strong>Dental Surgery – Kurunegala</strong><br><br>
+        • <strong>Address:</strong> 702, Bauddaloka Mawath, Kurunegala, Sri Lanka<br>
+        • <strong>Landmark:</strong> Kurunegala<br>
+        • <strong>Parking:</strong> Free parking available on‑site<br><br>
+        <i class="fas fa-map-marker-alt text-green-600"></i> <a href="https://www.google.com/maps/search/?api=1&query=702%2C%20Bauddaloka%20Mawath%2C%20Kurunegala%2C%20Sri%20Lanka" target="_blank" rel="noopener noreferrer" style="color:#0b7e3d;text-decoration:underline;">View on Google Maps</a><br><br>
+        We’re also planning to open located in <strong>Kurunegala</strong>, Sri Lanka.`
+        },
+
+        // ─── ROOT CANAL ───
+        rootcanal: {
+            q: "Tell me about root canal treatment",
+            a: `🦷 <strong>Root Canal Treatment (RCT)</strong> – gentle and effective.<br><br>
+        We use modern techniques to save your natural tooth and relieve pain.<br><br>
+        • 💉 <strong>Pain‑free</strong> – local anaesthesia ensures comfort<br>
+        • 🔬 <strong>Advanced</strong> – rotary instruments & digital X‑rays<br>
+        • ⏱️ <strong>Fast</strong> – most cases completed in 1–2 visits<br>
+        • 💰 <strong>Price:</strong> <span class="price-tag">Rs 18,000 – 45,000</span> per tooth<br><br>
+        <i class="fas fa-check-circle text-green-600"></i> Most insurance plans cover RCT. Call us for a free consultation!`
+        },
+
+        // ─── CLEANING ───
+        cleaning: {
+            q: "Tell me about teeth cleaning",
+            a: `🧼 <strong>Professional teeth cleaning</strong> – the foundation of a healthy smile.<br><br>
+        • <strong>What we do:</strong> Plaque & tartar removal, polishing, fluoride treatment<br>
+        • <strong>Benefits:</strong> Prevents cavities, gum disease, and bad breath<br>
+        • <strong>Frequency:</strong> Every 6 months recommended<br>
+        • 💰 <strong>Price:</strong> <span class="price-tag">Rs 5,000 – 10,000</span><br><br>
+        <i class="fas fa-calendar-check text-green-600"></i> Book your cleaning today — your smile will thank you!`
+        },
+
+        // ─── FILLINGS ───
+        fillings: {
+            q: "Tell me about dental fillings",
+            a: `🦷 <strong>Tooth‑coloured fillings</strong> – natural and durable.<br><br>
+        • <strong>Material:</strong> Composite resin (matches your tooth colour)<br>
+        • <strong>Procedure:</strong> Decay removed, tooth cleaned, filling placed & shaped<br>
+        • <strong>Duration:</strong> 20–40 minutes per tooth<br>
+        • 💰 <strong>Price:</strong> <span class="price-tag">Rs 3,500 – 15,000</span> per tooth<br><br>
+        <i class="fas fa-smile text-green-600"></i> Most insurances cover fillings. Ask us about same‑day service!`
+        },
+
+        // ─── EXTRACTION ───
+        extraction: {
+            q: "Tell me about tooth extraction",
+            a: `🦷 <strong>Tooth extraction</strong> – safe and gentle removal.<br><br>
+        • <strong>Simple extraction:</strong> For visible teeth <span class="price-tag">Rs 2,500 – 8,000</span><br>
+        • <strong>Surgical extraction:</strong> For impacted or broken teeth <span class="price-tag">Rs 8,000 – 25,000</span><br>
+        • <strong>Wisdom tooth:</strong> <span class="price-tag">Rs 10,000 – 30,000</span><br><br>
+        We use local anaesthesia and offer <strong>sedation options</strong> for anxious patients.<br><br>
+        <i class="fas fa-clock text-green-600"></i> Recovery is usually 3–7 days. We’ll give you full aftercare instructions.`
+        },
+
+        // ─── BRACES ───
+        braces: {
+            q: "Tell me about braces",
+            a: `🦴 <strong>Orthodontics – Braces & Invisalign</strong><br><br>
+        • <strong>Metal braces:</strong> Traditional, effective <span class="price-tag">Rs 85,000 – 150,000</span><br>
+        • <strong>Ceramic braces:</strong> Tooth‑coloured, discreet <span class="price-tag">Rs 120,000 – 200,000</span><br>
+        • <strong>Invisalign®:</strong> Clear aligners, nearly invisible <span class="price-tag">Rs 180,000 – 350,000</span><br><br>
+        <strong>Treatment time:</strong> 12–24 months (varies by case)<br><br>
+        <i class="fas fa-star text-green-600"></i> Free initial consultation — we’ll create a custom plan just for you!`
+        },
+
+        // ─── IMPLANT ───
+        implant: {
+            q: "Tell me about dental implants",
+            a: `🦷 <strong>Dental Implants</strong> – the gold standard for missing teeth.<br><br>
+        • <strong>What:</strong> Titanium post + custom crown — looks & feels like natural<br>
+        • <strong>Benefits:</strong> Permanent, preserves bone, no damage to adjacent teeth<br>
+        • <strong>Process:</strong> 3–6 months healing, then crown placement<br>
+        • 💰 <strong>Price:</strong> <span class="price-tag">Rs 90,000 – 200,000</span> per implant<br><br>
+        <i class="fas fa-gem text-green-600"></i> We offer <strong>free implant consultations</strong> with CBCT scan included.`
+        },
+
+        // ─── WHITENING ───
+        whitening: {
+            q: "Tell me about teeth whitening",
+            a: `✨ <strong>Professional teeth whitening</strong> – brighten your smile!<br><br>
+        • <strong>In‑office:</strong> 1 hour, immediate results <span class="price-tag">Rs 18,000 – 40,000</span><br>
+        • <strong>Take‑home kit:</strong> Custom trays, 2 weeks <span class="price-tag">Rs 10,000 – 20,000</span><br>
+        • <strong>Combo package:</strong> In‑office + take‑home <span class="price-tag">Rs 25,000 – 50,000</span><br><br>
+        <i class="fas fa-star text-green-600"></i> Most patients see <strong>4–8 shades</strong> of improvement! Ask about our promotions.`
+        },
+
+        // ─── PEDIATRIC ───
+        pediatric: {
+            q: "Do you treat children?",
+            a: `👶 <strong>Pediatric Dentistry</strong> – we love little smiles!<br><br>
+        • <strong>Age:</strong> Children 3 years and up<br>
+        • <strong>Services:</strong> Cleanings, exams, fluoride, sealants, fillings<br>
+        • <strong>Approach:</strong> Gentle, fun, and anxiety‑free<br>
+        • 💰 <strong>Price:</strong> Child cleaning <span class="price-tag">Rs 3,500 – 6,000</span><br><br>
+        <i class="fas fa-child text-green-600"></i> We make every visit a positive experience — book your child’s first check‑up today!`
+        },
+
+        // ─── VENEERS ───
+        veneers: {
+            q: "Tell me about veneers",
+            a: `🦷 <strong>Veneers</strong> – transform your smile.<br><br>
+        • <strong>What:</strong> Thin, custom‑made shells bonded to the front of teeth<br>
+        • <strong>Uses:</strong> Fix chips, stains, gaps, and misshapen teeth<br>
+        • <strong>Material:</strong> Porcelain or composite resin<br>
+        • 💰 <strong>Price:</strong> <span class="price-tag">Rs 25,000 – 65,000</span> per tooth<br><br>
+        <i class="fas fa-camera text-green-600"></i> We use digital smile design to show you the result before we start!`
+        },
+
+        // ─── GUM TREATMENT ───
+        gum: {
+            q: "Tell me about gum disease treatment",
+            a: `🦷 <strong>Gum (Periodontal) Treatment</strong> – protect your foundation.<br><br>
+        • <strong>Scaling & Root Planing:</strong> Deep cleaning below the gumline<br>
+        • <strong>Benefits:</strong> Reduces inflammation, stops bone loss, freshens breath<br>
+        • <strong>Price:</strong> <span class="price-tag">Rs 6,000 – 15,000</span> (full mouth)<br><br>
+        <i class="fas fa-heart text-green-600"></i> Healthy gums = healthy body. We also offer <strong>laser gum therapy</strong> for advanced cases.`
+        },
+
+        // ─── WISDOM TEETH ───
+        wisdom: {
+            q: "Tell me about wisdom tooth removal",
+            a: `🦷 <strong>Wisdom Tooth Removal</strong> – safe and comfortable.<br><br>
+        • <strong>Why remove?</strong> Impacted, painful, crowding, or decayed<br>
+        • <strong>Procedure:</strong> Local anaesthesia + sedation options<br>
+        • <strong>Recovery:</strong> 3–7 days with full aftercare support<br>
+        • 💰 <strong>Price:</strong> <span class="price-tag">Rs 10,000 – 30,000</span> per tooth<br><br>
+        <i class="fas fa-syringe text-green-600"></i> We use gentle techniques to minimise swelling and discomfort.`
+        },
+
+        // ─── SEDATION ───
+        sedation: {
+            q: "Do you offer sedation dentistry?",
+            a: `💉 <strong>Sedation Dentistry</strong> – relax during your visit.<br><br>
+        We offer options for patients with dental anxiety or complex procedures:<br><br>
+        • <strong>Nitrous oxide</strong> (laughing gas) – mild, wears off quickly<br>
+        • <strong>Oral sedation</strong> – pill taken before your appointment<br>
+        • <strong>IV sedation</strong> – deep relaxation, monitored by our team<br><br>
+        <i class="fas fa-bed text-green-600"></i> Ask us about sedation — we’ll make your experience calm and comfortable.`
+        },
+
+        // ─── PAYMENT ───
+        payment: {
+            q: "What payment methods do you accept?",
+            a: `💳 <strong>We accept multiple payment methods:</strong><br><br>
+        • 💵 <strong>Cash</strong> (LKR)<br>
+        • 💳 <strong>Credit / Debit Cards</strong> – Visa, MasterCard, Amex<br>
+        • 📱 <strong>Mobile Wallets</strong> – mCash, eZ Cash, Dialog Genie<br>
+        • 🏦 <strong>Bank Transfers</strong> – to our Sri Lankan bank account<br>
+        • 📋 <strong>Insurance</strong> – direct billing with most major insurers<br>
+        • 📅 <strong>Payment Plans</strong> – 0% interest instalments available<br><br>
+        <i class="fas fa-hand-holding-usd text-green-600"></i> We believe everyone deserves a healthy smile — ask about our financial options!`
+        },
+
+        // ─── BAD BREATH ───
+        breath: {
+            q: "How can I fix bad breath?",
+            a: `🌿 <strong>Bad breath (halitosis)</strong> – causes & solutions:<br><br>
+        • <strong>Common causes:</strong> Poor oral hygiene, gum disease, dry mouth, certain foods<br>
+        • <strong>Solutions:</strong><br>
+        &nbsp;&nbsp;✓ Brush twice daily & floss<br>
+        &nbsp;&nbsp;✓ Clean your tongue<br>
+        &nbsp;&nbsp;✓ Stay hydrated<br>
+        &nbsp;&nbsp;✓ Visit us for a professional cleaning<br><br>
+        <i class="fas fa-tooth text-green-600"></i> Persistent bad breath can be a sign of gum disease — book a check‑up with us!`
+        },
+
+        // ─── SENSITIVE ───
+        sensitive: {
+            q: "How can I treat sensitive teeth?",
+            a: `🦷 <strong>Tooth sensitivity</strong> – relief is here.<br><br>
+        • <strong>Causes:</strong> Enamel wear, receding gums, cavities, cracked teeth<br>
+        • <strong>At‑home:</strong> Use desensitising toothpaste & soft‑bristle brush<br>
+        • <strong>In‑office:</strong> Fluoride varnish, bonding, or gum graft if needed<br>
+        • 💰 <strong>Treatment:</strong> from <span class="price-tag">Rs 3,000</span><br><br>
+        <i class="fas fa-thermometer-half text-green-600"></i> Don’t suffer — we’ll find the cause and fix it!`
+        },
+
+        // ─── MOUTHGUARD ───
+        mouthguard: {
+            q: "Do you make sports mouthguards?",
+            a: `🏏 <strong>Custom sports mouthguards</strong> – protect your smile.<br><br>
+        • <strong>Why:</strong> Prevents broken teeth, lip injuries, and concussions<br>
+        • <strong>Material:</strong> Durable, comfortable, custom‑fitted<br>
+        • <strong>Sports:</strong> Cricket, rugby, football, boxing, martial arts<br>
+        • 💰 <strong>Price:</strong> <span class="price-tag">Rs 4,000 – 10,000</span><br><br>
+        <i class="fas fa-running text-green-600"></i> We take impressions and deliver your guard in 3–5 days.`
+        },
+
+        // ─── FLOSS ───
+        floss: {
+            q: "How do I floss properly?",
+            a: `🪥 <strong>Proper flossing technique</strong> – in 4 steps:<br><br>
+        1. Break off about 45cm of floss<br>
+        2. Wrap it around your middle fingers, leaving 2–3cm between hands<br>
+        3. Gently slide it between teeth using a zig‑zag motion<br>
+        4. Curve it around each tooth in a C‑shape and scrape up & down<br><br>
+        <i class="fas fa-check-circle text-green-600"></i> Floss once a day — it’s the best way to prevent cavities between teeth!`
+        },
+
+        // ─── CONTACT ───
+        contact: {
+            q: "How can I contact you?",
+            a: `📞 <strong>Get in touch with us:</strong><br><br>
+        • 📞 <strong>Phone:</strong> 011-2-345-678<br>
+        • 📱 <strong>WhatsApp:</strong> +94 77 123 4567<br>
+        • ✉️ <strong>Email:</strong> info@dentalsurgery.lk<br>
+        • 📍 <strong>Visit:</strong> 702, Bauddaloka Mawath, Kurunegala<br>
+        • 🌐 <strong>Website:</strong> www.dentalsurgery.lk<br><br>
+        <i class="fas fa-clock text-green-600"></i> We’re open Mon–Sat — call or WhatsApp us anytime!`
+        }
+
+    };
+
+    // ── Additional keyword mappings (for smarter matching) ──
+    const keywordMap = {
+        'root canal': 'rootcanal',
+        'rct': 'rootcanal',
+        'cleaning': 'cleaning',
+        'scale': 'cleaning',
+        'scaling': 'cleaning',
+        'polish': 'cleaning',
+        'filling': 'fillings',
+        'extraction': 'extraction',
+        'pull': 'extraction',
+        'braces': 'braces',
+        'ortho': 'braces',
+        'invisalign': 'braces',
+        'implant': 'implant',
+        'whitening': 'whitening',
+        'white': 'whitening',
+        'pediatric': 'pediatric',
+        'child': 'pediatric',
+        'kid': 'pediatric',
+        'children': 'pediatric',
+        'veneer': 'veneers',
+        'gum': 'gum',
+        'periodontal': 'gum',
+        'wisdom': 'wisdom',
+        'sedation': 'sedation',
+        'anxiety': 'sedation',
+        'payment': 'payment',
+        'pay': 'payment',
+        'bad breath': 'breath',
+        'halitosis': 'breath',
+        'sensitive': 'sensitive',
+        'sensitivity': 'sensitive',
+        'mouthguard': 'mouthguard',
+        'mouth guard': 'mouthguard',
+        'floss': 'floss',
+        'contact': 'contact',
+        'phone': 'contact',
+        'call': 'contact',
+        'email': 'contact',
+    };
+
+    const initialBotMessage =
+        `Hello! 👋 I’m your Dental Surgery assistant for <strong>Sri Lanka</strong>. Ask me about <strong>hours, appointments, services, prices in Rs, emergencies, insurance, or location</strong>. How can I help you today? 😊`;
+
+    // ═══════════════════════════════════════════════════════════════
+    //  2.  RENDER FUNCTIONS
+    // ═══════════════════════════════════════════════════════════════
+
+    function renderMessage(msg) {
+        const isBot = msg.role === 'bot';
+        const align = isBot ? 'justify-start' : 'justify-end';
+        const bubble = isBot ?
+            `bg-[#f7fef9] border border-green-100 text-gray-800 rounded-2xl rounded-tl-sm` :
+            `bg-[#0b7e3d] text-white rounded-2xl rounded-tr-sm shadow-md shadow-green-600/15`;
+
+        const icon = isBot ?
+            `<div class="w-8 h-8 rounded-full bg-[#0b7e3d] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <i class="fas fa-tooth text-xs"></i>
+        </div>` :
+            `<div class="w-8 h-8 rounded-full bg-[#065f2c] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <i class="fas fa-user text-xs"></i>
+        </div>`;
+
+        const time = new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        return `
+            <div class="flex items-end gap-2.5 ${align} msg-enter">
+                ${isBot ? icon : ''}
+                <div class="max-w-[80%] sm:max-w-[70%]">
+                    <div class="px-4 py-2.5 text-sm leading-relaxed whitespace-pre-line ${bubble}">
+                        ${msg.text}
+                    </div>
+                    <div class="flex ${isBot ? 'justify-start' : 'justify-end'} px-1 mt-0.5">
+                        <span class="text-[10px] text-gray-400">${time}</span>
+                    </div>
+                </div>
+                ${!isBot ? icon : ''}
+            </div>
+        `;
+    }
+
+    function renderQuickReplies(items) {
+        return items.map(q => `
+            <button class="quick-btn px-3.5 py-2 rounded-full text-xs font-medium text-gray-700 hover:text-[#065f2c] transition flex items-center gap-1.5 shadow-sm"
+                    data-quick="${q.id}" aria-label="Quick reply: ${q.label.replace(/[^a-zA-Z0-9 ]/g,'')}">
+                <i class="fas ${q.icon} text-[10px] text-[#0b7e3d]"></i>
+                ${q.label}
+            </button>
+        `).join('');
+    }
+
+    function renderTypingIndicator() {
+        return `
+            <div class="flex items-end gap-2.5 justify-start msg-enter" id="typing-indicator">
+                <div class="w-8 h-8 rounded-full bg-[#0b7e3d] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                    <i class="fas fa-tooth text-xs"></i>
+                </div>
+                <div class="bg-[#f7fef9] border border-green-100 text-gray-500 rounded-2xl rounded-tl-sm px-4 py-3">
+                    <div class="flex gap-1.5">
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  3.  CHAT STATE
+    // ═══════════════════════════════════════════════════════════════
+
+    let messages = [];
+    let isProcessing = false;
+
+    const chatMessages = document.getElementById('chat-messages');
+    const quickContainer = document.getElementById('quick-replies');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const resetBtn = document.getElementById('reset-chat');
+    const voiceBtn = document.getElementById('voice-btn');
+    const footerLink = document.getElementById('footer-link');
+
+    // ═══════════════════════════════════════════════════════════════
+    //  4.  CORE FUNCTIONS
+    // ═══════════════════════════════════════════════════════════════
+
+    function addMessage(role, text) {
+        messages.push({ role, text, timestamp: Date.now() });
+    }
+
+    function scrollToBottom() {
+        setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 50);
+    }
+
+    function mountMessages() {
+        chatMessages.innerHTML = messages.map(m => renderMessage(m)).join('');
+        scrollToBottom();
+    }
+
+    function mountQuickReplies() {
+        quickContainer.innerHTML = renderQuickReplies(quickReplies);
+    }
+
+    function showTyping() {
+        chatMessages.insertAdjacentHTML('beforeend', renderTypingIndicator());
+        scrollToBottom();
+    }
+
+    function removeTyping() {
+        const el = document.getElementById('typing-indicator');
+        if (el) el.remove();
+    }
+
+    // ─── SMART RESPONSE ───
+    function getBotResponse(userText) {
+        const lower = userText.toLowerCase().trim();
+
+        // 1) Direct match on FAQ keys
+        for (const [key, val] of Object.entries(faq)) {
+            if (lower.includes(key) || lower.includes(val.q.toLowerCase().slice(0, 14))) {
+                return val.a;
+            }
+        }
+
+        // 2) Keyword mapping
+        for (const [word, mappedKey] of Object.entries(keywordMap)) {
+            if (lower.includes(word)) {
+                const entry = faq[mappedKey];
+                if (entry) return entry.a;
+            }
+        }
+
+        // 3) Greetings
+        if (/^(hello|hi|hey|good morning|good afternoon|good evening|greetings|howdy)/i.test(lower)) {
+            return "Hello! 👋 How can I assist you with your dental care today? Ask me about prices, appointments, or services!";
+        }
+
+        // 4) Thank you
+        if (lower.includes('thank')) {
+            return "You’re welcome! 😊 If you have any more questions, feel free to ask. Have a bright smile!";
+        }
+
+        // 5) Goodbye
+        if (/(bye|goodbye|see you|take care)/i.test(lower)) {
+            return "Goodbye! 👋 Take care of your smile! We’re here whenever you need us. Call 011-2-345-678 anytime.";
+        }
+
+        // 6) General fallback
+        return `I’m not sure I understand. 🤔 Could you rephrase?<br><br>
+        You can ask me about:<br>
+        • 📅 Hours & location<br>
+        • 📋 Appointments<br>
+        • 🦷 Services & prices (in Rs)<br>
+        • 🚨 Emergencies<br>
+        • 💳 Insurance<br>
+        • ✨ Whitening, braces, implants, and more!<br><br>
+        Or call us at <strong>011-2-345-678</strong> for personal help.`;
+    }
+
+    // ─── HANDLE USER MESSAGE ───
+    function handleUserMessage(text) {
+        const trimmed = text.trim();
+        if (!trimmed || isProcessing) return;
+
+        addMessage('user', trimmed);
+        mountMessages();
+        chatInput.value = '';
+        isProcessing = true;
+        showTyping();
+
+        const delay = 600 + Math.random() * 800;
+        setTimeout(() => {
+            removeTyping();
+            const response = getBotResponse(trimmed);
+            addMessage('bot', response);
+            mountMessages();
+            isProcessing = false;
+        }, delay);
+    }
+
+    // ─── HANDLE QUICK REPLY ───
+    function handleQuickReply(id) {
+        if (isProcessing) return;
+        const item = faq[id];
+        if (!item) return;
+
+        addMessage('user', item.q);
+        mountMessages();
+        isProcessing = true;
+        showTyping();
+
+        setTimeout(() => {
+            removeTyping();
+            addMessage('bot', item.a);
+            mountMessages();
+            isProcessing = false;
+        }, 700 + Math.random() * 600);
+    }
+
+    // ─── RESET ───
+    function resetChat() {
+        if (isProcessing) return;
+        messages = [];
+        addMessage('bot', initialBotMessage);
+        mountMessages();
+        chatInput.value = '';
+        chatInput.focus();
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  5.  INIT
+    // ═══════════════════════════════════════════════════════════════
+
+    addMessage('bot', initialBotMessage);
+    mountMessages();
+    mountQuickReplies();
+
+    // ═══════════════════════════════════════════════════════════════
+    //  6.  EVENTS
+    // ═══════════════════════════════════════════════════════════════
+
+    document.addEventListener('click', function(e) {
+        // Quick reply
+        const quickBtn = e.target.closest('[data-quick]');
+        if (quickBtn) {
+            e.preventDefault();
+            handleQuickReply(quickBtn.dataset.quick);
+            return;
+        }
+
+        // Reset
+        if (e.target.closest('#reset-chat')) {
+            e.preventDefault();
+            resetChat();
+            return;
+        }
+
+        // Privacy
+        if (e.target.closest('#footer-link')) {
+            e.preventDefault();
+            addMessage('bot',
+                '🔒 Our Privacy Policy is available at <strong>dentalsurgery.lk/privacy</strong>. We take your data security seriously! 🛡️'
+                );
+            mountMessages();
+            return;
+        }
+
+        // Voice
+        if (e.target.closest('#voice-btn')) {
+            e.preventDefault();
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                addMessage('bot', '🎤 Voice input is not supported in your browser. Please type your message instead.');
+                mountMessages();
+                return;
+            }
+            addMessage('bot',
+                '🎤 Voice input is available! Click the microphone and start speaking. (Demo uses text input — speech recognition would activate in production.)'
+                );
+            mountMessages();
+            return;
+        }
+
+        // Hash links
+        const link = e.target.closest('a[href^="#"]');
+        if (link) {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.querySelector(href);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+
+    chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleUserMessage(chatInput.value);
+    });
+
+    chatInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleUserMessage(chatInput.value);
+        }
+    });
+
+    setTimeout(() => chatInput.focus(), 300);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'r') {
+            e.preventDefault();
+            resetChat();
+        }
+    });
+
+    console.log('🦷 Dental Surgery · Sri Lanka Chatbot loaded ✅');
+</script>
+
+</body>
+</html>
