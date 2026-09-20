@@ -433,12 +433,13 @@ function ReportBody({ tab, report }) {
           </div>
         ) : (
           <Table
-            headers={["Date", "Slot Time", "Patient Name", "Visit Purpose", "Status", "Queue Token"]}
+            headers={["Date", "Appointment Period", "Patient Name", "Appointment Category", "Visit Purpose", "Status", "Queue Token"]}
             rows={(data.appointments || []).map((a) => [
               formatDate(a.appointmentDate),
-              a.startTime,
+              a.appointmentPeriod ? `${a.appointmentPeriod}${a.startTime && a.endTime ? ` (${a.startTime}–${a.endTime})` : ""}` : "—",
               a.patientId?.name || "—",
-              a.visitPurpose || "General Treatment",
+              a.appointmentCategory || "—",
+              a.visitPurpose || "—",
               <StatusBadge key={a._id} status={a.status} />,
               a.tokenNumber ? `#${a.tokenNumber}` : "—",
             ])}

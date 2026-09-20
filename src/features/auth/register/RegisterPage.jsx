@@ -28,7 +28,7 @@ function RegisterPage() {
           <div className="relative z-10 space-y-3 pt-8 border-t border-white/15 text-xs text-emerald-100">
             <div className="flex items-center gap-3">
               <span className="w-6 h-6 rounded-full bg-teal-400/20 text-teal-300 flex items-center justify-center font-bold">1</span>
-              <span>15-minute slot calendar booking</span>
+              <span>Date + clinic period appointment booking</span>
             </div>
             <div className="flex items-center gap-3">
               <span className="w-6 h-6 rounded-full bg-teal-400/20 text-teal-300 flex items-center justify-center font-bold">2</span>

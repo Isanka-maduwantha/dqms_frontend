@@ -11,8 +11,8 @@ export default function HelpSupportPage({ type = "help" }) {
       icon: "❓",
       items: [
         {
-          q: "How do I book an appointment slot?",
-          a: "Navigate to 'Find Slots' from your patient dashboard, choose a convenient date, select your visit category, and confirm a 15-minute slot.",
+          q: "How do I book an appointment?",
+          a: "Navigate to 'Book Appointment' from your patient dashboard, select an available date and clinic period, then confirm your booking. Your appointment number is assigned automatically. When you arrive, reception will confirm the visit purpose and issue your queue token.",
         },
         {
           q: "What happens when I arrive at the clinic?",
@@ -20,7 +20,7 @@ export default function HelpSupportPage({ type = "help" }) {
         },
         {
           q: "How can I reschedule if I cannot make it?",
-          a: "Open your patient dashboard under 'Upcoming Appointments' and click the 'Reschedule' button next to your visit to pick a new date and time.",
+          a: "Open your patient dashboard under 'Upcoming Appointments' and click 'Reschedule' to choose a new date and available clinic period. A new appointment number is assigned automatically.",
         },
       ],
     },

@@ -83,6 +83,21 @@ export default function DashboardShell({
               <span className="truncate">{item.label}</span>
             </NavLink>
           ))}
+          <NavLink
+            to="/profile"
+            end
+            onClick={() => setMobileOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-3.5 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 ${
+                isActive
+                  ? "bg-gradient-to-r from-[#0E7A50] to-emerald-600 text-white shadow-lg shadow-emerald-950/40 font-bold"
+                  : "text-slate-300 hover:bg-white/10 hover:text-white"
+              }`
+            }
+          >
+            <span className="text-lg leading-none shrink-0">👤</span>
+            <span className="truncate">Manage Profile</span>
+          </NavLink>
         </nav>
 
         {/* User Card & Logout */}
@@ -147,3 +162,4 @@ export default function DashboardShell({
     </div>
   );
 }
+

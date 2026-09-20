@@ -14,9 +14,13 @@ export const MainPage = () => {
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-tr from-emerald-400/20 via-teal-300/20 to-emerald-600/15 rounded-full blur-[100px] pointer-events-none -z-10" />
 
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-20 sm:space-y-32">
-        {/* Hero Section */}
+
+        {/* =========================================================
+            HERO SECTION
+        ========================================================== */}
         <section className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center pt-4 pb-8">
           <div className="lg:col-span-7 space-y-7 text-left">
+
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-200/80 text-emerald-800 font-bold text-xs uppercase tracking-wider backdrop-blur-md shadow-xs">
               <span className="w-2 h-2 rounded-full bg-[#0E7A50] animate-ping" />
               <span>Smart Clinical Queue & Patient Portal</span>
@@ -40,77 +44,103 @@ export const MainPage = () => {
                   <span>→</span>
                 </button>
               </NavLink>
+
               <NavLink to="/patient/book-appointment">
                 <button className="px-7 py-3.5 bg-white/80 hover:bg-white backdrop-blur-md border border-slate-200/90 text-slate-800 font-bold text-sm rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md hover:border-emerald-300 hover:text-[#0E7A50] active:scale-[0.98] flex items-center gap-2">
                   <span>📅</span>
-                  <span>Find Available Slots</span>
+                  <span>Book an Appointment</span>
                 </button>
               </NavLink>
             </div>
 
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/70 text-xs font-semibold text-slate-500">
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px]">✓</span>
+                <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px]">
+                  ✓
+                </span>
                 <span>HIPAA Compliant</span>
               </div>
+
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px]">🔒</span>
+                <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px]">
+                  🔒
+                </span>
                 <span>256-Bit SSL Encrypted</span>
               </div>
+
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-[10px]">⚡</span>
+                <span className="w-5 h-5 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-[10px]">
+                  ⚡
+                </span>
                 <span>Live Queue Sync</span>
               </div>
             </div>
           </div>
 
-          {/* Hero Visual Container */}
+          {/* =========================================================
+              HERO VISUAL
+          ========================================================== */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              {/* Glossy Mesh Card */}
+
               <div className="relative rounded-3xl bg-gradient-to-br from-emerald-800 via-[#0E7A50] to-slate-900 p-8 text-white shadow-2xl overflow-hidden border border-white/20">
+
                 <div className="absolute -top-24 -right-24 w-64 h-64 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
                 <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-emerald-500/30 rounded-full blur-3xl pointer-events-none" />
 
-                {/* Card Header */}
                 <div className="flex justify-between items-center pb-6 border-b border-white/15">
                   <div>
                     <div className="text-[11px] font-bold uppercase tracking-wider text-teal-200">
                       Live Queue Monitor
                     </div>
+
                     <div className="text-xl font-manrope font-bold text-white">
                       Room 02 • Dr. S. Perera
                     </div>
                   </div>
+
                   <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-bold text-[11px] border border-emerald-400/30 flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                     In Session
                   </span>
                 </div>
 
-                {/* Token Hero Display */}
                 <div className="my-8 text-center py-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 shadow-inner">
                   <div className="text-xs font-semibold text-teal-200 uppercase tracking-widest mb-1">
                     Currently Calling Token
                   </div>
+
                   <div className="text-6xl font-black font-manrope tracking-tight text-white drop-shadow-md">
                     #A-014
                   </div>
+
                   <div className="text-xs font-medium text-white/80 mt-2 flex items-center justify-center gap-1.5">
                     <span>Estimated Wait:</span>
-                    <span className="font-bold text-teal-300">~6 mins</span>
+                    <span className="font-bold text-teal-300">
+                      ~6 mins
+                    </span>
                   </div>
                 </div>
 
-                {/* Queue Stats Mini Bar */}
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                    <span className="text-white/60 block text-[10px] uppercase">Next in Line</span>
-                    <span className="font-bold text-sm text-white">Token #A-015</span>
+                    <span className="text-white/60 block text-[10px] uppercase">
+                      Next in Line
+                    </span>
+
+                    <span className="font-bold text-sm text-white">
+                      Token #A-015
+                    </span>
                   </div>
+
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                    <span className="text-white/60 block text-[10px] uppercase">Total Waiting</span>
-                    <span className="font-bold text-sm text-teal-300">3 Patients</span>
+                    <span className="text-white/60 block text-[10px] uppercase">
+                      Total Waiting
+                    </span>
+
+                    <span className="font-bold text-sm text-teal-300">
+                      3 Patients
+                    </span>
                   </div>
                 </div>
               </div>
@@ -120,31 +150,60 @@ export const MainPage = () => {
                 <div className="w-10 h-10 rounded-xl bg-[#0E7A50] text-white flex items-center justify-center text-xl shadow-md shadow-emerald-700/30">
                   🦷
                 </div>
+
                 <div>
-                  <div className="text-xs font-bold text-slate-800">4.9 / 5.0 Rating</div>
-                  <div className="text-[11px] text-slate-500">From 2,400+ Patient Reviews</div>
+                  <div className="text-xs font-bold text-slate-800">
+                    4.9 / 5.0 Rating
+                  </div>
+
+                  <div className="text-[11px] text-slate-500">
+                    From 2,400+ Patient Reviews
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
         </section>
 
-        {/* Stats Grid */}
+        {/* =========================================================
+            STATS GRID
+        ========================================================== */}
         <section className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {[
-            { label: "Patients Served", val: "18,500+", icon: "👥" },
-            { label: "Average Wait Time", val: "18 mins", icon: "⏱️" },
-            { label: "Patient Satisfaction", val: "99.4%", icon: "⭐" },
-            { label: "Clinical Specialists", val: "14 Dentists", icon: "🩺" },
+            {
+              label: "Patients Served",
+              val: "18,500+",
+              icon: "👥",
+            },
+            {
+              label: "Average Wait Time",
+              val: "18 mins",
+              icon: "⏱️",
+            },
+            {
+              label: "Patient Satisfaction",
+              val: "99.4%",
+              icon: "⭐",
+            },
+            {
+              label: "Clinical Specialists",
+              val: "14 Dentists",
+              icon: "🩺",
+            },
           ].map((stat, i) => (
             <div
               key={i}
               className="glass-card p-6 text-center border border-white/80 shadow-glass flex flex-col justify-center space-y-1.5 hover:scale-[1.02] transition-all duration-200"
             >
-              <div className="text-2xl mb-1">{stat.icon}</div>
+              <div className="text-2xl mb-1">
+                {stat.icon}
+              </div>
+
               <div className="font-manrope text-2xl sm:text-3xl font-extrabold text-slate-900">
                 {stat.val}
               </div>
+
               <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                 {stat.label}
               </div>
@@ -152,15 +211,22 @@ export const MainPage = () => {
           ))}
         </section>
 
-        {/* Services Section */}
-        <section id="services" className="space-y-12 text-center flex flex-col items-center">
+        {/* =========================================================
+            SERVICES
+        ========================================================== */}
+        <section
+          id="services"
+          className="space-y-12 text-center flex flex-col items-center"
+        >
           <div className="space-y-3 max-w-xl mx-auto">
             <span className="px-3.5 py-1.5 bg-emerald-500/10 border border-emerald-200 text-emerald-800 font-bold text-xs rounded-full uppercase tracking-wider">
               Comprehensive Care
             </span>
+
             <h2 className="font-manrope text-3xl sm:text-4xl font-extrabold text-slate-900">
               Complete dental care under one roof
             </h2>
+
             <p className="text-sm text-slate-500">
               State-of-the-art diagnostics and gentle treatments tailored to your clinical needs.
             </p>
@@ -213,13 +279,16 @@ export const MainPage = () => {
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0E7A50] to-teal-400 text-white flex items-center justify-center text-2xl shadow-md shadow-emerald-700/20">
                     {service.icon}
                   </div>
+
                   <h3 className="font-manrope text-lg font-bold text-slate-900">
                     {service.title}
                   </h3>
+
                   <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                     {service.desc}
                   </p>
                 </div>
+
                 <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-100">
                   {service.tags.map((tag, tIndex) => (
                     <span
@@ -235,12 +304,15 @@ export const MainPage = () => {
           </div>
         </section>
 
-        {/* How It Works Section */}
+        {/* =========================================================
+            HOW IT WORKS
+        ========================================================== */}
         <section className="glass-card p-8 sm:p-14 text-center space-y-12 border border-white/80 shadow-glass flex flex-col items-center">
           <div className="space-y-3 max-w-xl mx-auto">
             <span className="px-3.5 py-1.5 bg-emerald-500/10 border border-emerald-200 text-emerald-800 font-bold text-xs rounded-full uppercase tracking-wider">
               Patient Journey
             </span>
+
             <h2 className="font-manrope text-3xl sm:text-4xl font-extrabold text-slate-900">
               Three simple steps from booking to check-out
             </h2>
@@ -250,13 +322,13 @@ export const MainPage = () => {
             {[
               {
                 num: "01",
-                title: "Book Your Slot Online",
-                desc: "Choose your treatment purpose, date, and preferred 15-minute slot from the live clinical calendar.",
+                title: "Book Your Appointment Online",
+                desc: "Choose an available appointment date and clinic period. Reception confirms your visit purpose and queue token when you arrive.",
               },
               {
                 num: "02",
                 title: "Instant Check-In on Arrival",
-                desc: "Reception validates your visit or generates a walk-in token. You join the live waiting queue instantly.",
+                desc: "Reception confirms your visit purpose, checks you in, and generates your live queue token.",
               },
               {
                 num: "03",
@@ -271,9 +343,11 @@ export const MainPage = () => {
                 <span className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0E7A50] to-teal-400 text-white flex items-center justify-center text-sm font-bold shadow-md shadow-emerald-700/25">
                   {step.num}
                 </span>
+
                 <h3 className="font-manrope text-lg font-bold text-slate-900">
                   {step.title}
                 </h3>
+
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                   {step.desc}
                 </p>
@@ -282,26 +356,45 @@ export const MainPage = () => {
           </div>
         </section>
 
-        {/* Practice Overview & Live Monitor */}
-        <section id="about" className="grid md:grid-cols-12 gap-10 items-center">
+        {/* =========================================================
+            PRACTICE OVERVIEW
+        ========================================================== */}
+        <section
+          id="about"
+          className="grid md:grid-cols-12 gap-10 items-center"
+        >
           <div className="md:col-span-7 space-y-6 text-left">
             <span className="px-3.5 py-1.5 bg-emerald-500/10 border border-emerald-200 text-emerald-800 font-bold text-xs rounded-full uppercase tracking-wider">
               About Our Practice
             </span>
+
             <h2 className="font-manrope text-3xl sm:text-4xl font-extrabold text-slate-900 leading-snug">
               Clinical excellence powered by real-time workflow coordination
             </h2>
+
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
               Our clinic combines modern dental diagnostics with a hybrid queue engine. By seamlessly balancing pre-booked appointments and urgent walk-ins, we eliminate waiting room congestion and keep patients informed at every step.
             </p>
+
             <div className="grid grid-cols-2 gap-4 pt-2">
               <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-100">
-                <div className="font-bold text-slate-900 text-sm mb-1">Digitized Dental Charts</div>
-                <p className="text-xs text-slate-600">Full treatment history, diagnosis notes, and follow-up tracking.</p>
+                <div className="font-bold text-slate-900 text-sm mb-1">
+                  Digitized Dental Charts
+                </div>
+
+                <p className="text-xs text-slate-600">
+                  Full treatment history, diagnosis notes, and follow-up tracking.
+                </p>
               </div>
+
               <div className="p-4 rounded-xl bg-teal-50/70 border border-teal-100">
-                <div className="font-bold text-slate-900 text-sm mb-1">Itemized Invoicing</div>
-                <p className="text-xs text-slate-600">Automated invoices based on official clinical treatment catalogues.</p>
+                <div className="font-bold text-slate-900 text-sm mb-1">
+                  Itemized Invoicing
+                </div>
+
+                <p className="text-xs text-slate-600">
+                  Automated invoices based on official clinical treatment catalogues.
+                </p>
               </div>
             </div>
           </div>
@@ -309,37 +402,55 @@ export const MainPage = () => {
           <div className="md:col-span-5">
             <div className="glass-card-dark p-8 space-y-5 shadow-2xl relative overflow-hidden text-xs">
               <div className="flex justify-between items-center border-b border-white/10 pb-4">
-                <span className="text-slate-300 font-semibold">Today's Clinic Activity</span>
+                <span className="text-slate-300 font-semibold">
+                  Today's Clinic Activity
+                </span>
+
                 <span className="font-bold text-teal-300 bg-teal-400/10 px-2.5 py-1 rounded-full border border-teal-400/20">
                   Live Operations
                 </span>
               </div>
+
               <div className="flex justify-between border-b border-white/10 pb-3 text-slate-300">
                 <span>Active Consultation Rooms</span>
-                <span className="font-bold text-white">4 of 4 Active</span>
+                <span className="font-bold text-white">
+                  4 of 4 Active
+                </span>
               </div>
+
               <div className="flex justify-between border-b border-white/10 pb-3 text-slate-300">
                 <span>Patients Checked-In Today</span>
-                <span className="font-bold text-white">28 Patients</span>
+                <span className="font-bold text-white">
+                  28 Patients
+                </span>
               </div>
+
               <div className="flex justify-between border-b border-white/10 pb-3 text-slate-300">
                 <span>Average Consultation Time</span>
-                <span className="font-bold text-teal-300">14.2 Mins</span>
+                <span className="font-bold text-teal-300">
+                  14.2 Mins
+                </span>
               </div>
+
               <div className="flex justify-between text-slate-300">
                 <span>System Security</span>
-                <span className="font-bold text-emerald-400">100% Encrypted</span>
+                <span className="font-bold text-emerald-400">
+                  100% Encrypted
+                </span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Interactive FAQ Section */}
+        {/* =========================================================
+            FAQ
+        ========================================================== */}
         <section className="space-y-8 max-w-3xl mx-auto w-full">
           <div className="text-center space-y-2">
             <h2 className="font-manrope text-2xl sm:text-3xl font-extrabold text-slate-900">
               Frequently Asked Questions
             </h2>
+
             <p className="text-xs sm:text-sm text-slate-500">
               Everything you need to know about our booking and appointment queue system.
             </p>
@@ -353,7 +464,7 @@ export const MainPage = () => {
               },
               {
                 q: "Can I reschedule or cancel my appointment online?",
-                a: "Yes! You can log in to your patient dashboard anytime to view upcoming appointments, choose a new available time slot, or cancel with one click.",
+                a: "Yes! You can log in to your patient dashboard anytime to view upcoming appointments, choose a new available clinic period, or cancel with one click.",
               },
               {
                 q: "Are walk-in patients accepted?",
@@ -374,10 +485,12 @@ export const MainPage = () => {
                   className="w-full px-6 py-4.5 text-left flex justify-between items-center gap-4 font-bold text-sm text-slate-800 hover:text-[#0E7A50] cursor-pointer"
                 >
                   <span>{faq.q}</span>
+
                   <span className="text-[#0E7A50] text-lg transition-transform duration-200">
                     {activeFaq === idx ? "−" : "+"}
                   </span>
                 </button>
+
                 {activeFaq === idx && (
                   <div className="px-6 pb-4.5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3 animate-fadeIn">
                     {faq.a}
@@ -388,17 +501,22 @@ export const MainPage = () => {
           </div>
         </section>
 
-        {/* CTA Banner */}
+        {/* =========================================================
+            CTA BANNER
+        ========================================================== */}
         <section className="rounded-3xl bg-gradient-to-r from-emerald-900 via-[#0E7A50] to-teal-800 p-10 sm:p-16 text-center space-y-6 text-white shadow-2xl relative overflow-hidden border border-white/20 flex flex-col items-center">
+
           <div className="absolute -top-24 -right-24 w-80 h-80 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
+
           <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-emerald-500/30 rounded-full blur-3xl pointer-events-none" />
 
           <div className="space-y-3 max-w-xl mx-auto relative z-10">
             <h2 className="font-manrope text-3xl sm:text-4xl font-extrabold leading-tight">
               Ready to schedule your visit?
             </h2>
+
             <p className="text-sm sm:text-base text-emerald-100">
-              Create your patient account in under 2 minutes and book your preferred slot.
+              Create your patient account in under 2 minutes and book your preferred clinic period.
             </p>
           </div>
 
@@ -408,6 +526,7 @@ export const MainPage = () => {
                 Create Patient Account →
               </button>
             </NavLink>
+
             <NavLink to="/login">
               <button className="px-7 py-3.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white font-semibold text-sm rounded-xl transition-all duration-200">
                 Sign In to Portal
@@ -415,7 +534,80 @@ export const MainPage = () => {
             </NavLink>
           </div>
         </section>
+
       </main>
+
+      {/* ============================================================
+          AI CHATBOT FLOATING BUTTON
+
+          This is intentionally a normal <a> link.
+          It does NOT use React Router.
+          It opens the standalone HTML chatbot from /public.
+      ============================================================ */}
+      <a
+        href="/chatbot.html"
+        aria-label="Open SmileCare Dental AI Assistant"
+        title="Chat with SmileCare Dental Assistant"
+        className="
+          fixed
+          bottom-6
+          right-6
+          z-50
+          group
+          flex
+          items-center
+          gap-3
+          pl-2
+          pr-5
+          py-2
+          rounded-full
+          bg-[#0E7A50]
+          text-white
+          shadow-xl
+          shadow-emerald-900/30
+          border
+          border-white/20
+          backdrop-blur-md
+          hover:bg-[#0b6341]
+          hover:scale-105
+          active:scale-95
+          transition-all
+          duration-200
+        "
+      >
+        {/* AI Icon */}
+        <span
+          className="
+            w-11
+            h-11
+            rounded-full
+            bg-white
+            text-[#0E7A50]
+            flex
+            items-center
+            justify-center
+            text-xl
+            shadow-md
+            group-hover:rotate-6
+            transition-transform
+            duration-200
+          "
+        >
+          ✨
+        </span>
+
+        {/* Button Text */}
+        <span className="hidden sm:flex flex-col text-left leading-tight">
+          <span className="text-[10px] font-semibold text-emerald-100 uppercase tracking-wider">
+            Need Help?
+          </span>
+
+          <span className="text-sm font-extrabold">
+            AI Assistant
+          </span>
+        </span>
+      </a>
+
     </div>
   );
 };

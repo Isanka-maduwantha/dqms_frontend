@@ -487,7 +487,7 @@ function Lobby() {
                   proceed to <span className="underline decoration-teal-400">{getRoomName(currentCall)}</span>”
                 </div>
                 <div className="flex items-center justify-between text-[11px] text-white/70 pt-1">
-                  <span>Slot Time:</span>
+                  <span>Appointment Period:</span>
                   <span className="font-bold text-white">
                     {currentCall?.startTime || "09:00"} {currentCall?.endTime ? `– ${currentCall.endTime}` : ""}
                   </span>
@@ -523,7 +523,7 @@ function Lobby() {
                       isCurrentCallingActive ? "bg-emerald-400 animate-ping" : "bg-teal-300"
                     }`}
                   />
-                  <span>{isCurrentCallingActive ? "In Session" : "Scheduled Slot"}</span>
+                  <span>{isCurrentCallingActive ? "In Session" : "Scheduled Appointment"}</span>
                 </div>
                 <div className="text-xs text-white/75">
                   Dental Surgery Wing • Level 1
