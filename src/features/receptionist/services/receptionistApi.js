@@ -1,6 +1,10 @@
 import { apiFetch } from "../../../lib/api/http";
 const BASE = "/api/receptionist";
 
+export const getAppointmentPurpose = ()=> {
+    return apiFetch(`${BASE}/visitPurpose`);
+}
+
 export function getAllPatients() { return apiFetch(`${BASE}/patients`); }
 export function searchPatients(query) { return apiFetch(`${BASE}/patients/search?q=${encodeURIComponent(query)}`); }
 export function addPatient(payload) { return apiFetch(`${BASE}/patient`, { method: "POST", body: payload }); }
